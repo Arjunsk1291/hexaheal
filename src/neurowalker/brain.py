@@ -31,7 +31,7 @@ class BrainController:
         self.net = SpikingNet(W, seed=seed)
         self.seed = seed
         self.cpg = TripodController(tripod)
-        self.g = {"speed": 0.6, "turn": 0.45, "stance": 0.12, "roll": 0.08, "speed_freq": 0.35}
+        self.g = {"speed": 0.6, "turn": 0.45, "stance": -0.1, "roll": 0.08, "speed_freq": 0.35}
         if gains:
             self.g.update(gains)
         rng = np.random.default_rng(1234)  # fixed I/O assignment, independent of the run seed
