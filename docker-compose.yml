@@ -1,0 +1,4 @@
+services:
+  demo:
+    build: .
+    environment: [MUJOCO_GL=egl]

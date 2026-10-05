@@ -1,0 +1,10 @@
+{
+  "os": "Linux-6.1.158+-x86_64-with-glibc2.35",
+  "python": "3.10.12",
+  "cpus": 2,
+  "docker": null,
+  "ffmpeg": "ffmpeg version 4.4.2-0ubuntu0.22.04.1 Copyright (c) 2000-2021 the FFmpeg developers",
+  "node": "v22.23.3",
+  "gh": "gh version 2.101.0 (2026-09-15)",
+  "nvidia_smi": null
+}
