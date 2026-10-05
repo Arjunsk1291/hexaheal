@@ -81,8 +81,9 @@ class HealthMonitor:
 class HealingController:
     """Wraps any controller exposing .cpg (TripodController) and .act(env)."""
 
-    def __init__(self, base, terrain="flat", max_trials=18, rollout_s=2.5, seed=0):
+    def __init__(self, base, terrain="flat", max_trials=18, rollout_s=2.5, seed=0, search_ctrl=None):
         self.base = base
+        self.search_ctrl = search_ctrl  # v3: optional controller used inside the CMA-ES rollouts (None = plain tripod, as in v1/v2)
         self.name = base.name + "+healing"
         self.terrain, self.max_trials, self.rollout_s, self.seed = terrain, max_trials, rollout_s, seed
         self._max_trials0 = max_trials
@@ -153,7 +154,10 @@ class HealingController:
             x = from_u(u)
             e = HexapodEnv(self.terrain, max_time=self.rollout_s + 0.5, faults=[*self.known, fault], seed=self.seed, target_speed=env.target_speed)
             e.reset(seed=self.seed)
-            c = TripodController(); apply(c, x)
+            if self.search_ctrl is None:
+                c = TripodController(); apply(c, x)
+            else:  # rollout with the real controller (its nudges included); the candidate gait is applied to its CPG
+                c = self.search_ctrl; c.reset(); apply(c.cpg, x)
             while True:
                 _, _, te, tr, _ = e.step(c.act(e))
                 if te or tr:
