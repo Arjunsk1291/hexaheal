@@ -88,8 +88,50 @@ def make_variant(name):
         return RandomGraphBrain()
     if name == "filter":
         return FilterBrain()
+    if name == "mlp":
+        return MLPBrain()
     raise KeyError(name)
 
 
 VARIANTS = ["connectome", "shuffled", "random_graph", "filter"]
 _ = CHANNELS
+
+
+class MLPBrain:
+    """Small MLP (8 -> 16 -> 16 -> 4, tanh) fitted offline to the connectome's raw (pre-smoothing) input-output mapping, then used in its place.
+    Same encoding, same 0.7/0.3 smoothing, same nudge limits. Weights: data/processed/mlp_ablation.npz (built by scripts/fit_mlp_ablation.py)."""
+    name = "ablation_mlp"
+
+    def __init__(self, path="data/processed/mlp_ablation.npz", gains=None, tripod=None, **_):
+        from .tripod import TripodController
+        z = np.load(path)
+        self.w = [z[k] for k in ("W1", "b1", "W2", "b2", "W3", "b3")]
+        self.cpg = TripodController(tripod)
+        self.g = {"speed": 0.6, "turn": 0.45, "stance": -0.1, "roll": 0.08, "speed_freq": 0.35}
+        if gains:
+            self.g.update(gains)
+        self.seed = 0
+        self.reset()
+
+    def reset(self):
+        self.cpg.reset()
+        self.dec = np.zeros(4)
+        self.nudges = []
+        self.last_counts = np.zeros(1, np.int32)
+
+    def mlp(self, lv):
+        W1, b1, W2, b2, W3, b3 = self.w
+        h = np.tanh(lv @ W1 + b1); h = np.tanh(h @ W2 + b2)
+        return h @ W3 + b3
+
+    def act(self, env, turn_cmd=0.0, legs_disabled=None):
+        lv = BrainController.encode(self, env, turn_cmd)
+        x = np.clip(self.mlp(lv), -1.5, 1.5)
+        self.dec = 0.7 * self.dec + 0.3 * x
+        d = self.dec; g = self.g
+        speed_gain = float(np.clip(1.0 + g["speed"] * d[0], 0.5, 1.5))
+        freq_scale = float(np.clip(1.0 + g["speed_freq"] * d[0], 0.6, 1.4))
+        turn = float(np.clip(g["turn"] * d[1], -0.6, 0.6))
+        stance = float(np.clip(g["stance"] * d[2], -0.2, 0.2))
+        self.nudges.append((speed_gain, freq_scale, turn, stance))
+        return self.cpg.act(env, speed_gain=speed_gain, turn=turn, stance_adj=stance, freq_scale=freq_scale)
