@@ -1,0 +1,29 @@
+# V3 Stage 3 recovery map (seeds 0-9, flat, simulation, 2 vCPU sandbox)
+
+Survival = no fall by 14 s with leg(s) disabled at 4.0 s (cell = survivors/10). Oracle column: offline CMA-ES over a free-gait family, faults from t=0, validated on seeds 0-9 over 10 s (walks = no fall and >= 1.0 m on >= 8/10 seeds).
+
+| case | tripod | tripod+heal | tuned | tuned+heal | healing recoveries (tuned+heal, mean/run) | oracle: survivors/10, mean dist m | oracle walks? |
+|---|---|---|---|---|---|---|---|
+| dl_0 | 1/10 | 10/10 | 0/10 | 0/10 | 0.0 | 10/10, 4.33 | YES |
+| dl_1 | 10/10 | 10/10 | 10/10 | 10/10 | 0.0 | not run | - |
+| dl_2 | 0/10 | 7/10 | 3/10 | 6/10 | 0.8 | not run | - |
+| dl_3 | 0/10 | 0/10 | 0/10 | 0/10 | 0.0 | not run | - |
+| dl_4 | 10/10 | 10/10 | 10/10 | 10/10 | 0.0 | not run | - |
+| dl_5 | 0/10 | 0/10 | 0/10 | 0/10 | 0.0 | not run | - |
+| dl_0_1 | 0/10 | 0/10 | 0/10 | 0/10 | 0.0 | not run | - |
+| dl_0_2 | 0/10 | 2/10 | 0/10 | 0/10 | 0.0 | not run | - |
+| dl_0_3 | 0/10 | 0/10 | 0/10 | 0/10 | 0.0 | not run | - |
+| dl_0_4 | 6/10 | 4/10 | 0/10 | 0/10 | 0.0 | not run | - |
+| dl_0_5 | 0/10 | 2/10 | 0/10 | 0/10 | 0.0 | not run | - |
+| dl_1_2 | 10/10 | 8/10 | 2/10 | 0/10 | 0.0 | not run | - |
+| dl_1_3 | 5/10 | 7/10 | 0/10 | 3/10 | 0.0 | not run | - |
+| dl_1_4 | 10/10 | 10/10 | 10/10 | 10/10 | 0.0 | not run | - |
+| dl_1_5 | 10/10 | 7/10 | 10/10 | 3/10 | 0.0 | not run | - |
+| dl_2_3 | 0/10 | 2/10 | 0/10 | 1/10 | 0.2 | not run | - |
+| dl_2_4 | 10/10 | 8/10 | 9/10 | 7/10 | 0.0 | not run | - |
+| dl_2_5 | 0/10 | 0/10 | 0/10 | 0/10 | 0.0 | not run | - |
+| dl_3_4 | 0/10 | 0/10 | 0/10 | 0/10 | 0.0 | not run | - |
+| dl_3_5 | 2/10 | 7/10 | 0/10 | 0/10 | 0.0 | not run | - |
+| dl_4_5 | 1/10 | 6/10 | 7/10 | 4/10 | 0.0 | not run | - |
+
+Wilson 95% for k/10: 0/10 0.00-0.28, 3/10 0.11-0.60, 5/10 0.24-0.76, 7/10 0.40-0.89, 10/10 0.72-1.00.
