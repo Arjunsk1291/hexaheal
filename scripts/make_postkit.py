@@ -1,5 +1,6 @@
 """LinkedIn DRAFTS. Numbers come from results/summary.json. Nothing is posted; Arjun reviews exact text."""
 import json
+
 S = json.load(open("results/summary.json")); V = json.load(open("results/validation/shiu_sugar_validation.json")); I = json.load(open("data/processed/subgraph_info.json"))
 d = lambda c, s: S[c][s]["distance"]["mean"]; fl = lambda c, s: f"{S[c][s]['fall_rate']['falls']}/{S[c][s]['fall_rate']['n']}"
 fr = lambda c, f, h="": S[c][f"fault_{f}{h}"]["fault_retained"]["mean"] * 100

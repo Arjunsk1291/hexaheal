@@ -49,7 +49,7 @@ def run_one(ctrl, ctrl_name, scenario, seed):
         ctrl.seed = seed
     env.reset(seed=seed)
     c.reset()
-    ts, xs, ys, tilt, roll, pitch = [], [], [], [], [], []
+    ts, xs, ys, _tilt, roll, pitch = [], [], [], [], [], []
     lat = []
     proc = psutil.Process()
     cpu0, w0 = sum(proc.cpu_times()[:2]), time.perf_counter()
@@ -78,13 +78,12 @@ def run_one(ctrl, ctrl_name, scenario, seed):
         pre = np.sqrt(roll[ts < PUSH[0]] ** 2 + pitch[ts < PUSH[0]] ** 2)
         thr = max(0.03, 1.5 * float(np.sqrt(np.mean(pre ** 2))))
         tl = np.hypot(roll, pitch)
-        ok = False
         if not env.fell:
             idx = np.where(ts >= tp)[0]
             for k in idx:
                 w = (ts >= ts[k]) & (ts < ts[k] + 0.5)
                 if ts[k] + 0.5 <= ts[-1] + 1e-9 and np.all(tl[w] < thr):
-                    r["push_recovery_s"] = float(ts[k] - tp); ok = True
+                    r["push_recovery_s"] = float(ts[k] - tp) 
                     break
     if sp["faults"]:
         pre = _speed(xs, ts, 1.5, FAULT_T)

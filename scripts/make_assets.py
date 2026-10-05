@@ -1,7 +1,12 @@
 """Build demo.gif, hero.mp4, reel, cover, carousel, vertical clips from rendered clips and results files."""
-import json, os, shutil
-import imageio.v2 as iio, numpy as np
+import json
+import os
+import shutil
+
+import imageio.v2 as iio
+import numpy as np
 from PIL import Image, ImageDraw, ImageFont
+
 M = "docs/media"; OUT = "docs/social"; os.makedirs(OUT, exist_ok=True)
 S = json.load(open("results/summary.json"))
 def font(sz):

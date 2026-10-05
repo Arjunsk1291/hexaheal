@@ -5,14 +5,14 @@ setup:
 test:
 	$(PY) -m pytest -q -m "not slow"
 demo:
-	$(PY) scripts/make_demo.py
+	$(PY) scripts/make_media.py && $(PY) scripts/make_assets.py
 train:
-	$(PY) scripts/train_ppo.py --max-hours 1.5 --seeds 1
-	$(PY) scripts/run_connectome_setup.py
+	$(PY) scripts/train_ppo.py
+	$(PY) scripts/run_lesion_sweep.py 5
 benchmark:
 	$(PY) scripts/run_benchmark.py
 report:
 	$(PY) scripts/make_report.py
 dashboard:
-	$(PY) scripts/export_dashboard_data.py && cd dashboard && npm install && npm run build
+	$(PY) scripts/make_readme.py && cd dashboard && npm install && npm run build
 all: setup test demo benchmark report dashboard

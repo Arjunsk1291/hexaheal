@@ -22,8 +22,11 @@ where = ["src"]
 line-length = 110
 [tool.ruff.lint]
 select = ["E", "F", "I"]
-ignore = ["E741"]
+ignore = ["E741", "E501", "E701", "E702", "E731"]  # dense research-script style
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 markers = ["slow: slower tests excluded from CI"]
+
+[tool.ruff.lint.per-file-ignores]
+"scripts/*" = ["I001"]

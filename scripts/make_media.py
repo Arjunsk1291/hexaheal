@@ -85,7 +85,7 @@ def neural_data():
     out = {"fps": 10, "xy": np.round(xy, 4).tolist(), "frames": rec.neural_frames, "baseline_distance": None, "lesions": {},
            "note": "Per-neuron spike counts per 100 ms from the real simulation run; layout is a spectral embedding of the subgraph (no anatomical meaning)."}
     if os.path.exists("results/lesion_sweep_summary.json"):
-        ls = json.load(open("results/lesion_sweep.json")) if False else None
+        json.load(open("results/lesion_sweep.json")) if False else None
         df = pd.read_parquet("results/lesion_sweep.parquet"); base = df[df.group == "none"]
         out["baseline_distance"] = float((base.speed_post * 8 + base.speed_pre * 2).mean())
         summ = json.load(open("results/lesion_sweep_summary.json"))
