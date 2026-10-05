@@ -30,6 +30,9 @@ def scenario_spec(name):
     base = name.replace("+healing", "")
     if base in TERRAIN_SCENARIOS:
         return dict(terrain=base, t=10.0, faults=[], pushes=[], heal=False)
+    if base.startswith("dl_"):  # v3 recovery map: simultaneous leg losses at FAULT_T, e.g. dl_2 (single) or dl_2_5 (double)
+        legs = [int(x) for x in base[3:].split("_")]
+        return dict(terrain="flat", t=14.0, faults=[Fault("disable_leg", FAULT_T, leg=lg) for lg in legs], pushes=[], heal=heal)
     if base == "fault_sequential":
         return dict(terrain="flat", t=16.0, faults=[Fault("disable_leg", FAULT_T, leg=2), Fault("disable_leg", FAULT2_T, leg=5)], pushes=[], heal=heal)
     if base == "healthy":
