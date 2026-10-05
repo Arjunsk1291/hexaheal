@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>neurowalker_ros</name>
+  <version>0.1.0</version>
+  <description>ROS 2 wrapper around the NeuroWalker pure-Python core (UNVERIFIED: not executed in the build environment)</description>
+  <maintainer email="arjunsk1291@gmail.com">Arjun Sunil Kumar</maintainer>
+  <license>MIT</license>
+  <depend>rclpy</depend>
+  <depend>sensor_msgs</depend>
+  <depend>std_msgs</depend>
+  <export><build_type>ament_python</build_type></export>
+</package>
