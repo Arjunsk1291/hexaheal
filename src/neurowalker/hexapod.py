@@ -34,6 +34,29 @@ class HexapodParams:
         return self.femur_len * np.sin(a) + self.tibia_len * np.sin(a + b) + 0.02
 
 
+V = 'contype="0" conaffinity="0" mass="0" group="1"'  # visual-only: no collision, no mass, dynamics unchanged
+
+
+TORSO_VIS = """<geom type="box" pos="0 0 -0.019" size="0.15 0.066 0.004" material="carbon" """ + V + """/>
+      <geom type="box" pos="0 0 0.021" size="0.15 0.066 0.004" material="carbon" """ + V + """/>
+      <geom type="box" pos="0 0.069 0.001" size="0.15 0.0025 0.017" material="servo" """ + V + """/>
+      <geom type="box" pos="0 -0.069 0.001" size="0.15 0.0025 0.017" material="servo" """ + V + """/>
+      <geom type="box" pos="0.0 0.0 0.0" size="0.152 0.068 0.0015" material="accent" """ + V + """/>
+      <geom type="box" pos="0 0 0.0" size="0.07 0.05 0.02" material="servo" """ + V + """/>
+      <geom type="cylinder" pos="0.135 0.055 0" size="0.005 0.021" material="alu" """ + V + """/>
+      <geom type="cylinder" pos="0.135 -0.055 0" size="0.005 0.021" material="alu" """ + V + """/>
+      <geom type="cylinder" pos="-0.135 0.055 0" size="0.005 0.021" material="alu" """ + V + """/>
+      <geom type="cylinder" pos="-0.135 -0.055 0" size="0.005 0.021" material="alu" """ + V + """/>
+      <geom type="box" pos="-0.04 0 0.04" size="0.055 0.03 0.015" material="accent" """ + V + """/>
+      <geom type="box" pos="-0.04 0 0.041" size="0.008 0.032 0.016" material="carbon" """ + V + """/>
+      <geom type="box" pos="0.07 0 0.027" size="0.04 0.03 0.0025" material="pcb" """ + V + """/>
+      <geom type="box" pos="{bx_head} 0 0.004" size="0.028 0.045 0.02" material="carbon" """ + V + """/>
+      <geom type="sphere" pos="{bx_lens} 0.022 0.008" size="0.011" material="lens" """ + V + """/>
+      <geom type="sphere" pos="{bx_lens} -0.022 0.008" size="0.011" material="lens" """ + V + """/>
+      <geom type="sphere" pos="{bx_led} 0 0.026" size="0.005" material="gold" """ + V + """/>"""
+TORSO_VIS = TORSO_VIS.replace("{bx_head}", "0.168").replace("{bx_lens}", "0.194").replace("{bx_led}", "0.17")
+
+
 def _leg_xml(i: int, p: HexapodParams) -> str:
     side = -1 if i < 3 else 1  # right legs point -y
     x = p.leg_x[i % 3]
@@ -41,18 +64,32 @@ def _leg_xml(i: int, p: HexapodParams) -> str:
     zax = "0 0 1" if side < 0 else "0 0 -1"  # positive coxa = swing forward on both sides
     n = LEG_NAMES[i]
     r = p.ranges
+    cl, fl, tl = p.coxa_len, p.femur_len, p.tibia_len
     return f"""
     <body name="{n}_coxa" pos="{x} {side * p.body_half[1]} 0" euler="0 0 {yaw}">
       <joint name="{n}_coxa" axis="{zax}" range="{r[0][0]} {r[0][1]}" damping="0.05" armature="0.004"/>
-      <geom type="capsule" fromto="0 0 0 {p.coxa_len} 0 0" size="0.012" mass="0.03" rgba="0.2 0.5 0.9 1" contype="0" conaffinity="0"/>
-      <body name="{n}_femur" pos="{p.coxa_len} 0 0">
+      <geom type="capsule" fromto="0 0 0 {cl} 0 0" size="0.012" mass="0.03" rgba="0 0 0 0" contype="0" conaffinity="0"/>
+      <geom type="box" pos="{cl * 0.35} 0 0" size="0.026 0.015 0.019" material="servo" {V}/>
+      <geom type="cylinder" pos="0 0 0.021" size="0.011 0.003" material="gold" {V}/>
+      <geom type="box" pos="{cl * 0.9} 0 0" size="0.012 0.013 0.016" material="alu" {V}/>
+      <body name="{n}_femur" pos="{cl} 0 0">
         <joint name="{n}_femur" axis="0 1 0" range="{r[1][0]} {r[1][1]}" damping="0.05" armature="0.004"/>
-        <geom type="capsule" fromto="0 0 0 {p.femur_len} 0 0" size="0.011" mass="0.05" rgba="0.3 0.6 0.95 1" contype="0" conaffinity="0"/>
-        <body name="{n}_tibia" pos="{p.femur_len} 0 0">
+        <geom type="capsule" fromto="0 0 0 {fl} 0 0" size="0.011" mass="0.05" rgba="0 0 0 0" contype="0" conaffinity="0"/>
+        <geom type="box" pos="0 0 0" size="0.026 0.016 0.019" material="servo" {V}/>
+        <geom type="cylinder" pos="0 0.019 0" euler="1.5708 0 0" size="0.012 0.003" material="gold" {V}/>
+        <geom type="box" pos="{fl * 0.5} 0.016 0" size="{fl * 0.5} 0.0025 0.013" material="alu" {V}/>
+        <geom type="box" pos="{fl * 0.5} -0.016 0" size="{fl * 0.5} 0.0025 0.013" material="alu" {V}/>
+        <geom type="cylinder" pos="{fl * 0.5} 0 0" euler="1.5708 0 0" size="0.004 0.016" material="alu" {V}/>
+        <body name="{n}_tibia" pos="{fl} 0 0">
           <joint name="{n}_tibia" axis="0 1 0" range="{r[2][0]} {r[2][1]}" damping="0.05" armature="0.004"/>
-          <geom type="capsule" fromto="0 0 0 {p.tibia_len} 0 0" size="0.009" mass="0.05" rgba="0.9 0.9 0.95 1" contype="0" conaffinity="0"/>
-          <geom name="{n}_foot" type="sphere" pos="{p.tibia_len} 0 0" size="0.013" mass="0.01" friction="{p.foot_friction} 0.02 0.002" rgba="0.95 0.5 0.2 1"/>
-          <site name="{n}_foot_site" pos="{p.tibia_len} 0 0" size="0.02" rgba="1 0 0 0.0"/>
+          <geom type="capsule" fromto="0 0 0 {tl} 0 0" size="0.009" mass="0.05" rgba="0 0 0 0" contype="0" conaffinity="0"/>
+          <geom type="box" pos="0 0 0" size="0.022 0.014 0.017" material="servo" {V}/>
+          <geom type="cylinder" pos="0 0.017 0" euler="1.5708 0 0" size="0.011 0.003" material="gold" {V}/>
+          <geom type="capsule" fromto="0.01 0 0 {tl} 0 0" size="0.0085" material="titan" {V}/>
+          <geom type="capsule" fromto="{tl * 0.45} 0 0 {tl * 0.97} 0 0" size="0.0055" material="carbon" {V}/>
+          <geom name="{n}_foot" type="sphere" pos="{tl} 0 0" size="0.013" mass="0.01" friction="{p.foot_friction} 0.02 0.002" material="rubber"/>
+          <geom type="cylinder" pos="{tl - 0.012} 0 0" euler="0 1.5708 0" size="0.011 0.004" material="accent" {V}/>
+          <site name="{n}_foot_site" pos="{tl} 0 0" size="0.02" rgba="1 0 0 0.0"/>
         </body>
       </body>
     </body>"""
@@ -101,18 +138,29 @@ def generate_mjcf(p: HexapodParams | None = None) -> str:
   <option timestep="{p.dt}" integrator="implicitfast" gravity="0 0 -9.81"/>
   <visual><global offwidth="1280" offheight="1280"/><quality shadowsize="2048"/><headlight ambient="0.35 0.35 0.4" diffuse="0.7 0.7 0.7"/></visual>
   <asset>
-    <texture name="grid" type="2d" builtin="checker" rgb1="0.12 0.14 0.19" rgb2="0.17 0.19 0.26" width="256" height="256" mark="edge" markrgb="0.3 0.35 0.5"/>
-    <material name="grid" texture="grid" texrepeat="40 40" reflectance="0.05"/>
-    <texture name="sky" type="skybox" builtin="gradient" rgb1="0.1 0.12 0.2" rgb2="0.02 0.02 0.05" width="64" height="64"/>
+    <texture name="grid" type="2d" builtin="checker" rgb1="0.30 0.33 0.38" rgb2="0.38 0.41 0.47" width="256" height="256" mark="edge" markrgb="0.5 0.55 0.65"/>
+    <material name="grid" texture="grid" texrepeat="40 40" reflectance="0.15"/>
+    <texture name="sky" type="skybox" builtin="gradient" rgb1="0.55 0.65 0.8" rgb2="0.12 0.14 0.2" width="64" height="64"/>
+    <material name="carbon" rgba="0.07 0.07 0.09 1" specular="0.6" shininess="0.7"/>
+    <material name="alu" rgba="0.78 0.8 0.84 1" specular="0.9" shininess="0.8" reflectance="0.15"/>
+    <material name="servo" rgba="0.14 0.15 0.18 1" specular="0.4" shininess="0.5"/>
+    <material name="titan" rgba="0.36 0.38 0.42 1" specular="0.8" shininess="0.7" reflectance="0.1"/>
+    <material name="gold" rgba="0.9 0.72 0.25 1" specular="0.9" shininess="0.9"/>
+    <material name="rubber" rgba="0.05 0.05 0.05 1" specular="0.1" shininess="0.1"/>
+    <material name="accent" rgba="0.95 0.42 0.08 1" specular="0.5" shininess="0.6"/>
+    <material name="pcb" rgba="0.05 0.45 0.25 1" specular="0.5" shininess="0.6"/>
+    <material name="lens" rgba="0.1 0.5 0.9 1" specular="1" shininess="1" reflectance="0.3"/>
     {assets}
   </asset>
   <worldbody>
     <light pos="2 -2 5" dir="-0.3 0.3 -1" diffuse="0.9 0.9 0.9" castshadow="true"/>
+    <light pos="-2 3 4" dir="0.3 -0.5 -1" diffuse="0.35 0.38 0.45" castshadow="false"/>
     {floor}
     <body name="torso" pos="0 0 {p.spawn_height}">
       <freejoint name="root"/>
-      <geom name="torso_geom" type="box" size="{bh[0]} {bh[1]} {bh[2]}" mass="{p.torso_mass}" rgba="0.1 0.75 0.65 1"/>
-      <geom name="head" type="sphere" pos="{bh[0] + 0.01} 0 0.005" size="0.02" mass="0.001" rgba="1 0.8 0.2 1" contype="0" conaffinity="0"/>
+      <geom name="torso_geom" type="box" size="{bh[0]} {bh[1]} {bh[2]}" mass="{p.torso_mass}" rgba="0 0 0 0"/>
+      <geom name="head" type="sphere" pos="{bh[0] + 0.01} 0 0.005" size="0.02" mass="0.001" rgba="0 0 0 0" contype="0" conaffinity="0"/>
+      {TORSO_VIS}
       <site name="imu" pos="0 0 0" size="0.01"/>
       {legs}
     </body>
