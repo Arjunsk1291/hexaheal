@@ -13,10 +13,10 @@ from neurowalker.v3 import HybridBrain
 
 mode, rng_ = sys.argv[1], sys.argv[2]
 a, b = rng_.split("-"); seeds = range(int(a), int(b) + 1)
-VARIANTS = {"h_full": dict(scale=(1, 1, 1)), "h_half": dict(scale=(0.5, 0.5, 1)), "h_turn": dict(scale=(0, 0, 1)), "h_speed": dict(scale=(1, 1, 0)), "h_clip": dict(scale=(1, 1, 1), clip=(0.15, 0.1, 0.1)), "h_none": dict(scale=(0, 0, 0))}
+VARIANTS = {"h_full": dict(scale=(1, 1, 1)), "h_half": dict(scale=(0.5, 0.5, 1)), "h_turn": dict(scale=(0, 0, 1)), "h_speed": dict(scale=(1, 1, 0)), "h_clip": dict(scale=(1, 1, 1), clip=(0.15, 0.1, 0.1)), "h_none": dict(scale=(0, 0, 0)), "h_half_pg": dict(scale=(0.5, 0.5, 1), pitch_gate=0.10), "h_full_pg": dict(scale=(1, 1, 1), pitch_gate=0.10), "h_half_pg2": dict(scale=(0.5, 0.5, 1), pitch_gate=0.06)}
 TUNE_CELLS = ["flat", "rough3", "push", "slope15", "fault_disable_leg+healing", "fault_lock_joint+healing"]
 FINAL_CELLS = ["flat", "rough1", "rough3", "push", "slope10", "slope15", "slope20", "fault_disable_leg+healing", "fault_lock_joint+healing", "fault_sensor_dropout+healing", "fault_sequential+healing", "healthy+healing"]
-names = list(VARIANTS) if mode == "tune" else [sys.argv[3]]
+names = (sys.argv[3:] or list(VARIANTS)) if mode == "tune" else [sys.argv[3]]
 cells = TUNE_CELLS if mode == "tune" else FINAL_CELLS
 path = f"results/v3_stage4_{mode}_{a}-{b}.jsonl"
 done = set()

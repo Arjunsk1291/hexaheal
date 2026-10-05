@@ -70,14 +70,18 @@ class HybridBrain(BrainController):
     The connectome's own pitch/stance nudge is not used."""
     name = "hybrid"
 
-    def __init__(self, kp=1.2, scale=(1.0, 1.0, 1.0), clip=None, **kw):
+    def __init__(self, kp=1.2, scale=(1.0, 1.0, 1.0), clip=None, pitch_gate=None, **kw):
         super().__init__(**kw)
-        self.kp, self.scale, self.clip = kp, np.asarray(scale, float), clip
-        self.nudge_gate = True
+        self.kp, self.scale, self.clip, self.pitch_gate = kp, np.asarray(scale, float), clip, pitch_gate  # pitch_gate: nudges off while |low-passed pitch| exceeds it (slope detector)
+        self.nudge_gate = True; self.pf = 0.0
+
+    def reset(self):
+        super().reset(); self.pf = 0.0
 
     def act(self, env, turn_cmd=0.0, legs_disabled=None):
         import time
         t0 = time.perf_counter()
+        self.pf = 0.95 * self.pf + 0.05 * env.euler()[1]
         lv = self.encode(env, turn_cmd)
         self.last_rates = 100.0 * lv
         self._drive(lv)
@@ -85,7 +89,7 @@ class HybridBrain(BrainController):
         c = self.decode(self.net.run(ms), ms)
         g = self.g
         dev = np.array([g["speed"] * c["speed"], g["speed_freq"] * c["speed"], g["turn"] * c["turn"]]) * self.scale
-        if not self.nudge_gate:
+        if not self.nudge_gate or (self.pitch_gate is not None and abs(self.pf) > self.pitch_gate):
             dev = dev * 0.0
         elif self.clip is not None:
             dev = np.clip(dev, -np.array(self.clip), np.array(self.clip))
