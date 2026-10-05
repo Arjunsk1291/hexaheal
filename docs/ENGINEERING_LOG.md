@@ -17,3 +17,23 @@ Decisions, deviations and measured findings, appended per phase. Environment for
 ## Phase 2 - tripod baseline
 - Tuned by a small grid (freq 1-2 Hz, stride 0.2-0.4, lift 0.3-0.5). Defaults: 1.5 Hz, stride 0.35, lift 0.35, duty 0.55.
 - Finding (not hidden): the tripod gait walks flat, rough L1-L3 and a 10 deg slope, but **falls on 15 and 20 deg slopes** in most seeds.
+
+## Spec v2 adaptations (2026-10-05)
+CPU-only design, PPO as a residual on the CPG (64x64 MLP), verification labels, no tokens handled, push via `PUSH.md` + `push.sh` (written at the end), kinematic-replay fallback not needed because OSMesa works.
+
+## Phase 3 - connectome-inspired controller
+- Data: FlyWire v783 connectivity/completeness tables from the Shiu et al. repo (MIT code; FlyWire data CC BY-NC 4.0, https://flywire.ai/guidelines) and the Schlegel et al. annotation table. Raw data is downloaded to `data/raw` (git-ignored), never committed.
+- Subgraph (`neurowalker.connectome`): 10,000 neurons, 797,577 synapse pairs. All mechanosensory + gustatory sensory neurons, all descending (1,299) and motor neurons, remaining slots by sqrt(forward reach from sensory x backward reach to descending), 3 hops, excluding visual/olfactory/optic neurons.
+- Engine (`neurowalker.snn`): LIF with Shiu et al. constants (v_th -45 mV, v_rst -52 mV, t_mbr 20 ms, tau 5 ms, refractory 2.2 ms, w_syn 0.275 mV, Poisson kick 0.275*250 mV). Deviations: 0.5 ms Euler step (reference Brian2 0.1 ms, exact linear), 2.0 ms delay (reference 1.8 ms), numba event-driven delivery.
+- Measured here: 10k subgraph 0.098 s compute per simulated second (about 10x faster than real time); full 138,639-neuron network about 1.2 s per simulated second.
+- Validation (`scripts/validate_shiu.py`, `results/validation/shiu_sugar_validation.json`): sugar-GRN drive reaches proboscis/ingestion motor neurons; bitter and no-stimulus controls stay silent. Qualitative reproduction only.
+- I/O mapping (8 disjoint mechanosensory groups in, readout DN groups out, calibrated paired readouts) is a DESIGN CHOICE, not a biological claim.
+- Finding: first decoding used the wrong normalisation (readouts saturated at the speed clip); fixed by paired-channel calibration.
+
+## Phase 4 - self-healing
+- Monitor: tracking residual EMA vs per-joint healthy baseline (t=1.5-3.5 s), frozen/flat sensor detection. State machine NORMAL -> FAULT_SUSPECTED -> DIAGNOSE -> ADAPT -> VERIFY -> NORMAL | SAFE_STOP; CMA-ES over 6 gait parameters in model rollouts; search wall time is charged to the robot as time spent on the old gait.
+- Finding: a torque-reduction fault at 30% remaining torque does not change tracking at all (loads stay below the limit), so it is undetectable and harmless; the benchmark uses 5%.
+- Finding: the severity of reduce_torque is assumed (5%), not estimated, in the model rollouts.
+
+## Phase 5 - PPO residual
+- `neurowalker.rl`: residual (scale 0.25) on the tripod CPG, 64x64 MLP, 4 envs, curriculum over terrains, random faults/pushes during training. Single seed (budget).
