@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it and the underlying FlyWire and Shiu et al. work."
+title: "NeuroWalker"
+version: 0.1.0
+authors:
+  - family-names: "Sunil Kumar"
+    given-names: "Arjun"
+license: MIT
+references:
+  - type: article
+    authors: [{family-names: Dorkenwald}]
+    title: "Neuronal wiring diagram of an adult brain"
+    journal: Nature
+    year: 2024
+  - type: article
+    authors: [{family-names: Shiu}]
+    title: "A Drosophila computational brain model reveals sensorimotor processing"
+    journal: Nature
+    year: 2024

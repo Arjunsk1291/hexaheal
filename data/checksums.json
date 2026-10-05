@@ -1,0 +1,14 @@
+{
+ "Completeness_783.csv": {
+  "url": "https://raw.githubusercontent.com/philshiu/Drosophila_brain_model/main/Completeness_783.csv",
+  "sha256": "bbb847a4cc2caaa7a16349722d220c087317b946d148d4d592d94d250617a311"
+ },
+ "Connectivity_783.parquet": {
+  "url": "https://raw.githubusercontent.com/philshiu/Drosophila_brain_model/main/Connectivity_783.parquet",
+  "sha256": "efeb23fb99098e9c390f6869969b2a121a2ee92c833cfc45ecb2c1d8e1af0347"
+ },
+ "Supplemental_file1_neuron_annotations.tsv": {
+  "url": "https://raw.githubusercontent.com/flyconnectome/flywire_annotations/main/supplemental_files/Supplemental_file1_neuron_annotations.tsv",
+  "sha256": "b214970b55d2fbe0853bba536fdcb9e28730f4eb7ab06f600491df795da683cd"
+ }
+}
