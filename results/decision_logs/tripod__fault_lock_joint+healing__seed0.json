@@ -1,0 +1,143 @@
+{
+ "controller": "tripod",
+ "scenario": "fault_lock_joint+healing",
+ "seed": 0,
+ "decisions": [
+  {
+   "t": 4.62,
+   "from": "NORMAL",
+   "to": "FAULT_SUSPECTED",
+   "evidence": {
+    "max_elevation_rad": 0.061,
+    "frozen_joints": 1,
+    "tilt_rms": 0.059
+   },
+   "action": {}
+  },
+  {
+   "t": 5.24,
+   "from": "FAULT_SUSPECTED",
+   "to": "DIAGNOSE",
+   "evidence": {
+    "elevation_by_leg": [
+     [
+      -0.05,
+      -0.02,
+      -0.03
+     ],
+     [
+      -0.04,
+      -0.0,
+      -0.0
+     ],
+     [
+      -0.04,
+      -0.04,
+      -0.02
+     ],
+     [
+      -0.04,
+      0.0,
+      -0.0
+     ],
+     [
+      0.05,
+      -0.03,
+      -0.02
+     ],
+     [
+      -0.03,
+      -0.0,
+      -0.0
+     ]
+    ]
+   },
+   "action": {}
+  },
+  {
+   "t": 5.24,
+   "from": "DIAGNOSE",
+   "to": "ADAPT",
+   "evidence": {
+    "diagnosis": {
+     "leg": 4,
+     "joint": 0,
+     "kind": "lock_joint",
+     "score": 2.0,
+     "n_candidates": 1
+    }
+   },
+   "action": {
+    "decision": "gait re-plan via CMA-ES"
+   }
+  },
+  {
+   "t": 6.98,
+   "from": "ADAPT",
+   "to": "VERIFY",
+   "evidence": {
+    "trials": 19,
+    "wall_s": 1.71,
+    "fitness_before": 0.194,
+    "fitness_after": 0.786
+   },
+   "action": {
+    "applied_params": [
+     2.016,
+     0.494,
+     0.272,
+     0.565,
+     -0.18,
+     0.917
+    ]
+   }
+  },
+  {
+   "t": 8.48,
+   "from": "VERIFY",
+   "to": "ADAPT",
+   "evidence": {
+    "speed_m_s": 0.056,
+    "pre_fault_speed_m_s": 0.427,
+    "ratio": 0.132
+   },
+   "action": {
+    "decision": "verify failed, second search with larger budget"
+   }
+  },
+  {
+   "t": 11.2,
+   "from": "ADAPT",
+   "to": "VERIFY",
+   "evidence": {
+    "trials": 37,
+    "wall_s": 2.69,
+    "fitness_before": 0.787,
+    "fitness_after": 0.937
+   },
+   "action": {
+    "applied_params": [
+     2.18,
+     0.492,
+     0.461,
+     0.56,
+     -0.316,
+     0.555
+    ]
+   }
+  },
+  {
+   "t": 12.7,
+   "from": "VERIFY",
+   "to": "SAFE_STOP",
+   "evidence": {
+    "speed_m_s": -0.057,
+    "pre_fault_speed_m_s": 0.427,
+    "ratio": -0.134
+   },
+   "action": {
+    "decision": "unable to verify recovery, standing still"
+   }
+  }
+ ]
+}

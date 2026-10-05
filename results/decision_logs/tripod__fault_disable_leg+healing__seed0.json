@@ -1,0 +1,109 @@
+{
+ "controller": "tripod",
+ "scenario": "fault_disable_leg+healing",
+ "seed": 0,
+ "decisions": [
+  {
+   "t": 4.38,
+   "from": "NORMAL",
+   "to": "FAULT_SUSPECTED",
+   "evidence": {
+    "max_elevation_rad": 0.349,
+    "frozen_joints": 0,
+    "tilt_rms": 0.14
+   },
+   "action": {}
+  },
+  {
+   "t": 5.0,
+   "from": "FAULT_SUSPECTED",
+   "to": "DIAGNOSE",
+   "evidence": {
+    "elevation_by_leg": [
+     [
+      -0.01,
+      -0.04,
+      -0.04
+     ],
+     [
+      0.02,
+      0.01,
+      0.0
+     ],
+     [
+      0.29,
+      0.82,
+      0.76
+     ],
+     [
+      -0.0,
+      -0.0,
+      -0.0
+     ],
+     [
+      -0.01,
+      -0.04,
+      -0.02
+     ],
+     [
+      0.0,
+      0.0,
+      0.01
+     ]
+    ]
+   },
+   "action": {}
+  },
+  {
+   "t": 5.0,
+   "from": "DIAGNOSE",
+   "to": "ADAPT",
+   "evidence": {
+    "diagnosis": {
+     "leg": 2,
+     "joint": 1,
+     "kind": "disable_leg",
+     "score": 1.863309931274666,
+     "n_candidates": 1
+    }
+   },
+   "action": {
+    "decision": "gait re-plan via CMA-ES"
+   }
+  },
+  {
+   "t": 6.24,
+   "from": "ADAPT",
+   "to": "VERIFY",
+   "evidence": {
+    "trials": 19,
+    "wall_s": 1.22,
+    "fitness_before": 0.269,
+    "fitness_after": 0.359
+   },
+   "action": {
+    "applied_params": [
+     2.398,
+     0.219,
+     0.35,
+     0.556,
+     0.129,
+     1.0
+    ]
+   }
+  },
+  {
+   "t": 7.76,
+   "from": "VERIFY",
+   "to": "NORMAL",
+   "evidence": {
+    "speed_m_s": 0.154,
+    "pre_fault_speed_m_s": 0.263,
+    "ratio": 0.587
+   },
+   "action": {
+    "decision": "recovery verified"
+   }
+  }
+ ]
+}

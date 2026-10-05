@@ -37,3 +37,9 @@ CPU-only design, PPO as a residual on the CPG (64x64 MLP), verification labels, 
 
 ## Phase 5 - PPO residual
 - `neurowalker.rl`: residual (scale 0.25) on the tripod CPG, 64x64 MLP, 4 envs, curriculum over terrains, random faults/pushes during training. Single seed (budget).
+
+## Phase 6 - benchmark (tripod + connectome-inspired; PPO rows appended separately)
+- 320 episodes, 10 seeds per cell (`results/benchmark.parquet`, `results/summary.json`, `docs/BENCHMARK.md`, figures in `docs/figures`).
+- Caveat: this run shared 2 vCPUs with PPO training, so latency and CPU numbers are inflated and the wall time of the CMA-ES search (charged to the robot as time spent on the old gait) is load-dependent. Several healing episodes ended while still in ADAPT/VERIFY/FAULT_SUSPECTED; those are reported as such in the tables, not as recoveries.
+- Findings (not hidden): connectome-inspired and tripod both fall on 15/20 deg slopes; on 10 deg slope the connectome-inspired controller falls in 3/10 seeds, the tripod in 0/10; the 48 N push topples both in 5/10 seeds. Slight distance advantage of the connectome-inspired controller on flat and rough terrain (about +0.1 m of 10 s) is small and comes mostly from the closed-loop speed command pushing gait gain above the fixed tripod setting.
+- Retained speed above 100% (reduce_torque + healing) means the healed run walked faster than its own pre-fault window; plain 0% rows include falls and backward motion (negative speed is clipped to 0).

@@ -1,0 +1,75 @@
+{
+ "controller": "connectome",
+ "scenario": "fault_disable_leg+healing",
+ "seed": 0,
+ "decisions": [
+  {
+   "t": 4.28,
+   "from": "NORMAL",
+   "to": "FAULT_SUSPECTED",
+   "evidence": {
+    "max_elevation_rad": 0.345,
+    "frozen_joints": 2,
+    "tilt_rms": 0.036
+   },
+   "action": {}
+  },
+  {
+   "t": 4.9,
+   "from": "FAULT_SUSPECTED",
+   "to": "DIAGNOSE",
+   "evidence": {
+    "elevation_by_leg": [
+     [
+      -0.06,
+      -0.04,
+      -0.01
+     ],
+     [
+      -0.01,
+      -0.02,
+      -0.02
+     ],
+     [
+      0.62,
+      0.71,
+      0.08
+     ],
+     [
+      -0.02,
+      -0.0,
+      -0.02
+     ],
+     [
+      -0.01,
+      -0.03,
+      -0.01
+     ],
+     [
+      -0.01,
+      -0.01,
+      -0.01
+     ]
+    ]
+   },
+   "action": {}
+  },
+  {
+   "t": 4.9,
+   "from": "DIAGNOSE",
+   "to": "ADAPT",
+   "evidence": {
+    "diagnosis": {
+     "leg": 2,
+     "joint": 1,
+     "kind": "disable_leg",
+     "score": 1.4043452890123924,
+     "n_candidates": 1
+    }
+   },
+   "action": {
+    "decision": "gait re-plan via CMA-ES"
+   }
+  }
+ ]
+}

@@ -1,0 +1,135 @@
+{
+ "controller": "tripod",
+ "scenario": "fault_sensor_dropout+healing",
+ "seed": 0,
+ "decisions": [
+  {
+   "t": 4.32,
+   "from": "NORMAL",
+   "to": "FAULT_SUSPECTED",
+   "evidence": {
+    "max_elevation_rad": 0.136,
+    "frozen_joints": 0,
+    "tilt_rms": 0.056
+   },
+   "action": {}
+  },
+  {
+   "t": 4.94,
+   "from": "FAULT_SUSPECTED",
+   "to": "DIAGNOSE",
+   "evidence": {
+    "elevation_by_leg": [
+     [
+      -0.05,
+      -0.01,
+      -0.01
+     ],
+     [
+      -0.05,
+      -0.0,
+      -0.03
+     ],
+     [
+      -0.03,
+      -0.02,
+      -0.01
+     ],
+     [
+      0.05,
+      0.01,
+      0.01
+     ],
+     [
+      -0.02,
+      -0.01,
+      -0.01
+     ],
+     [
+      -0.03,
+      -0.04,
+      -0.02
+     ]
+    ]
+   },
+   "action": {}
+  },
+  {
+   "t": 4.94,
+   "from": "DIAGNOSE",
+   "to": "ADAPT",
+   "evidence": {
+    "diagnosis": {
+     "leg": 3,
+     "joint": 0,
+     "kind": "sensor_dropout",
+     "score": 3.0,
+     "n_candidates": 1
+    }
+   },
+   "action": {
+    "decision": "gait re-plan via CMA-ES"
+   }
+  },
+  {
+   "t": 4.96,
+   "from": "ADAPT",
+   "to": "VERIFY",
+   "evidence": {
+    "note": "sensors of this leg flagged unreliable; leg continues open-loop under the CPG",
+    "trials": 0,
+    "wall_s": 0.0
+   },
+   "action": {
+    "applied_params": null
+   }
+  },
+  {
+   "t": 6.48,
+   "from": "VERIFY",
+   "to": "ADAPT",
+   "evidence": {
+    "speed_m_s": -0.121,
+    "pre_fault_speed_m_s": 0.228,
+    "ratio": -0.529
+   },
+   "action": {
+    "decision": "verify failed, second search with larger budget"
+   }
+  },
+  {
+   "t": 9.16,
+   "from": "ADAPT",
+   "to": "VERIFY",
+   "evidence": {
+    "trials": 37,
+    "wall_s": 2.65,
+    "fitness_before": 0.409,
+    "fitness_after": 1.232
+   },
+   "action": {
+    "applied_params": [
+     2.224,
+     0.414,
+     0.432,
+     0.524,
+     0.035,
+     0.991
+    ]
+   }
+  },
+  {
+   "t": 10.66,
+   "from": "VERIFY",
+   "to": "SAFE_STOP",
+   "evidence": {
+    "speed_m_s": -0.417,
+    "pre_fault_speed_m_s": 0.228,
+    "ratio": -1.829
+   },
+   "action": {
+    "decision": "unable to verify recovery, standing still"
+   }
+  }
+ ]
+}
