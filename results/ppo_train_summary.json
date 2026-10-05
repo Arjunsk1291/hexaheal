@@ -1,0 +1,47 @@
+{
+ "steps": 1179948,
+ "wall_minutes": 23.31102575858434,
+ "hyperparameters": {
+  "n_steps": 512,
+  "batch_size": 256,
+  "learning_rate": 0.0003,
+  "gamma": 0.99,
+  "gae_lambda": 0.95,
+  "n_epochs": 6,
+  "ent_coef": 0.0,
+  "clip_range": 0.2,
+  "policy_kwargs": {
+   "net_arch": [
+    64,
+    64
+   ]
+  },
+  "seed": 0,
+  "device": "cpu",
+  "verbose": 0
+ },
+ "curriculum": [
+  [
+   "flat"
+  ],
+  [
+   "flat",
+   "rough1"
+  ],
+  [
+   "flat",
+   "rough1",
+   "rough2",
+   "slope10"
+  ],
+  [
+   "flat",
+   "rough1",
+   "rough2",
+   "rough3",
+   "slope10",
+   "slope15"
+  ]
+ ],
+ "env": "CPU sandbox, 2 vCPU, DummyVecEnv x4"
+}
