@@ -75,8 +75,17 @@ def family(name, ref, others, cells):
 
 abl = [c for c in ctrls if c in ("shuffled", "random_graph", "filter", "mlp")]
 family("A. ablations (connectome vs ablation)", "connectome", abl, ["flat", "rough1", "rough3", "push", "slope10", "fault_disable_leg+healing", "fault_lock_joint+healing", "fault_sensor_dropout+healing"])
-base = [c for c in ctrls if c in ("tripod", "ppo")]
+base = [c for c in ctrls if c in ("tripod", "ppo", "tuned_tripod")]
 family("B. baselines (connectome vs tripod/PPO)", "connectome", base, cells_all)
+# PPO across 5 training seeds (ppo = training seed 0; ppo_s1..s4): per-training-seed mean over eval seeds 0-9, then mean and spread across training seeds
+pp = sorted(c for c in ctrls if c == "ppo" or c.startswith("ppo_s"))
+md.append(f"\n## PPO across training seeds ({', '.join(pp)}): per-training-seed mean distance over eval seeds 0-9; mean, sd, min-max across training seeds; total falls\n\n| cell | n train seeds | mean of means m | sd | min-max | falls (all) |\n|---|---|---|---|---|---|")
+for s_ in cells_all:
+    ms = []; fl = 0; nn = 0
+    for c in pp:
+        g = df[(df.controller == c) & (df.scenario == s_)]
+        if len(g): ms.append(g.distance.mean()); fl += int(g.fell.sum()); nn += len(g)
+    if len(ms) > 1: md.append(f"| {s_} | {len(ms)} | {np.mean(ms):.3f} | {np.std(ms, ddof=1):.3f} | {min(ms):.3f}-{max(ms):.3f} | {fl}/{nn} |")
 nud = df[df.nudge_speed_gain_absdev.notna()].groupby("controller")[["nudge_speed_gain_absdev", "nudge_freq_scale_absdev", "nudge_turn_abs", "nudge_stance_abs"]].mean()
 md.append("\n## Mean nudge magnitude applied to the CPG (per control step, all episodes)\n\n| variant | mean abs(speed_gain-1) | mean abs(freq_scale-1) | mean abs(turn) | mean abs(stance) |\n|---|---|---|---|---|")
 for c, r in nud.iterrows():

@@ -7,6 +7,8 @@
 | fault_disable_leg | connectome | 1.312 | 10/10 (0.72-1.00) |
 | fault_disable_leg | ppo | 2.349 | 0/10 (0.00-0.28) |
 | fault_disable_leg | ppo_s1 | 2.623 | 0/10 (0.00-0.28) |
+| fault_disable_leg | ppo_s2 | 0.607 | 0/10 (0.00-0.28) |
+| fault_disable_leg | ppo_s3 | 0.459 | 0/10 (0.00-0.28) |
 | fault_disable_leg | tripod | 1.703 | 10/10 (0.72-1.00) |
 | fault_disable_leg | tuned_tripod | 2.646 | 7/10 (0.40-0.89) |
 | fault_disable_leg+healing | connectome | 1.322 | 10/10 (0.72-1.00) |
@@ -14,6 +16,8 @@
 | fault_disable_leg+healing | mlp | 1.429 | 10/10 (0.72-1.00) |
 | fault_disable_leg+healing | ppo | 2.403 | 1/10 (0.02-0.40) |
 | fault_disable_leg+healing | ppo_s1 | 2.522 | 1/10 (0.02-0.40) |
+| fault_disable_leg+healing | ppo_s2 | 0.667 | 0/10 (0.00-0.28) |
+| fault_disable_leg+healing | ppo_s3 | 0.397 | 0/10 (0.00-0.28) |
 | fault_disable_leg+healing | random_graph | 1.693 | 8/10 (0.49-0.94) |
 | fault_disable_leg+healing | shuffled | 1.915 | 6/10 (0.31-0.83) |
 | fault_disable_leg+healing | tripod | 2.417 | 3/10 (0.11-0.60) |
@@ -21,6 +25,8 @@
 | fault_lock_joint | connectome | 3.083 | 0/10 (0.00-0.28) |
 | fault_lock_joint | ppo | 2.403 | 0/10 (0.00-0.28) |
 | fault_lock_joint | ppo_s1 | 2.727 | 0/10 (0.00-0.28) |
+| fault_lock_joint | ppo_s2 | 1.184 | 0/10 (0.00-0.28) |
+| fault_lock_joint | ppo_s3 | 0.438 | 0/10 (0.00-0.28) |
 | fault_lock_joint | tripod | 1.311 | 0/10 (0.00-0.28) |
 | fault_lock_joint | tuned_tripod | 1.266 | 0/10 (0.00-0.28) |
 | fault_lock_joint+healing | connectome | 3.644 | 0/10 (0.00-0.28) |
@@ -28,6 +34,8 @@
 | fault_lock_joint+healing | mlp | 3.637 | 0/10 (0.00-0.28) |
 | fault_lock_joint+healing | ppo | 1.799 | 0/10 (0.00-0.28) |
 | fault_lock_joint+healing | ppo_s1 | 3.284 | 0/10 (0.00-0.28) |
+| fault_lock_joint+healing | ppo_s2 | 1.822 | 0/10 (0.00-0.28) |
+| fault_lock_joint+healing | ppo_s3 | 0.655 | 0/10 (0.00-0.28) |
 | fault_lock_joint+healing | random_graph | 3.337 | 0/10 (0.00-0.28) |
 | fault_lock_joint+healing | shuffled | 3.175 | 0/10 (0.00-0.28) |
 | fault_lock_joint+healing | tripod | 2.798 | 0/10 (0.00-0.28) |
@@ -35,16 +43,22 @@
 | fault_reduce_torque | connectome | 1.416 | 0/10 (0.00-0.28) |
 | fault_reduce_torque | ppo | 0.526 | 0/10 (0.00-0.28) |
 | fault_reduce_torque | ppo_s1 | 0.854 | 0/10 (0.00-0.28) |
+| fault_reduce_torque | ppo_s2 | 1.140 | 0/10 (0.00-0.28) |
+| fault_reduce_torque | ppo_s3 | 1.084 | 0/10 (0.00-0.28) |
 | fault_reduce_torque | tripod | 0.765 | 0/10 (0.00-0.28) |
 | fault_reduce_torque | tuned_tripod | 0.786 | 0/10 (0.00-0.28) |
 | fault_reduce_torque+healing | connectome | 2.762 | 1/10 (0.02-0.40) |
 | fault_reduce_torque+healing | ppo | 0.682 | 0/10 (0.00-0.28) |
 | fault_reduce_torque+healing | ppo_s1 | 1.216 | 0/10 (0.00-0.28) |
+| fault_reduce_torque+healing | ppo_s2 | 1.069 | 0/10 (0.00-0.28) |
+| fault_reduce_torque+healing | ppo_s3 | 1.049 | 0/10 (0.00-0.28) |
 | fault_reduce_torque+healing | tripod | 1.617 | 0/10 (0.00-0.28) |
 | fault_reduce_torque+healing | tuned_tripod | 0.972 | 0/10 (0.00-0.28) |
 | fault_sensor_dropout | connectome | 3.933 | 0/10 (0.00-0.28) |
 | fault_sensor_dropout | ppo | 0.948 | 0/10 (0.00-0.28) |
 | fault_sensor_dropout | ppo_s1 | 3.119 | 0/10 (0.00-0.28) |
+| fault_sensor_dropout | ppo_s2 | 2.635 | 0/10 (0.00-0.28) |
+| fault_sensor_dropout | ppo_s3 | 2.399 | 0/10 (0.00-0.28) |
 | fault_sensor_dropout | tripod | 3.700 | 0/10 (0.00-0.28) |
 | fault_sensor_dropout | tuned_tripod | 3.671 | 0/10 (0.00-0.28) |
 | fault_sensor_dropout+healing | connectome | 3.933 | 0/10 (0.00-0.28) |
@@ -52,6 +66,8 @@
 | fault_sensor_dropout+healing | mlp | 4.154 | 0/10 (0.00-0.28) |
 | fault_sensor_dropout+healing | ppo | 0.873 | 0/10 (0.00-0.28) |
 | fault_sensor_dropout+healing | ppo_s1 | 3.119 | 0/10 (0.00-0.28) |
+| fault_sensor_dropout+healing | ppo_s2 | 2.635 | 0/10 (0.00-0.28) |
+| fault_sensor_dropout+healing | ppo_s3 | 2.399 | 0/10 (0.00-0.28) |
 | fault_sensor_dropout+healing | random_graph | 3.486 | 0/10 (0.00-0.28) |
 | fault_sensor_dropout+healing | shuffled | 3.341 | 0/10 (0.00-0.28) |
 | fault_sensor_dropout+healing | tripod | 3.700 | 0/10 (0.00-0.28) |
@@ -63,6 +79,8 @@
 | flat | mlp | 2.973 | 0/10 (0.00-0.28) |
 | flat | ppo | 1.438 | 0/10 (0.00-0.28) |
 | flat | ppo_s1 | 2.265 | 0/10 (0.00-0.28) |
+| flat | ppo_s2 | 1.973 | 0/10 (0.00-0.28) |
+| flat | ppo_s3 | 1.681 | 0/10 (0.00-0.28) |
 | flat | random_graph | 2.494 | 0/10 (0.00-0.28) |
 | flat | shuffled | 2.384 | 0/10 (0.00-0.28) |
 | flat | tripod | 2.635 | 0/10 (0.00-0.28) |
@@ -73,6 +91,8 @@
 | push | mlp | 2.336 | 5/10 (0.24-0.76) |
 | push | ppo | 0.826 | 10/10 (0.72-1.00) |
 | push | ppo_s1 | 2.526 | 0/10 (0.00-0.28) |
+| push | ppo_s2 | 0.850 | 10/10 (0.72-1.00) |
+| push | ppo_s3 | 1.326 | 7/10 (0.40-0.89) |
 | push | random_graph | 1.620 | 7/10 (0.40-0.89) |
 | push | shuffled | 1.350 | 8/10 (0.49-0.94) |
 | push | tripod | 2.022 | 5/10 (0.24-0.76) |
@@ -82,6 +102,8 @@
 | rough1 | mlp | 2.906 | 0/10 (0.00-0.28) |
 | rough1 | ppo | 1.514 | 0/10 (0.00-0.28) |
 | rough1 | ppo_s1 | 2.251 | 0/10 (0.00-0.28) |
+| rough1 | ppo_s2 | 2.001 | 0/10 (0.00-0.28) |
+| rough1 | ppo_s3 | 1.750 | 0/10 (0.00-0.28) |
 | rough1 | random_graph | 2.476 | 0/10 (0.00-0.28) |
 | rough1 | shuffled | 2.377 | 0/10 (0.00-0.28) |
 | rough1 | tripod | 2.679 | 0/10 (0.00-0.28) |
@@ -89,6 +111,8 @@
 | rough2 | connectome | 2.759 | 0/10 (0.00-0.28) |
 | rough2 | ppo | 1.539 | 0/10 (0.00-0.28) |
 | rough2 | ppo_s1 | 2.254 | 0/10 (0.00-0.28) |
+| rough2 | ppo_s2 | 1.992 | 0/10 (0.00-0.28) |
+| rough2 | ppo_s3 | 1.756 | 0/10 (0.00-0.28) |
 | rough2 | tripod | 2.661 | 0/10 (0.00-0.28) |
 | rough2 | tuned_tripod | 2.632 | 0/10 (0.00-0.28) |
 | rough3 | connectome | 2.726 | 0/10 (0.00-0.28) |
@@ -96,6 +120,8 @@
 | rough3 | mlp | 2.851 | 0/10 (0.00-0.28) |
 | rough3 | ppo | 1.554 | 0/10 (0.00-0.28) |
 | rough3 | ppo_s1 | 2.246 | 0/10 (0.00-0.28) |
+| rough3 | ppo_s2 | 1.963 | 0/10 (0.00-0.28) |
+| rough3 | ppo_s3 | 1.711 | 0/10 (0.00-0.28) |
 | rough3 | random_graph | 2.451 | 0/10 (0.00-0.28) |
 | rough3 | shuffled | 2.377 | 0/10 (0.00-0.28) |
 | rough3 | tripod | 2.622 | 0/10 (0.00-0.28) |
@@ -105,6 +131,8 @@
 | slope10 | mlp | 1.115 | 5/10 (0.24-0.76) |
 | slope10 | ppo | 1.576 | 0/10 (0.00-0.28) |
 | slope10 | ppo_s1 | 1.894 | 0/10 (0.00-0.28) |
+| slope10 | ppo_s2 | 1.764 | 0/10 (0.00-0.28) |
+| slope10 | ppo_s3 | 1.768 | 0/10 (0.00-0.28) |
 | slope10 | random_graph | 2.198 | 0/10 (0.00-0.28) |
 | slope10 | shuffled | 1.996 | 1/10 (0.02-0.40) |
 | slope10 | tripod | 2.148 | 0/10 (0.00-0.28) |
@@ -112,11 +140,15 @@
 | slope15 | connectome | -0.093 | 10/10 (0.72-1.00) |
 | slope15 | ppo | 1.487 | 0/10 (0.00-0.28) |
 | slope15 | ppo_s1 | 1.532 | 0/10 (0.00-0.28) |
+| slope15 | ppo_s2 | 1.556 | 0/10 (0.00-0.28) |
+| slope15 | ppo_s3 | 1.624 | 0/10 (0.00-0.28) |
 | slope15 | tripod | 0.190 | 8/10 (0.49-0.94) |
 | slope15 | tuned_tripod | 1.960 | 0/10 (0.00-0.28) |
 | slope20 | connectome | -0.083 | 10/10 (0.72-1.00) |
 | slope20 | ppo | 1.217 | 0/10 (0.00-0.28) |
 | slope20 | ppo_s1 | 1.095 | 0/10 (0.00-0.28) |
+| slope20 | ppo_s2 | 1.018 | 0/10 (0.00-0.28) |
+| slope20 | ppo_s3 | 1.483 | 0/10 (0.00-0.28) |
 | slope20 | tripod | -0.123 | 10/10 (0.72-1.00) |
 | slope20 | tuned_tripod | -0.101 | 10/10 (0.72-1.00) |
 
@@ -161,38 +193,75 @@
 
 | cell | other | diff m | 95% CI | d_z | p (raw) | p (Holm) |
 |---|---|---|---|---|---|---|
-| fault_disable_leg | ppo | -1.036 | [-1.082, -0.994] | -13.89 | 0.0000 | 0.0003 |
-| fault_disable_leg+healing | ppo | -1.081 | [-1.343, -0.797] | -2.34 | 0.0000 | 0.0003 |
-| fault_lock_joint | ppo | +0.679 | [+0.568, +0.770] | +3.92 | 0.0000 | 0.0003 |
-| fault_lock_joint+healing | ppo | +1.846 | [+1.423, +2.266] | +2.56 | 0.0000 | 0.0003 |
-| fault_reduce_torque | ppo | +0.891 | [+0.725, +1.040] | +3.32 | 0.0000 | 0.0003 |
-| fault_reduce_torque+healing | ppo | +2.079 | [+1.752, +2.415] | +3.65 | 0.0000 | 0.0003 |
-| fault_sensor_dropout | ppo | +2.985 | [+2.904, +3.073] | +20.68 | 0.0000 | 0.0003 |
-| fault_sensor_dropout+healing | ppo | +3.060 | [+2.972, +3.157] | +19.35 | 0.0000 | 0.0003 |
-| flat | ppo | +1.322 | [+1.246, +1.398] | +10.21 | 0.0000 | 0.0003 |
-| push | ppo | +1.406 | [+0.731, +2.090] | +1.20 | 0.0000 | 0.0003 |
-| rough1 | ppo | +1.266 | [+1.207, +1.332] | +11.90 | 0.0000 | 0.0003 |
-| rough2 | ppo | +1.220 | [+1.166, +1.277] | +12.79 | 0.0000 | 0.0003 |
-| rough3 | ppo | +1.172 | [+1.121, +1.226] | +13.01 | 0.0000 | 0.0003 |
+| fault_disable_leg | ppo | -1.036 | [-1.082, -0.994] | -13.89 | 0.0000 | 0.0005 |
+| fault_disable_leg+healing | ppo | -1.081 | [-1.343, -0.797] | -2.34 | 0.0000 | 0.0005 |
+| fault_lock_joint | ppo | +0.679 | [+0.568, +0.770] | +3.92 | 0.0000 | 0.0005 |
+| fault_lock_joint+healing | ppo | +1.846 | [+1.423, +2.266] | +2.56 | 0.0000 | 0.0005 |
+| fault_reduce_torque | ppo | +0.891 | [+0.725, +1.040] | +3.32 | 0.0000 | 0.0005 |
+| fault_reduce_torque+healing | ppo | +2.079 | [+1.752, +2.415] | +3.65 | 0.0000 | 0.0005 |
+| fault_sensor_dropout | ppo | +2.985 | [+2.904, +3.073] | +20.68 | 0.0000 | 0.0005 |
+| fault_sensor_dropout+healing | ppo | +3.060 | [+2.972, +3.157] | +19.35 | 0.0000 | 0.0005 |
+| flat | ppo | +1.322 | [+1.246, +1.398] | +10.21 | 0.0000 | 0.0005 |
+| push | ppo | +1.406 | [+0.731, +2.090] | +1.20 | 0.0000 | 0.0005 |
+| rough1 | ppo | +1.266 | [+1.207, +1.332] | +11.90 | 0.0000 | 0.0005 |
+| rough2 | ppo | +1.220 | [+1.166, +1.277] | +12.79 | 0.0000 | 0.0005 |
+| rough3 | ppo | +1.172 | [+1.121, +1.226] | +13.01 | 0.0000 | 0.0005 |
 | slope10 | ppo | -0.013 | [-0.702, +0.604] | -0.01 | 0.9698 | 0.9748 |
-| slope15 | ppo | -1.579 | [-1.606, -1.551] | -33.74 | 0.0000 | 0.0003 |
-| slope20 | ppo | -1.300 | [-1.326, -1.276] | -30.87 | 0.0000 | 0.0003 |
-| fault_disable_leg | tripod | -0.390 | [-0.458, -0.323] | -3.39 | 0.0000 | 0.0003 |
-| fault_disable_leg+healing | tripod | -1.095 | [-1.494, -0.693] | -1.60 | 0.0000 | 0.0003 |
-| fault_lock_joint | tripod | +1.771 | [+1.638, +1.886] | +8.33 | 0.0000 | 0.0003 |
-| fault_lock_joint+healing | tripod | +0.847 | [+0.600, +1.055] | +2.16 | 0.0000 | 0.0003 |
-| fault_reduce_torque | tripod | +0.651 | [+0.498, +0.794] | +2.59 | 0.0000 | 0.0003 |
-| fault_reduce_torque+healing | tripod | +1.145 | [+0.913, +1.347] | +3.07 | 0.0000 | 0.0003 |
-| fault_sensor_dropout | tripod | +0.233 | [+0.167, +0.294] | +2.14 | 0.0000 | 0.0003 |
-| fault_sensor_dropout+healing | tripod | +0.233 | [+0.167, +0.294] | +2.14 | 0.0000 | 0.0003 |
-| flat | tripod | +0.125 | [+0.072, +0.175] | +1.43 | 0.0000 | 0.0003 |
+| slope15 | ppo | -1.579 | [-1.606, -1.551] | -33.74 | 0.0000 | 0.0005 |
+| slope20 | ppo | -1.300 | [-1.326, -1.276] | -30.87 | 0.0000 | 0.0005 |
+| fault_disable_leg | tripod | -0.390 | [-0.458, -0.323] | -3.39 | 0.0000 | 0.0005 |
+| fault_disable_leg+healing | tripod | -1.095 | [-1.494, -0.693] | -1.60 | 0.0000 | 0.0005 |
+| fault_lock_joint | tripod | +1.771 | [+1.638, +1.886] | +8.33 | 0.0000 | 0.0005 |
+| fault_lock_joint+healing | tripod | +0.847 | [+0.600, +1.055] | +2.16 | 0.0000 | 0.0005 |
+| fault_reduce_torque | tripod | +0.651 | [+0.498, +0.794] | +2.59 | 0.0000 | 0.0005 |
+| fault_reduce_torque+healing | tripod | +1.145 | [+0.913, +1.347] | +3.07 | 0.0000 | 0.0005 |
+| fault_sensor_dropout | tripod | +0.233 | [+0.167, +0.294] | +2.14 | 0.0000 | 0.0005 |
+| fault_sensor_dropout+healing | tripod | +0.233 | [+0.167, +0.294] | +2.14 | 0.0000 | 0.0005 |
+| flat | tripod | +0.125 | [+0.072, +0.175] | +1.43 | 0.0000 | 0.0005 |
 | push | tripod | +0.209 | [-0.391, +0.812] | +0.20 | 0.4874 | 0.9748 |
-| rough1 | tripod | +0.101 | [+0.061, +0.142] | +1.47 | 0.0000 | 0.0003 |
-| rough2 | tripod | +0.098 | [+0.059, +0.132] | +1.55 | 0.0000 | 0.0003 |
-| rough3 | tripod | +0.104 | [+0.073, +0.142] | +1.75 | 0.0000 | 0.0003 |
-| slope10 | tripod | -0.586 | [-1.287, +0.061] | -0.52 | 0.0574 | 0.2294 |
-| slope15 | tripod | -0.283 | [-0.721, +0.023] | -0.45 | 0.2140 | 0.6420 |
-| slope20 | tripod | +0.039 | [+0.034, +0.045] | +4.13 | 0.0000 | 0.0003 |
+| rough1 | tripod | +0.101 | [+0.061, +0.142] | +1.47 | 0.0000 | 0.0005 |
+| rough2 | tripod | +0.098 | [+0.059, +0.132] | +1.55 | 0.0000 | 0.0005 |
+| rough3 | tripod | +0.104 | [+0.073, +0.142] | +1.75 | 0.0000 | 0.0005 |
+| slope10 | tripod | -0.586 | [-1.287, +0.061] | -0.52 | 0.0574 | 0.3442 |
+| slope15 | tripod | -0.283 | [-0.721, +0.023] | -0.45 | 0.2140 | 0.7612 |
+| slope20 | tripod | +0.039 | [+0.034, +0.045] | +4.13 | 0.0000 | 0.0005 |
+| fault_disable_leg | tuned_tripod | -1.333 | [-1.586, -1.080] | -3.09 | 0.0000 | 0.0005 |
+| fault_disable_leg+healing | tuned_tripod | -1.527 | [-1.920, -1.143] | -2.30 | 0.0000 | 0.0005 |
+| fault_lock_joint | tuned_tripod | +1.817 | [+1.681, +1.933] | +8.42 | 0.0000 | 0.0005 |
+| fault_lock_joint+healing | tuned_tripod | +1.459 | [+1.071, +1.899] | +2.07 | 0.0000 | 0.0005 |
+| fault_reduce_torque | tuned_tripod | +0.630 | [+0.471, +0.776] | +2.42 | 0.0000 | 0.0005 |
+| fault_reduce_torque+healing | tuned_tripod | +1.790 | [+1.484, +2.083] | +3.51 | 0.0000 | 0.0005 |
+| fault_sensor_dropout | tuned_tripod | +0.261 | [+0.201, +0.317] | +2.65 | 0.0000 | 0.0005 |
+| fault_sensor_dropout+healing | tuned_tripod | +0.261 | [+0.202, +0.317] | +2.65 | 0.0000 | 0.0005 |
+| flat | tuned_tripod | +0.144 | [+0.094, +0.191] | +1.74 | 0.0000 | 0.0005 |
+| push | tuned_tripod | +0.553 | [-0.268, +1.362] | +0.40 | 0.1903 | 0.7612 |
+| rough1 | tuned_tripod | +0.130 | [+0.093, +0.169] | +2.01 | 0.0000 | 0.0005 |
+| rough2 | tuned_tripod | +0.127 | [+0.080, +0.168] | +1.68 | 0.0000 | 0.0005 |
+| rough3 | tuned_tripod | +0.144 | [+0.099, +0.190] | +1.83 | 0.0000 | 0.0005 |
+| slope10 | tuned_tripod | -0.524 | [-1.230, +0.102] | -0.46 | 0.0983 | 0.4916 |
+| slope15 | tuned_tripod | -2.053 | [-2.234, -1.849] | -6.24 | 0.0000 | 0.0005 |
+| slope20 | tuned_tripod | +0.018 | [+0.010, +0.024] | +1.47 | 0.0000 | 0.0005 |
+
+## PPO across training seeds (ppo, ppo_s1, ppo_s2, ppo_s3): per-training-seed mean distance over eval seeds 0-9; mean, sd, min-max across training seeds; total falls
+
+| cell | n train seeds | mean of means m | sd | min-max | falls (all) |
+|---|---|---|---|---|---|
+| fault_disable_leg | 4 | 1.509 | 1.135 | 0.459-2.623 | 0/40 |
+| fault_disable_leg+healing | 4 | 1.497 | 1.121 | 0.397-2.522 | 2/40 |
+| fault_lock_joint | 4 | 1.688 | 1.066 | 0.438-2.727 | 0/40 |
+| fault_lock_joint+healing | 4 | 1.890 | 1.077 | 0.655-3.284 | 0/40 |
+| fault_reduce_torque | 4 | 0.901 | 0.279 | 0.526-1.140 | 0/40 |
+| fault_reduce_torque+healing | 4 | 1.004 | 0.227 | 0.682-1.216 | 0/40 |
+| fault_sensor_dropout | 4 | 2.275 | 0.934 | 0.948-3.119 | 0/40 |
+| fault_sensor_dropout+healing | 4 | 2.257 | 0.970 | 0.873-3.119 | 0/40 |
+| flat | 4 | 1.839 | 0.358 | 1.438-2.265 | 0/40 |
+| push | 4 | 1.382 | 0.796 | 0.826-2.526 | 27/40 |
+| rough1 | 4 | 1.879 | 0.318 | 1.514-2.251 | 0/40 |
+| rough2 | 4 | 1.885 | 0.308 | 1.539-2.254 | 0/40 |
+| rough3 | 4 | 1.868 | 0.303 | 1.554-2.246 | 0/40 |
+| slope10 | 4 | 1.751 | 0.131 | 1.576-1.894 | 0/40 |
+| slope15 | 4 | 1.550 | 0.057 | 1.487-1.624 | 0/40 |
+| slope20 | 4 | 1.203 | 0.204 | 1.018-1.483 | 0/40 |
 
 ## Mean nudge magnitude applied to the CPG (per control step, all episodes)
 
@@ -213,6 +282,8 @@
 | flat | mlp | 0.2973 | 0.0473 |
 | flat | ppo | 0.1438 | 0.1062 |
 | flat | ppo_s1 | 0.2265 | 0.0235 |
+| flat | ppo_s2 | 0.1973 | 0.0527 |
+| flat | ppo_s3 | 0.1681 | 0.0819 |
 | flat | random_graph | 0.2494 | 0.0027 |
 | flat | shuffled | 0.2384 | 0.0116 |
 | flat | tripod | 0.2635 | 0.0135 |
@@ -222,6 +293,8 @@
 | rough1 | mlp | 0.2906 | 0.0406 |
 | rough1 | ppo | 0.1514 | 0.0986 |
 | rough1 | ppo_s1 | 0.2251 | 0.0249 |
+| rough1 | ppo_s2 | 0.2001 | 0.0499 |
+| rough1 | ppo_s3 | 0.1750 | 0.0750 |
 | rough1 | random_graph | 0.2476 | 0.0024 |
 | rough1 | shuffled | 0.2377 | 0.0123 |
 | rough1 | tripod | 0.2679 | 0.0179 |
@@ -231,6 +304,8 @@
 | rough3 | mlp | 0.2851 | 0.0351 |
 | rough3 | ppo | 0.1554 | 0.0946 |
 | rough3 | ppo_s1 | 0.2246 | 0.0254 |
+| rough3 | ppo_s2 | 0.1963 | 0.0537 |
+| rough3 | ppo_s3 | 0.1711 | 0.0789 |
 | rough3 | random_graph | 0.2451 | 0.0049 |
 | rough3 | shuffled | 0.2377 | 0.0123 |
 | rough3 | tripod | 0.2622 | 0.0122 |
