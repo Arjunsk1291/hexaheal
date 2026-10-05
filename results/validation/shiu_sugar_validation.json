@@ -1,0 +1,187 @@
+{
+  "n_trials": 3,
+  "stim_rate_hz": 100.0,
+  "full_build_s": 0.45021629333496094,
+  "full_network": {
+    "neurons": 138639,
+    "synapse_pairs": 15091983
+  },
+  "full": {
+    "none": {
+      "proboscis_motor": {
+        "mean_hz": 0.0,
+        "sd_hz": 0.0,
+        "n_neurons": 24
+      },
+      "ingestion_motor": {
+        "mean_hz": 0.0,
+        "sd_hz": 0.0,
+        "n_neurons": 28
+      },
+      "antennal_motor": {
+        "mean_hz": 0.0,
+        "sd_hz": 0.0,
+        "n_neurons": 10
+      },
+      "neck_motor": {
+        "mean_hz": 0.0,
+        "sd_hz": 0.0,
+        "n_neurons": 26
+      },
+      "eye_motor": {
+        "mean_hz": 0.0,
+        "sd_hz": 0.0,
+        "n_neurons": 4
+      },
+      "n_stimulated": 0
+    },
+    "sugar_GRN": {
+      "proboscis_motor": {
+        "mean_hz": 21.75,
+        "sd_hz": 0.766787430102347,
+        "n_neurons": 24
+      },
+      "ingestion_motor": {
+        "mean_hz": 32.11904761904761,
+        "sd_hz": 3.758927393205711,
+        "n_neurons": 28
+      },
+      "antennal_motor": {
+        "mean_hz": 0.0,
+        "sd_hz": 0.0,
+        "n_neurons": 10
+      },
+      "neck_motor": {
+        "mean_hz": 0.0,
+        "sd_hz": 0.0,
+        "n_neurons": 26
+      },
+      "eye_motor": {
+        "mean_hz": 0.0,
+        "sd_hz": 0.0,
+        "n_neurons": 4
+      },
+      "n_stimulated": 32
+    },
+    "bitter_GRN": {
+      "proboscis_motor": {
+        "mean_hz": 0.0,
+        "sd_hz": 0.0,
+        "n_neurons": 24
+      },
+      "ingestion_motor": {
+        "mean_hz": 0.0,
+        "sd_hz": 0.0,
+        "n_neurons": 28
+      },
+      "antennal_motor": {
+        "mean_hz": 0.0,
+        "sd_hz": 0.0,
+        "n_neurons": 10
+      },
+      "neck_motor": {
+        "mean_hz": 0.0,
+        "sd_hz": 0.0,
+        "n_neurons": 26
+      },
+      "eye_motor": {
+        "mean_hz": 0.0,
+        "sd_hz": 0.0,
+        "n_neurons": 4
+      },
+      "n_stimulated": 42
+    }
+  },
+  "full_wall_s_per_sim_s": 1.1986587047576904,
+  "subgraph_network": {
+    "neurons": 10000,
+    "synapse_pairs": 797577
+  },
+  "subgraph": {
+    "none": {
+      "proboscis_motor": {
+        "mean_hz": 0.0,
+        "sd_hz": 0.0,
+        "n_neurons": 24
+      },
+      "ingestion_motor": {
+        "mean_hz": 0.0,
+        "sd_hz": 0.0,
+        "n_neurons": 28
+      },
+      "antennal_motor": {
+        "mean_hz": 0.0,
+        "sd_hz": 0.0,
+        "n_neurons": 10
+      },
+      "neck_motor": {
+        "mean_hz": 0.0,
+        "sd_hz": 0.0,
+        "n_neurons": 26
+      },
+      "eye_motor": {
+        "mean_hz": 0.0,
+        "sd_hz": 0.0,
+        "n_neurons": 4
+      },
+      "n_stimulated": 0
+    },
+    "sugar_GRN": {
+      "proboscis_motor": {
+        "mean_hz": 19.76388888888889,
+        "sd_hz": 0.7878808113157129,
+        "n_neurons": 24
+      },
+      "ingestion_motor": {
+        "mean_hz": 11.30952380952381,
+        "sd_hz": 1.524274482635164,
+        "n_neurons": 28
+      },
+      "antennal_motor": {
+        "mean_hz": 0.0,
+        "sd_hz": 0.0,
+        "n_neurons": 10
+      },
+      "neck_motor": {
+        "mean_hz": 0.0,
+        "sd_hz": 0.0,
+        "n_neurons": 26
+      },
+      "eye_motor": {
+        "mean_hz": 0.0,
+        "sd_hz": 0.0,
+        "n_neurons": 4
+      },
+      "n_stimulated": 32
+    },
+    "bitter_GRN": {
+      "proboscis_motor": {
+        "mean_hz": 0.0,
+        "sd_hz": 0.0,
+        "n_neurons": 24
+      },
+      "ingestion_motor": {
+        "mean_hz": 0.0,
+        "sd_hz": 0.0,
+        "n_neurons": 28
+      },
+      "antennal_motor": {
+        "mean_hz": 0.0,
+        "sd_hz": 0.0,
+        "n_neurons": 10
+      },
+      "neck_motor": {
+        "mean_hz": 0.0,
+        "sd_hz": 0.0,
+        "n_neurons": 26
+      },
+      "eye_motor": {
+        "mean_hz": 0.0,
+        "sd_hz": 0.0,
+        "n_neurons": 4
+      },
+      "n_stimulated": 42
+    }
+  },
+  "subgraph_wall_s_per_sim_s": 0.0984338919321696
+}
