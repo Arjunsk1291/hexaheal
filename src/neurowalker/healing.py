@@ -4,6 +4,7 @@ Adaptation = gait re-planning via CMA-ES over CPG parameters, evaluated in short
 with the diagnosed fault applied. Every decision is logged (timestamp, evidence, action)."""
 from __future__ import annotations
 
+import copy
 import json
 import time
 from collections import deque
@@ -17,15 +18,18 @@ from .tripod import TripodController, TripodParams
 
 STATES = ["NORMAL", "FAULT_SUSPECTED", "DIAGNOSE", "ADAPT", "VERIFY", "SAFE_STOP"]
 WIN = 25  # 0.5 s window at 50 Hz
+SEARCH_SIM_S_PER_TRIAL = 0.075  # simulated compute time charged per CMA-ES trial (deterministic; replaces the wall-clock budget)
 
 
 class HealthMonitor:
-    def __init__(self):
+    def __init__(self, win=(1.5, 3.5)):
+        self.win = win  # baseline window (s): first monitor 1.5-3.5 s; after a verified recovery a short window, so a later fault can be caught
         self.res = deque(maxlen=WIN)
         self.qs = deque(maxlen=WIN)
         self.qc = deque(maxlen=WIN)
         self.tilt = deque(maxlen=WIN)
         self.ema = np.zeros(18)
+        self.masked: set[int] = set()  # legs with an already diagnosed fault: their frozen/flat signature is expected, not a new fault
         self.base = None
         self._base_samples = []
 
@@ -33,9 +37,9 @@ class HealthMonitor:
         r = np.abs(q_cmd - q_sensed)
         self.ema = 0.9 * self.ema + 0.1 * r
         self.qs.append(q_sensed.copy()); self.qc.append(q_cmd.copy()); self.tilt.append(np.hypot(roll, pitch))
-        if 1.5 <= t < 3.5:
+        if self.win[0] <= t < self.win[1]:
             self._base_samples.append(self.ema.copy())
-        elif self.base is None and t >= 3.5 and self._base_samples:
+        elif self.base is None and t >= self.win[1] and self._base_samples:
             self.base = np.max(self._base_samples, axis=0)
 
     def ready(self):
@@ -46,6 +50,8 @@ class HealthMonitor:
         elev = self.ema - self.base
         frozen = (qs.std(0) < 0.2 * qc.std(0)) & (qc.std(0) > 0.05)
         flat = qs.std(0) < 0.0015
+        for leg in self.masked:
+            frozen[leg * 3:leg * 3 + 3] = False; flat[leg * 3:leg * 3 + 3] = False; elev[leg * 3:leg * 3 + 3] = 0.0
         return {"elevation": elev, "frozen": frozen, "flat": flat, "tilt_rms": float(np.sqrt(np.mean(np.square(self.tilt))))}
 
     def suspect(self):
@@ -79,9 +85,15 @@ class HealingController:
         self.base = base
         self.name = base.name + "+healing"
         self.terrain, self.max_trials, self.rollout_s, self.seed = terrain, max_trials, rollout_s, seed
+        self._max_trials0 = max_trials
+        self._p0 = copy.deepcopy(base.cpg.p)  # pristine gait: the healing search must not leak into the next episode
         self.reset()
 
     def reset(self):
+        self.base.cpg.p = copy.deepcopy(self._p0)
+        self.base.cpg.leg_stride_scale = np.ones(6)
+        self.max_trials = self._max_trials0
+        self.cur_p, self.cur_scale, self.known = copy.deepcopy(self._p0), np.ones(6), []  # committed gait and diagnosed faults
         self.base.reset()
         self.mon = HealthMonitor()
         self.state = "NORMAL"
@@ -91,6 +103,7 @@ class HealingController:
         self.suspect_count = 0
         self.diag = None
         self.new_params = None
+        self._applied = None
         self.delay_steps = 0
         self.x_hist = deque(maxlen=400)
         self.pre_fault_speed = None
@@ -104,6 +117,16 @@ class HealingController:
         self.state = to
         self.t_state = env.t
 
+    def _commit(self, speed_after):
+        """Verified recovery: the candidate gait becomes the committed gait and the diagnosed fault is remembered for later searches."""
+        if self._applied is not None:
+            x, apply = self._applied
+            tmp = TripodController(); apply(tmp, x)
+            self.cur_p, self.cur_scale = tmp.p, tmp.leg_stride_scale.copy()
+        if getattr(self, "_cand_fault", None) is not None:
+            self.known.append(self._cand_fault)
+        self.pre_fault_speed = speed_after
+
     def _speed(self, env, window):
         h = list(self.x_hist)
         if len(h) < 2:
@@ -115,7 +138,8 @@ class HealingController:
     def _search(self, env, diag):
         fault = Fault(diag["kind"], 0.0, leg=diag["leg"], joint=diag["joint"], severity=getattr(self, "est_severity", 0.05),
                       angle=float(np.mean(np.array(self.mon.qs)[:, diag["leg"] * 3 + diag["joint"]])))
-        p0 = self.base.cpg.p
+        p0 = self.cur_p
+        self._cand_fault = fault
         lo = np.array([1.0, 0.15, 0.15, 0.5, -0.4, 0.0]); hi = np.array([2.4, 0.5, 0.5, 0.8, 0.4, 1.0])
         x0 = np.array([p0.freq, p0.stride, p0.lift, p0.duty, p0.turn_bias, 1.0])
         to_u = lambda x: (x - lo) / (hi - lo)
@@ -123,11 +147,11 @@ class HealingController:
 
         def apply(c, x):
             c.p = TripodParams(freq=x[0], stride=x[1], lift=x[2], duty=x[3], turn_bias=x[4], tibia_lift=p0.tibia_lift)
-            c.leg_stride_scale = np.ones(6); c.leg_stride_scale[diag["leg"]] = x[5]
+            c.leg_stride_scale = self.cur_scale.copy(); c.leg_stride_scale[diag["leg"]] = x[5]
 
         def fitness(u):
             x = from_u(u)
-            e = HexapodEnv(self.terrain, max_time=self.rollout_s + 0.5, faults=[fault], seed=self.seed, target_speed=env.target_speed)
+            e = HexapodEnv(self.terrain, max_time=self.rollout_s + 0.5, faults=[*self.known, fault], seed=self.seed, target_speed=env.target_speed)
             e.reset(seed=self.seed)
             c = TripodController(); apply(c, x)
             while True:
@@ -181,7 +205,7 @@ class HealingController:
                 self.diag_t = t
                 self._log(env, "ADAPT", {"diagnosis": d}, {"decision": "gait re-plan via CMA-ES"})
                 if d["kind"] == "sensor_dropout":
-                    self.new_params = None
+                    self.new_params = None; self._cand_fault = None
                     self.adapt_info = {"note": "sensors of this leg flagged unreliable; leg continues open-loop under the CPG", "trials": 0, "wall_s": 0.0}
                     self.delay_steps = 0
                 else:
@@ -190,14 +214,12 @@ class HealingController:
                     self.new_params = (x, apply)
                     self.adapt_info = info
                     self.adapt_wall_s = info["wall_s"]
-                    self.delay_steps = int(np.ceil(info["wall_s"] / env.dt))  # old gait continues while the search "runs"
+                    self.delay_steps = int(np.ceil(info["trials"] * SEARCH_SIM_S_PER_TRIAL / env.dt))  # simulated-time budget: old gait continues while the search "runs"
         elif self.state == "ADAPT":
             if self.delay_steps > 0:
                 self.delay_steps -= 1
             else:
-                if self.new_params is not None:
-                    x, apply = self.new_params
-                    apply(self.base.cpg, x)
+                self._applied = self.new_params  # applied only while this wrapper acts; the shared base gait is never mutated
                 self.verify_start = (t, float(env.data.qpos[0]))
                 self._log(env, "VERIFY", self.adapt_info, {"applied_params": None if self.new_params is None else np.round(self.new_params[0], 3).tolist()})
         elif self.state == "VERIFY" and t - self.verify_start[0] >= 1.5:
@@ -208,17 +230,34 @@ class HealingController:
             if ok:
                 self.t_recover = t
                 self._log(env, "NORMAL", ev, {"decision": "recovery verified"})
-                self.suspect_count = -10 ** 6  # healed: do not re-trigger on the residual signature of the known fault
+                self._commit(float(sp))
+                self.suspect_count = 0  # back to monitoring: new baseline (includes the known dead leg) so a later fault can be detected
+                self.mon = HealthMonitor(win=(t + 0.1, t + 0.9)); self.mon.masked = {f.leg for f in self.known}
+                self.attempt = 0; self.max_trials = self._max_trials0
             elif self.attempt == 0:
                 self.attempt = 1
                 self._log(env, "ADAPT", ev, {"decision": "verify failed, second search with larger budget"})
                 self.max_trials = 36
                 x, apply, info = self._search(env, self.diag)
                 self.new_params = (x, apply); self.adapt_info = info
-                self.delay_steps = int(np.ceil(info["wall_s"] / env.dt))
+                self.delay_steps = int(np.ceil(info["trials"] * SEARCH_SIM_S_PER_TRIAL / env.dt))
             else:
                 self._log(env, "SAFE_STOP", ev, {"decision": "unable to verify recovery, standing still"})
-        a = self.base.act(env, **kw)
+        if self._applied is not None:
+            x, apply = self._applied
+            p_save, sc_save = self.base.cpg.p, self.base.cpg.leg_stride_scale
+            apply(self.base.cpg, x)
+            try:
+                a = self.base.act(env, **kw)
+            finally:
+                self.base.cpg.p, self.base.cpg.leg_stride_scale = p_save, sc_save
+        else:
+            p_save, sc_save = self.base.cpg.p, self.base.cpg.leg_stride_scale
+            self.base.cpg.p, self.base.cpg.leg_stride_scale = self.cur_p, self.cur_scale
+            try:
+                a = self.base.act(env, **kw)
+            finally:
+                self.base.cpg.p, self.base.cpg.leg_stride_scale = p_save, sc_save
         self.prev_action = a
         return a
 

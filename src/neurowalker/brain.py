@@ -25,9 +25,9 @@ K_DN = 12  # readout DNs per channel
 class BrainController:
     name = "connectome_inspired"
 
-    def __init__(self, data_dir="data/processed", seed=0, gains=None, synthetic_fallback=False, tripod: TripodParams | None = None):
+    def __init__(self, data_dir="data/processed", seed=0, gains=None, synthetic_fallback=False, tripod: TripodParams | None = None, W=None):
         self.meta = pd.read_parquet(f"{data_dir}/subgraph_meta.parquet")
-        W = sp.load_npz(f"{data_dir}/subgraph_weights.npz")
+        W = sp.load_npz(f"{data_dir}/subgraph_weights.npz") if W is None else W
         self.net = SpikingNet(W, seed=seed)
         self.seed = seed
         self.cpg = TripodController(tripod)
@@ -114,6 +114,7 @@ class BrainController:
         self.last_rates = np.zeros(8)
         self.last_spikes = 0
         self.rt_ms = []
+        self.nudges = []
 
     def lesion(self, group: str):
         """Silence a named neuron group (all its incoming and outgoing synapses are inactive; the neurons are clamped at rest)."""
@@ -166,4 +167,5 @@ class BrainController:
         stance = float(np.clip(g["stance"] * c["pitch"], -0.2, 0.2))
         a = self.cpg.act(env, speed_gain=speed_gain, turn=turn, stance_adj=stance, freq_scale=freq_scale)
         self.rt_ms.append((time.perf_counter() - t0) * 1000)
+        self.nudges.append((speed_gain, freq_scale, turn, stance))
         return a

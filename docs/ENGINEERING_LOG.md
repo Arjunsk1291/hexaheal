@@ -57,3 +57,15 @@ CPU-only design, PPO as a residual on the CPG (64x64 MLP), verification labels, 
 - The sandbox VM was replaced mid-build, so the v4 media was re-rendered from the pushed repo plus the v4 model source.
 - On the reinstalled stack, importing torch.optim after mujoco segfaulted when loading the PPO policy. `scripts/make_media.py` now imports `torch` and `torch._dynamo` first. No result files were affected.
 - Wall-clock note: connectome clips take about 8 min each in the 2 vCPU sandbox because the spiking network runs every control step.
+
+## v2 Stage 1 (reproducibility) - 2026-10-05, 2 vCPU sandbox
+- Wall-time budget removed from the healing re-planner: the old gait now continues for trials x 0.075 s of SIMULATED time (src/neurowalker/healing.py, SEARCH_SIM_S_PER_TRIAL). CMA-ES and rollouts were already seeded.
+- Verification (results/repro_check.json, scripts/repro_check.py): connectome, fault_disable_leg+healing, seed 8, 3 runs idle + 3 runs with one core burned: all 6 outcomes bit-identical (fell=True, t_end 6.5 s, distance 1.366976876199071, states FAULT_SUSPECTED 4.28, DIAGNOSE 4.9, ADAPT 4.9, VERIFY 6.36).
+- Seed 8 now FALLS at 6.5 s. The v1 benchmark row for seed 8 (survived, 90-98% speed retained) did NOT reproduce.
+- Cause of the pre-fault speed difference (no-heal vs healing runs, same seeds; v1 connectome 0.275 vs 0.322 m/s) and of the v1 irreproducibility: a state LEAK. HealingController.apply() mutated the shared controller's CPG params (freq/stride/lift/duty/turn_bias) and leg_stride_scale and nothing restored them, so every episode after a healing episode started with the previously searched gait. Demonstration (tripod, seed 101, x at t=4 s before any fault): 1.0175 m on a fresh controller, 1.3329 m after one healing episode (params freq 1.90, stride 0.498 instead of 1.5, 0.35). With the fix: 1.0175 m both times.
+- CONSEQUENCE: all v1 "+healing" cells and any v1 cell run after a healing episode on the same controller object are contaminated by the leak. v1 healing numbers (e.g. 38% speed kept, 6/10 falls) are not valid and are superseded by the v2 re-run.
+- Fix: the wrapper applies the searched gait only inside its own act() and restores the base gait; reset() restores the pristine gait.
+## v2 Stage 2 (multi-fault healing) - code only so far, results pending
+- Removed the suspect_count = -1e6 latch. After a verified recovery: commit the gait, remember the diagnosed fault (later searches include it), mask its legs in the monitor, re-baseline over a 0.8 s window (t+0.1 .. t+0.9) and return to monitoring.
+- New scenarios in src/neurowalker/benchmark.py: fault_sequential (R3 @4 s, L3 @9 s, 16 s), fault_sequential+healing, healthy+healing (14 s); extra metrics n_suspect, n_recover, n_safe_stop, detect2_s.
+- tests/test_healing.py: 3 new tests (no false positive on healthy seeds 100-102, second fault detected on tuning seed 101, no leak into the shared controller). tests/test_healing.py: 7 passed. Full suite and the 10-seed cells: pending.

@@ -1,0 +1,181 @@
+{
+ "seed": 8,
+ "cell": "connectome fault_disable_leg+healing",
+ "runs": [
+  {
+   "fell": true,
+   "t_end": 6.499999999999884,
+   "distance": 1.366976876199071,
+   "fault_pre_speed": 0.26302919369587924,
+   "fault_post_speed": 0.0,
+   "t_detect_s": 0.27999999999993097,
+   "t_verified_recovery_s": NaN,
+   "final_state": "VERIFY",
+   "log_states": [
+    [
+     4.28,
+     "FAULT_SUSPECTED"
+    ],
+    [
+     4.9,
+     "DIAGNOSE"
+    ],
+    [
+     4.9,
+     "ADAPT"
+    ],
+    [
+     6.36,
+     "VERIFY"
+    ]
+   ],
+   "tag": "idle0"
+  },
+  {
+   "fell": true,
+   "t_end": 6.499999999999884,
+   "distance": 1.366976876199071,
+   "fault_pre_speed": 0.26302919369587924,
+   "fault_post_speed": 0.0,
+   "t_detect_s": 0.27999999999993097,
+   "t_verified_recovery_s": NaN,
+   "final_state": "VERIFY",
+   "log_states": [
+    [
+     4.28,
+     "FAULT_SUSPECTED"
+    ],
+    [
+     4.9,
+     "DIAGNOSE"
+    ],
+    [
+     4.9,
+     "ADAPT"
+    ],
+    [
+     6.36,
+     "VERIFY"
+    ]
+   ],
+   "tag": "idle1"
+  },
+  {
+   "fell": true,
+   "t_end": 6.499999999999884,
+   "distance": 1.366976876199071,
+   "fault_pre_speed": 0.26302919369587924,
+   "fault_post_speed": 0.0,
+   "t_detect_s": 0.27999999999993097,
+   "t_verified_recovery_s": NaN,
+   "final_state": "VERIFY",
+   "log_states": [
+    [
+     4.28,
+     "FAULT_SUSPECTED"
+    ],
+    [
+     4.9,
+     "DIAGNOSE"
+    ],
+    [
+     4.9,
+     "ADAPT"
+    ],
+    [
+     6.36,
+     "VERIFY"
+    ]
+   ],
+   "tag": "idle2"
+  },
+  {
+   "fell": true,
+   "t_end": 6.499999999999884,
+   "distance": 1.366976876199071,
+   "fault_pre_speed": 0.26302919369587924,
+   "fault_post_speed": 0.0,
+   "t_detect_s": 0.27999999999993097,
+   "t_verified_recovery_s": NaN,
+   "final_state": "VERIFY",
+   "log_states": [
+    [
+     4.28,
+     "FAULT_SUSPECTED"
+    ],
+    [
+     4.9,
+     "DIAGNOSE"
+    ],
+    [
+     4.9,
+     "ADAPT"
+    ],
+    [
+     6.36,
+     "VERIFY"
+    ]
+   ],
+   "tag": "load0"
+  },
+  {
+   "fell": true,
+   "t_end": 6.499999999999884,
+   "distance": 1.366976876199071,
+   "fault_pre_speed": 0.26302919369587924,
+   "fault_post_speed": 0.0,
+   "t_detect_s": 0.27999999999993097,
+   "t_verified_recovery_s": NaN,
+   "final_state": "VERIFY",
+   "log_states": [
+    [
+     4.28,
+     "FAULT_SUSPECTED"
+    ],
+    [
+     4.9,
+     "DIAGNOSE"
+    ],
+    [
+     4.9,
+     "ADAPT"
+    ],
+    [
+     6.36,
+     "VERIFY"
+    ]
+   ],
+   "tag": "load1"
+  },
+  {
+   "fell": true,
+   "t_end": 6.499999999999884,
+   "distance": 1.366976876199071,
+   "fault_pre_speed": 0.26302919369587924,
+   "fault_post_speed": 0.0,
+   "t_detect_s": 0.27999999999993097,
+   "t_verified_recovery_s": NaN,
+   "final_state": "VERIFY",
+   "log_states": [
+    [
+     4.28,
+     "FAULT_SUSPECTED"
+    ],
+    [
+     4.9,
+     "DIAGNOSE"
+    ],
+    [
+     4.9,
+     "ADAPT"
+    ],
+    [
+     6.36,
+     "VERIFY"
+    ]
+   ],
+   "tag": "load2"
+  }
+ ],
+ "all_identical": true
+}

@@ -19,6 +19,8 @@ FAULTS = {
     "fault_sensor_dropout": Fault("sensor_dropout", FAULT_T, leg=3),
 }
 PUSH = (4.0, 0.0, 48.0, 0.15)  # t, Fx, Fy (N), duration (s)
+FAULT2_T = 9.0
+EXTRA_SCENARIOS = ["fault_sequential", "fault_sequential+healing", "healthy+healing"]  # v2: two sequential leg faults (R3 @4 s, L3 @9 s, 16 s); healthy false-positive cell
 TERRAIN_SCENARIOS = ["flat", "rough1", "rough2", "rough3", "slope10", "slope15", "slope20"]
 SCENARIOS = TERRAIN_SCENARIOS + ["push"] + list(FAULTS) + [f"{k}+healing" for k in FAULTS]
 
@@ -28,6 +30,10 @@ def scenario_spec(name):
     base = name.replace("+healing", "")
     if base in TERRAIN_SCENARIOS:
         return dict(terrain=base, t=10.0, faults=[], pushes=[], heal=False)
+    if base == "fault_sequential":
+        return dict(terrain="flat", t=16.0, faults=[Fault("disable_leg", FAULT_T, leg=2), Fault("disable_leg", FAULT2_T, leg=5)], pushes=[], heal=heal)
+    if base == "healthy":
+        return dict(terrain="flat", t=14.0, faults=[], pushes=[], heal=True)
     if base == "push":
         return dict(terrain="flat", t=12.0, faults=[], pushes=[PUSH], heal=False)
     return dict(terrain="flat", t=14.0, faults=[FAULTS[base]], pushes=[], heal=heal)
@@ -87,7 +93,8 @@ def run_one(ctrl, ctrl_name, scenario, seed):
                     break
     if sp["faults"]:
         pre = _speed(xs, ts, 1.5, FAULT_T)
-        post = _speed(xs, ts, 10.0, 14.0) if env.t >= 13.9 else 0.0
+        t_last = sp["t"]
+        post = _speed(xs, ts, t_last - 4.0, t_last) if env.t >= t_last - 0.1 else 0.0
         r["fault_pre_speed"], r["fault_post_speed"] = pre, post
         r["fault_retained"] = float(max(post, 0.0) / pre) if pre and pre > 0 else nan
         if not env.fell:  # first time after the fault when 1 s-window speed stays >= 70% of pre-fault speed for 2 s
@@ -101,4 +108,10 @@ def run_one(ctrl, ctrl_name, scenario, seed):
                 r["t_detect_s"] = float(c.t_detect - FAULT_T)
             if c.t_recover is not None:
                 r["t_verified_recovery_s"] = float(c.t_recover - FAULT_T)
+    if sp["heal"]:
+        sus = [e["t"] for e in c.log if e["to"] == "FAULT_SUSPECTED"]
+        r["n_suspect"] = len(sus); r["n_recover"] = sum(1 for e in c.log if e["action"].get("decision") == "recovery verified")
+        r["n_safe_stop"] = sum(1 for e in c.log if e["to"] == "SAFE_STOP")
+        t2 = [t for t in sus if t >= FAULT2_T]
+        r["detect2_s"] = float(t2[0] - FAULT2_T) if (len(sp["faults"]) == 2 and t2) else nan
     return r, (c.log if sp["heal"] else None)
