@@ -55,7 +55,7 @@ def card(lines, size, secs=3, fps=30):
 
 def all_frames():
     yield from card([("NeuroWalker: measured, not claimed", 54, (255, 255, 255)), ("Simulation only. 10 seeds per scenario. Sandbox: 2 vCPU CPU.", 24, (150, 200, 255))], (1920, 518), 3)
-    for sc, title, key in [("flat", "Flat ground", "flat"), ("slope15", "15 degree slope", "slope15"), ("push", "48 N push", "push"), ("fault_disable_leg", "Leg disabled at t=4 s (no healing in this clip)", "fault_disable_leg"), ("fault_lock_joint", "Joint locked at t=4 s", "fault_lock_joint")]:
+    for sc, title, key in [("flat", "Flat ground", "flat"), ("slope15", "15 degree slope", "slope15"), ("push", "48 N push", "push"), ("fault_disable_leg", "Leg disabled at t=4 s (video shows self-healing on)", "fault_disable_leg"), ("fault_lock_joint", "Joint locked at t=4 s (video shows self-healing on)", "fault_lock_joint")]:
         yield from scene(sc, title, key)
     yield from card([("Source: results/summary.json, docs/BENCHMARK.md", 30, (255, 255, 255)), ("Not an emulated fly brain. No hardware.", 24, (150, 200, 255))], (1920, 518), 3)
 
