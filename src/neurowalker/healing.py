@@ -184,6 +184,8 @@ class HealingController:
 
     def act(self, env, **kw):
         t = env.t
+        if hasattr(self.base, "nudge_gate"):  # v3 hybrid: learned/connectome nudges only while nothing is suspected, detected or healed
+            self.base.nudge_gate = self.state == "NORMAL" and self.t_detect is None
         if self.prev_action is not None:
             self.mon.update(t, env.action_to_q(self.prev_action), env.last_sensed_q, *env.euler()[:2])
         self.x_hist.append((t, float(env.data.qpos[0])))
