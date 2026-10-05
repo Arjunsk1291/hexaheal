@@ -69,3 +69,10 @@ CPU-only design, PPO as a residual on the CPG (64x64 MLP), verification labels, 
 - Removed the suspect_count = -1e6 latch. After a verified recovery: commit the gait, remember the diagnosed fault (later searches include it), mask its legs in the monitor, re-baseline over a 0.8 s window (t+0.1 .. t+0.9) and return to monitoring.
 - New scenarios in src/neurowalker/benchmark.py: fault_sequential (R3 @4 s, L3 @9 s, 16 s), fault_sequential+healing, healthy+healing (14 s); extra metrics n_suspect, n_recover, n_safe_stop, detect2_s.
 - tests/test_healing.py: 3 new tests (no false positive on healthy seeds 100-102, second fault detected on tuning seed 101, no leak into the shared controller). tests/test_healing.py: 7 passed. Full suite and the 10-seed cells: pending.
+
+## v2 Stage 2 results (seeds 0-9, results/v2_stage2_0-9.jsonl, 2 vCPU sandbox, fixed healing, numba installed)
+- ENVIRONMENT FINDING: the rebuilt sandbox had NO numba, so the SNN ran in pure Python: connectome latency 420-450 ms per control step (vs 5 ms in the v1 benchmark), episodes ~135 s. `pip install numba` (0.68.0) restores speed. The v4 media were rendered without numba (same maths, slower; clips not re-rendered). The first partial Stage 2 connectome rows from the slow run were discarded and recomputed.
+- healthy+healing (14 s): 0 FAULT_SUSPECTED transitions in 30/30 episodes (tripod 0, connectome 0, PPO 0), 0 falls.
+- fault_sequential (R3 @4 s, L3 @9 s, 16 s) falls/10, no healing: tripod 10, connectome 10, PPO 10 (these robots fall before 9 s or after).
+- fault_sequential+healing: falls/10 tripod 10, connectome 10, PPO 10. Mean FAULT_SUSPECTED per run: tripod 1.6, connectome 1.0, PPO 2.0; verified recoveries per run: tripod 0.6, connectome 0.0, PPO 1.0. Second fault (L3) detected (detect2_s mean): tripod 0.340 s, PPO 0.292 s, connectome n/a (falls before 9 s, never reaches the second fault).
+- Reading: the latch is gone and the second fault IS detected where the robot is still standing, but nobody survives the two-fault episode. With the leak fixed, healing does not stop the first-fault fall for the connectome (10/10 falls, 0 verified recoveries).
