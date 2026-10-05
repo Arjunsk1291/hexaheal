@@ -2,6 +2,8 @@
 """v2 experiment runner (resumable, one JSON line per episode).
   python scripts/run_v2.py ablation [seeds]   variants x 8 cells (Stage 3)
   python scripts/run_v2.py stage2   [seeds]   tripod/connectome/ppo x sequential + healthy cells (Stage 2)
+  python scripts/run_v2.py tuned    [seeds]   tuned tripod (gains from results/tuned_tripod_tuning.json) on all cells
+  python scripts/run_v2.py pposeeds [seeds]   PPO training seeds 1-4 (models/ppo_residual_s*.zip) on all cells
   python scripts/run_v2.py rebench  [seeds]   tripod/connectome/ppo x the original 16+ cells re-run with fixed healing
 seeds default 0-9 (final evaluation). Pass e.g. 100-109 for tuning/debugging; output file name carries the seed range."""
 try:
@@ -34,6 +36,14 @@ if mode == "ablation":
     plan = [(v, ABL_CELLS) for v in VARIANTS]; build = make_variant
 elif mode == "stage2":
     plan = [(c, S2_CELLS) for c in ("tripod", "connectome", "ppo")]; build = make_ctrl
+elif mode == "tuned":
+    from neurowalker.tuned import TunedTripod
+    best = json.load(open("results/tuned_tripod_tuning.json"))["best"]  # gains chosen on seeds 100-109 only
+    plan = [("tuned_tripod", list(SCENARIOS) + S2_CELLS)]; build = lambda n: TunedTripod(best["kp"], best["kr"], best["ks"])
+elif mode == "pposeeds":
+    from neurowalker.rl import PPOController
+    plan = [(f"ppo_s{k}", list(SCENARIOS)) for k in (1, 2, 3, 4) if os.path.exists(f"models/ppo_residual_s{k}.zip")]
+    build = lambda n: PPOController(f"models/ppo_residual_s{n.split('_s')[1]}.zip")
 else:
     plan = [(c, list(SCENARIOS)) for c in ("tripod", "connectome", "ppo")]; build = make_ctrl
 for name, cells in plan:

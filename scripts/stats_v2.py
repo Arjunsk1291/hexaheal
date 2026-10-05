@@ -11,7 +11,7 @@ import pandas as pd
 
 B = 10_000
 rng = np.random.default_rng(12345)
-frames = [pd.read_json(f, lines=True) for f in sorted(glob.glob("results/v2_ablation_0-9.jsonl") + glob.glob("results/v2_rebench_0-9.jsonl"))]
+frames = [pd.read_json(f, lines=True) for f in sorted(glob.glob("results/v2_ablation_0-9.jsonl") + glob.glob("results/v2_rebench_0-9.jsonl") + glob.glob("results/v2_tuned_0-9.jsonl") + glob.glob("results/v2_pposeeds_0-9.jsonl"))]
 df = pd.concat(frames).drop_duplicates(["controller", "scenario", "seed"], keep="last")
 df = df[df.seed.between(0, 9)]
 
@@ -81,6 +81,12 @@ nud = df[df.nudge_speed_gain_absdev.notna()].groupby("controller")[["nudge_speed
 md.append("\n## Mean nudge magnitude applied to the CPG (per control step, all episodes)\n\n| variant | mean abs(speed_gain-1) | mean abs(freq_scale-1) | mean abs(turn) | mean abs(stance) |\n|---|---|---|---|---|")
 for c, r in nud.iterrows():
     md.append(f"| {c} | {r.nudge_speed_gain_absdev:.4f} | {r.nudge_freq_scale_absdev:.4f} | {r.nudge_turn_abs:.4f} | {r.nudge_stance_abs:.4f} |")
+# POST-HOC (not pre-registered): distance rewards walking faster than the 0.25 m/s target; speed-tracking error |mean_speed - 0.25| (flat/rough cells, no fall)
+md.append("\n## POST-HOC, not pre-registered: speed tracking error |mean speed - 0.25 m/s| (m/s), flat/rough cells\n\n| cell | controller | mean speed | mean abs error |\n|---|---|---|---|")
+for s_ in ["flat", "rough1", "rough3"]:
+    for c in ctrls:
+        g = df[(df.controller == c) & (df.scenario == s_)]
+        if len(g): md.append(f"| {s_} | {c} | {g.mean_speed.mean():.4f} | {(g.mean_speed - 0.25).abs().mean():.4f} |")
 json.dump(out, open("results/v2_stats.json", "w"), indent=1)
 open("docs/v2_tables.md", "w").write("\n".join(md) + "\n")
 print("\n".join(md[-60:]))
