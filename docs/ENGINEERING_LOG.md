@@ -52,3 +52,8 @@ CPU-only design, PPO as a residual on the CPG (64x64 MLP), verification labels, 
 - Build host hit a memory stall when the first asset script held all frames in RAM (1.5 GB box). Rewritten to stream frames.
 - Healing made the PPO residual worse after a disabled leg (77% -> 49% speed retained). Reported as is.
 - Playwright screenshots (desktop and mobile) are in docs/screenshots; ROS 2, Docker and CI remain UNVERIFIED.
+
+## v4 media rebuild (environment note)
+- The sandbox VM was replaced mid-build, so the v4 media was re-rendered from the pushed repo plus the v4 model source.
+- On the reinstalled stack, importing torch.optim after mujoco segfaulted when loading the PPO policy. `scripts/make_media.py` now imports `torch` and `torch._dynamo` first. No result files were affected.
+- Wall-clock note: connectome clips take about 8 min each in the 2 vCPU sandbox because the spiking network runs every control step.
