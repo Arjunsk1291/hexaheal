@@ -1,0 +1,7 @@
+@tailwind base; @tailwind components; @tailwind utilities;
+html { scroll-behavior: smooth; }
+body { @apply bg-ink text-slate-200 font-sans antialiased; }
+.card { @apply rounded-2xl border border-line bg-panel p-4 sm:p-6; }
+.chip { @apply rounded-full border border-line px-3 py-1 text-sm transition-colors; }
+.chip[aria-pressed="true"] { @apply border-teal bg-teal/10 text-teal; }
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
