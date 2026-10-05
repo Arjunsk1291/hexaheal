@@ -156,6 +156,7 @@ class BrainController:
         ms = env.dt * 1000.0
         counts = self.net.run(ms)
         self.last_spikes = int(counts.sum())
+        self.last_counts = counts
         c = self.decode(counts, ms)
         self.last_cmd = c
         g = self.g
