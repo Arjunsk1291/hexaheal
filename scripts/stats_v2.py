@@ -1,6 +1,6 @@
 """Stage 5 statistics for v2. Reads results/v2_*.jsonl (seeds 0-9 only). Writes results/v2_stats.json and docs/v2_tables.md.
 Old v1 ci95 (scripts/make_report.py): Student-t 95% half-width = t_{0.975,n-1} * sd(ddof=1)/sqrt(n) of the per-seed values, n=10.
-v2: paired bootstrap on per-seed differences (same seed in both arms), 10,000 resamples of the 10 differences, percentile 95% CI, rng seed 12345.
+v2: paired bootstrap on per-seed differences (same seed in both arms), 100,000 resamples of the 10 differences, percentile 95% CI, rng seed 12345.
 Two-sided bootstrap p = 2*min(P(boot_mean<=0), P(boot_mean>=0)) floored at 1/(B+1); Holm step-down across each comparison family.
 Falls: k/10 with Wilson 95% interval. Effect size: mean paired difference in metres and Cohen's d_z (mean diff / sd of diffs)."""
 import glob
@@ -9,7 +9,7 @@ import json
 import numpy as np
 import pandas as pd
 
-B = 10_000
+B = 100_000
 rng = np.random.default_rng(12345)
 frames = [pd.read_json(f, lines=True) for f in sorted(glob.glob("results/v2_ablation_0-9.jsonl") + glob.glob("results/v2_rebench_0-9.jsonl") + glob.glob("results/v2_tuned_0-9.jsonl") + glob.glob("results/v2_mlp_0-9.jsonl") + glob.glob("results/v2_pposeeds_0-9.jsonl"))]
 df = pd.concat(frames).drop_duplicates(["controller", "scenario", "seed"], keep="last")
@@ -73,7 +73,7 @@ def family(name, ref, others, cells):
         md.append(f"| {r['cell']} | {r['other']} | {r['diff']:+.3f} | [{r['lo']:+.3f}, {r['hi']:+.3f}] | {r['dz']:+.2f} | {r['p']:.4f} | {r['p_holm']:.4f} |")
 
 
-abl = [c for c in ctrls if c in ("shuffled", "random_graph", "filter")]
+abl = [c for c in ctrls if c in ("shuffled", "random_graph", "filter", "mlp")]
 family("A. ablations (connectome vs ablation)", "connectome", abl, ["flat", "rough1", "rough3", "push", "slope10", "fault_disable_leg+healing", "fault_lock_joint+healing", "fault_sensor_dropout+healing"])
 base = [c for c in ctrls if c in ("tripod", "ppo")]
 family("B. baselines (connectome vs tripod/PPO)", "connectome", base, cells_all)
