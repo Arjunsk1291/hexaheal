@@ -1,7 +1,7 @@
 {
-  "n_trials": 3,
+  "n_trials": 10,
   "stim_rate_hz": 100.0,
-  "full_build_s": 0.45021629333496094,
+  "full_build_s": 0.41489577293395996,
   "full_network": {
     "neurons": 138639,
     "synapse_pairs": 15091983
@@ -37,13 +37,13 @@
     },
     "sugar_GRN": {
       "proboscis_motor": {
-        "mean_hz": 21.75,
-        "sd_hz": 0.766787430102347,
+        "mean_hz": 21.083333333333336,
+        "sd_hz": 1.1225281486200884,
         "n_neurons": 24
       },
       "ingestion_motor": {
-        "mean_hz": 32.11904761904761,
-        "sd_hz": 3.758927393205711,
+        "mean_hz": 29.989285714285717,
+        "sd_hz": 3.415975747297168,
         "n_neurons": 28
       },
       "antennal_motor": {
@@ -92,7 +92,7 @@
       "n_stimulated": 42
     }
   },
-  "full_wall_s_per_sim_s": 1.1986587047576904,
+  "full_wall_s_per_sim_s": 6.957315675417582,
   "subgraph_network": {
     "neurons": 10000,
     "synapse_pairs": 797577
@@ -128,13 +128,13 @@
     },
     "sugar_GRN": {
       "proboscis_motor": {
-        "mean_hz": 19.76388888888889,
-        "sd_hz": 0.7878808113157129,
+        "mean_hz": 18.841666666666665,
+        "sd_hz": 1.3925396463536202,
         "n_neurons": 24
       },
       "ingestion_motor": {
-        "mean_hz": 11.30952380952381,
-        "sd_hz": 1.524274482635164,
+        "mean_hz": 9.675,
+        "sd_hz": 1.873039791682091,
         "n_neurons": 28
       },
       "antennal_motor": {
@@ -183,5 +183,5 @@
       "n_stimulated": 42
     }
   },
-  "subgraph_wall_s_per_sim_s": 0.0984338919321696
+  "subgraph_wall_s_per_sim_s": 0.09532277584075928
 }

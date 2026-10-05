@@ -27,7 +27,7 @@ A simulated 18-DOF hexapod (MuJoCo) whose walking is modulated by a **connectome
 ## The 30-second version
 Take a map of how a fruit fly's brain cells connect. Cut out a 10,000-cell piece around the cells that feel the body and the cells that send commands down. Feed the robot's sensor readings into the input cells, read the output cells, and let them nudge the speed and turning of a normal walking pattern. Then break a leg and see whether the robot notices and adapts. It is not a copy of a fly brain, and the robot does not think like a fly.
 
-## Key results (generated from `results/summary.json`; 10 seeds per cell, 640 ... see docs/BENCHMARK.md)
+## Key results (generated from `results/summary.json`; 10 seeds per cell, see docs/BENCHMARK.md)
 | scenario | {' | '.join(L[c] for c in ctrls)} |
 |---|{'---|' * len(ctrls)}
 {rows}
