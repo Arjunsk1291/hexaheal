@@ -1,0 +1,10 @@
+{
+  "n_neurons": 10000,
+  "n_synapse_pairs": 797577,
+  "n_sensory_seeds": 2991,
+  "n_descending": 1299,
+  "n_motor": 110,
+  "descending_kept": 1299,
+  "source": "FlyWire v783 (CC BY-NC 4.0) via Shiu et al. 2024 repo tables",
+  "selection": "all mechanosensory+gustatory sensory neurons, all descending and motor neurons, remaining slots filled by sqrt(forward reach from sensory * backward reach to descending) over 3 hops, excluding visual/olfactory/optic."
+}
