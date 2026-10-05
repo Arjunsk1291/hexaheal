@@ -50,6 +50,17 @@ TORSO_VIS = """<geom type="box" pos="0 0 -0.019" size="0.15 0.066 0.004" materia
       <geom type="box" pos="-0.04 0 0.04" size="0.055 0.03 0.015" material="accent" """ + V + """/>
       <geom type="box" pos="-0.04 0 0.041" size="0.008 0.032 0.016" material="carbon" """ + V + """/>
       <geom type="box" pos="0.07 0 0.027" size="0.04 0.03 0.0025" material="pcb" """ + V + """/>
+      <geom type="box" pos="0.075 0.0 0.031" size="0.014 0.014 0.0035" material="servo" """ + V + """/>
+      <geom type="box" pos="0.075 0.0 0.0375" size="0.012 0.012 0.0035" material="alu" """ + V + """/>
+      <geom type="box" pos="0.075 0.0 0.0425" size="0.010 0.010 0.0015" material="titan" """ + V + """/>
+      <geom type="box" pos="0.053 0.0 0.0305" size="0.004 0.012 0.002" material="gold" """ + V + """/>
+      <geom type="box" pos="0.104 0.020 0.0315" size="0.007 0.007 0.0035" material="alu" """ + V + """/>
+      <geom type="box" pos="0.104 -0.020 0.0315" size="0.007 0.007 0.0035" material="alu" """ + V + """/>
+      <geom type="box" pos="0.098 0.0 0.0295" size="0.0045 0.009 0.0022" material="carbon" """ + V + """/>
+      <geom type="box" pos="0.05 0.026 0.0305" size="0.012 0.0025 0.002" material="gold" """ + V + """/>
+      <geom type="cylinder" pos="0.062 -0.022 0.0305" size="0.003 0.002" material="accent" """ + V + """/>
+      <geom type="cylinder" pos="0.068 -0.022 0.0305" size="0.003 0.002" material="accent" """ + V + """/>
+      <geom type="box" pos="0.09 -0.018 0.0295" size="0.003 0.003 0.001" material="gold" """ + V + """/>
       <geom type="box" pos="{bx_head} 0 0.004" size="0.028 0.045 0.02" material="carbon" """ + V + """/>
       <geom type="sphere" pos="{bx_lens} 0.022 0.008" size="0.011" material="lens" """ + V + """/>
       <geom type="sphere" pos="{bx_lens} -0.022 0.008" size="0.011" material="lens" """ + V + """/>
