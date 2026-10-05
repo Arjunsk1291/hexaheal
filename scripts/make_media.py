@@ -35,7 +35,7 @@ def render(ctrl_name, ctrl, scenario, seed=0, record_neural=False):
     if hasattr(ctrl, "seed"): ctrl.seed = seed
     env.reset(seed=seed); c.reset()
     label = f"{LABEL[ctrl_name]}{' + HEALING' if sp['heal'] else ''} | {scenario.replace('+healing','').replace('_',' ')}"
-    rec = EpisodeRecorder(env, 640, 360, 30, cam_dist=1.25, label=label)
+    rec = EpisodeRecorder(env, 640, 360, 30, cam_dist=1.0, label=label)
     frames_n, last_x, last_t = [], 0.0, 0.0
     acc = None
     while True:
