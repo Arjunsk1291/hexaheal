@@ -1,0 +1,271 @@
+{
+ "controller": "ppo",
+ "scenario": "fault_reduce_torque+healing",
+ "seed": 0,
+ "decisions": [
+  {
+   "t": 4.3,
+   "from": "NORMAL",
+   "to": "FAULT_SUSPECTED",
+   "evidence": {
+    "max_elevation_rad": 0.097,
+    "frozen_joints": 0,
+    "tilt_rms": 0.066
+   },
+   "action": {}
+  },
+  {
+   "t": 4.92,
+   "from": "FAULT_SUSPECTED",
+   "to": "DIAGNOSE",
+   "evidence": {
+    "elevation_by_leg": [
+     [
+      -0.03,
+      -0.03,
+      0.0
+     ],
+     [
+      0.04,
+      0.05,
+      0.01
+     ],
+     [
+      -0.03,
+      -0.04,
+      -0.01
+     ],
+     [
+      -0.07,
+      -0.06,
+      -0.02
+     ],
+     [
+      -0.07,
+      0.01,
+      -0.02
+     ],
+     [
+      -0.06,
+      0.01,
+      -0.04
+     ]
+    ]
+   },
+   "action": {}
+  },
+  {
+   "t": 4.92,
+   "from": "DIAGNOSE",
+   "to": "NORMAL",
+   "evidence": {},
+   "action": {
+    "decision": "false alarm, no localizable fault"
+   }
+  },
+  {
+   "t": 5.26,
+   "from": "NORMAL",
+   "to": "FAULT_SUSPECTED",
+   "evidence": {
+    "max_elevation_rad": 0.152,
+    "frozen_joints": 0,
+    "tilt_rms": 0.077
+   },
+   "action": {}
+  },
+  {
+   "t": 5.88,
+   "from": "FAULT_SUSPECTED",
+   "to": "DIAGNOSE",
+   "evidence": {
+    "elevation_by_leg": [
+     [
+      0.02,
+      -0.0,
+      0.02
+     ],
+     [
+      0.02,
+      0.12,
+      0.02
+     ],
+     [
+      -0.02,
+      -0.0,
+      -0.02
+     ],
+     [
+      -0.04,
+      -0.09,
+      -0.05
+     ],
+     [
+      -0.04,
+      -0.02,
+      -0.05
+     ],
+     [
+      -0.03,
+      -0.01,
+      -0.06
+     ]
+    ]
+   },
+   "action": {}
+  },
+  {
+   "t": 5.88,
+   "from": "DIAGNOSE",
+   "to": "ADAPT",
+   "evidence": {
+    "diagnosis": {
+     "leg": 1,
+     "joint": 0,
+     "kind": "lock_joint",
+     "score": 2.0,
+     "n_candidates": 1
+    }
+   },
+   "action": {
+    "decision": "gait re-plan via CMA-ES"
+   }
+  },
+  {
+   "t": 7.0,
+   "from": "ADAPT",
+   "to": "VERIFY",
+   "evidence": {
+    "trials": 19,
+    "wall_s": 1.1,
+    "fitness_before": -0.047,
+    "fitness_after": 0.931
+   },
+   "action": {
+    "applied_params": [
+     2.083,
+     0.44,
+     0.489,
+     0.502,
+     0.233,
+     0.709
+    ]
+   }
+  },
+  {
+   "t": 8.5,
+   "from": "VERIFY",
+   "to": "NORMAL",
+   "evidence": {
+    "speed_m_s": 0.191,
+    "pre_fault_speed_m_s": 0.001,
+    "ratio": 191.379
+   },
+   "action": {
+    "decision": "recovery verified"
+   }
+  },
+  {
+   "t": 9.12,
+   "from": "NORMAL",
+   "to": "FAULT_SUSPECTED",
+   "evidence": {
+    "max_elevation_rad": 0.097,
+    "frozen_joints": 0,
+    "tilt_rms": 0.161
+   },
+   "action": {}
+  },
+  {
+   "t": 9.72,
+   "from": "FAULT_SUSPECTED",
+   "to": "DIAGNOSE",
+   "evidence": {
+    "elevation_by_leg": [
+     [
+      0.02,
+      -0.0,
+      -0.0
+     ],
+     [
+      0.08,
+      0.14,
+      -0.04
+     ],
+     [
+      0.03,
+      -0.04,
+      -0.03
+     ],
+     [
+      -0.13,
+      -0.08,
+      -0.04
+     ],
+     [
+      -0.15,
+      -0.03,
+      -0.03
+     ],
+     [
+      -0.11,
+      0.01,
+      -0.06
+     ]
+    ]
+   },
+   "action": {}
+  },
+  {
+   "t": 9.72,
+   "from": "DIAGNOSE",
+   "to": "ADAPT",
+   "evidence": {
+    "diagnosis": {
+     "leg": 1,
+     "joint": 0,
+     "kind": "lock_joint",
+     "score": 2.0,
+     "n_candidates": 1
+    }
+   },
+   "action": {
+    "decision": "gait re-plan via CMA-ES"
+   }
+  },
+  {
+   "t": 11.0,
+   "from": "ADAPT",
+   "to": "VERIFY",
+   "evidence": {
+    "trials": 19,
+    "wall_s": 1.26,
+    "fitness_before": 0.926,
+    "fitness_after": 0.926
+   },
+   "action": {
+    "applied_params": [
+     2.083,
+     0.44,
+     0.489,
+     0.502,
+     0.233,
+     1.0
+    ]
+   }
+  },
+  {
+   "t": 12.5,
+   "from": "VERIFY",
+   "to": "ADAPT",
+   "evidence": {
+    "speed_m_s": -0.084,
+    "pre_fault_speed_m_s": 0.001,
+    "ratio": -83.512
+   },
+   "action": {
+    "decision": "verify failed, second search with larger budget"
+   }
+  }
+ ]
+}
