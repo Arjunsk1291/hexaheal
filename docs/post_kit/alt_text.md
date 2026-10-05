@@ -1,0 +1,12 @@
+# Alt text (drafts)
+- cover_1080x1080.png: Dark card reading NeuroWalker, connectome-inspired hexapod, simulation only.
+- carousel_1.png: Title slide: NeuroWalker, connectome-inspired hexapod, simulation only.
+- carousel_2.png: Text slide describing a 10,000-neuron piece of a published fruit-fly connectome steering a simulated 18-joint hexapod.
+- carousel_3.png: Flat-ground distance in 10 seconds for the tripod, connectome-inspired and PPO residual controllers.
+- carousel_4.png: Number of falls out of 10 on a 15 degree slope for each controller.
+- carousel_5.png: Number of falls out of 10 under a 48 newton push for each controller.
+- carousel_6.png: Speed kept after a disabled leg, without and with self-healing, for each controller.
+- carousel_7.png: Honest limits: simulation only, not an emulated fly brain, 10 seeds, sandbox timings.
+- carousel_8.png: Pointer to code, data and results, with the FlyWire CC BY-NC 4.0 data note.
+- reel_showcase.mp4 / hero.mp4: Side-by-side simulated hexapods (tripod, connectome-inspired, PPO residual) walking on flat ground, then slope, push and leg-fault scenes. Labeled SIMULATION.
+- vertical_*.mp4: One simulated hexapod walking, 15 seconds, labeled simulation only.
