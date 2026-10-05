@@ -1,6 +1,12 @@
 """Media pipeline: render clips (640x360, 30 fps), neural-activity data, dashboard data, showcase reel, LinkedIn assets."""
-import glob, json, os, shutil, sys
+import glob
+import json
+import os
+import shutil
+import sys
+
 import numpy as np
+
 os.environ.setdefault("MUJOCO_GL", "osmesa"); os.environ.setdefault("PYOPENGL_PLATFORM", "osmesa")
 from neurowalker.benchmark import TARGET_SPEED, scenario_spec
 from neurowalker.env import HexapodEnv
@@ -66,8 +72,9 @@ def main():
 
 
 def neural_data():
-    import scipy.sparse as sp, scipy.sparse.linalg as sla, pandas as pd
-    from neurowalker.brain import BrainController
+    import pandas as pd
+    import scipy.sparse as sp
+    import scipy.sparse.linalg as sla
     b = make_ctrl("connectome")
     rec, env = render("connectome", b, "flat", seed=0, record_neural=True)
     rec.save(f"{MEDIA}/neural_walk.mp4"); shutil.copy(f"{MEDIA}/neural_walk.mp4", f"{PUB}/media/neural_walk.mp4")

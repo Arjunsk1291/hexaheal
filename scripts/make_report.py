@@ -1,6 +1,8 @@
 """Summaries (mean, 95% CI), figures and an auto-generated analysis from results/benchmark.parquet."""
-import json, os
-import numpy as np, pandas as pd
+import json
+import os
+import numpy as np
+import pandas as pd
 from scipy import stats
 import matplotlib; matplotlib.use("Agg")
 import matplotlib.pyplot as plt

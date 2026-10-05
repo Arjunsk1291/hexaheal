@@ -4,7 +4,6 @@ Adaptation = gait re-planning via CMA-ES over CPG parameters, evaluated in short
 with the diagnosed fault applied. Every decision is logged (timestamp, evidence, action)."""
 from __future__ import annotations
 
-import copy
 import json
 import time
 from collections import deque

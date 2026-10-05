@@ -1,5 +1,6 @@
 """Generate README.md; every number is read from results/*.json."""
 import json
+
 S = json.load(open("results/summary.json")); info = json.load(open("data/processed/subgraph_info.json"))
 V = json.load(open("results/validation/shiu_sugar_validation.json"))
 try: pre = json.load(open("results/preflight.json"))

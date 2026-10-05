@@ -1,11 +1,16 @@
 """Train the PPO residual policy. Resumable (checkpoints), CPU only, honors --max-minutes."""
-import argparse, json, os, time
+import argparse
+import json
+import os
+import time
+
 import numpy as np
 import torch
 from stable_baselines3 import PPO
 from stable_baselines3.common.callbacks import BaseCallback, CheckpointCallback
-from stable_baselines3.common.vec_env import DummyVecEnv
 from stable_baselines3.common.monitor import Monitor
+from stable_baselines3.common.vec_env import DummyVecEnv
+
 from neurowalker.rl import ResidualEnv
 
 ap = argparse.ArgumentParser()

@@ -9,7 +9,6 @@ import psutil
 from .env import HexapodEnv
 from .faults import Fault
 from .healing import HealingController
-from .tripod import TripodController
 
 TARGET_SPEED = 0.25
 FAULT_T = 4.0

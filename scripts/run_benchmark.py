@@ -1,6 +1,11 @@
 """Run the arena. Resumable: partial rows are appended to results/benchmark_partial.jsonl."""
-import argparse, json, os, time
-import numpy as np, pandas as pd
+import argparse
+import json
+import os
+import time
+
+import pandas as pd
+
 from neurowalker.benchmark import SCENARIOS, run_one
 from neurowalker.tripod import TripodController
 

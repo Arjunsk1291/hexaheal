@@ -1,8 +1,8 @@
 """PPO residual policy on top of the tripod CPG (small 64x64 MLP). The policy outputs a bounded correction added to the CPG action."""
 from __future__ import annotations
 
-import numpy as np
 import gymnasium as gym
+import numpy as np
 from gymnasium import spaces
 
 from .env import HexapodEnv

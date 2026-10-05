@@ -1,10 +1,15 @@
 """Validation: reproduce a published qualitative circuit result (Shiu et al. 2024): activating sugar-sensing
 gustatory neurons drives feeding-related (proboscis/ingestion) motor neurons. Runs on the full 138,639-neuron
 v783 network (engine check) and on the 10k-neuron subgraph used for control."""
-import json, time, sys
-import numpy as np, pandas as pd, scipy.sparse as sp
+import json
+import time
+import sys
+import numpy as np
+import pandas as pd
+import scipy.sparse as sp
 import matplotlib; matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+
 from neurowalker.connectome import load_full
 from neurowalker.snn import SpikingNet
 
@@ -59,7 +64,7 @@ json.dump(res, open("results/validation/shiu_sugar_validation.json", "w"), inden
 fig, axes = plt.subplots(1, 2, figsize=(11, 4.2), sharey=False)
 cols = {"none": "#6b7280", "sugar_GRN": "#2dd4bf", "bitter_GRN": "#f59e0b"}
 for ax, key, title in [(axes[0], "full", f"Full network ({res['full_network']['neurons']:,} neurons)"),
-                       (axes[1], "subgraph", f"10k-neuron control subgraph")]:
+                       (axes[1], "subgraph", "10k-neuron control subgraph")]:
     gs = ["proboscis_motor", "ingestion_motor", "antennal_motor", "neck_motor", "eye_motor"]
     x = np.arange(len(gs)); w = 0.27
     for k, (cn, col) in enumerate(cols.items()):
