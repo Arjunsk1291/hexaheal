@@ -18,3 +18,4 @@ gh api -X POST "repos/$OWNER/neurowalker/pages" -f build_type=workflow || gh api
 fi
 echo "Repo: https://github.com/$OWNER/neurowalker"
 [ "$VIS" = public ] && echo "Pages (after the Pages workflow finishes): https://$OWNER.github.io/neurowalker/"
+true
