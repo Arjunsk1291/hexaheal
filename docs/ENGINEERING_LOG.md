@@ -43,3 +43,12 @@ CPU-only design, PPO as a residual on the CPG (64x64 MLP), verification labels, 
 - Caveat: this run shared 2 vCPUs with PPO training, so latency and CPU numbers are inflated and the wall time of the CMA-ES search (charged to the robot as time spent on the old gait) is load-dependent. Several healing episodes ended while still in ADAPT/VERIFY/FAULT_SUSPECTED; those are reported as such in the tables, not as recoveries.
 - Findings (not hidden): connectome-inspired and tripod both fall on 15/20 deg slopes; on 10 deg slope the connectome-inspired controller falls in 3/10 seeds, the tripod in 0/10; the 48 N push topples both in 5/10 seeds. Slight distance advantage of the connectome-inspired controller on flat and rough terrain (about +0.1 m of 10 s) is small and comes mostly from the closed-loop speed command pushing gait gain above the fixed tripod setting.
 - Retained speed above 100% (reduce_torque + healing) means the healed run walked faster than its own pre-fault window; plain 0% rows include falls and backward motion (negative speed is clipped to 0).
+
+## Phase 6b - lesion sweep, media, dashboard (2 vCPU sandbox)
+- Lesion sweep (5 seeds per group, silencing named neuron groups of the subgraph; results/lesion_sweep_summary.json): no group caused a fall. Speed change vs. unlesioned: dn_turn_left -113%, dn_turn_right -90%, in_turn_left -83%, dn_all and sensory_all_mech -78%, dn_speed_up -67%, in_speed_up -38%, pitch/roll/other groups -18% to 0%.
+- Caveat: the input/output mapping from neurons to the gait is a design choice, so these effects describe this controller, not fly biology. A turn-group lesion changing forward speed shows the readout couples channels; it is not a finding about fly turning circuits.
+- Validation rerun with 10 trials (results/validation/shiu_sugar_validation.json). Qualitative reproduction only.
+- Dashboard bug found while checking screenshots: results/summary.json contains NaN (cells with no fault metric). Browsers reject NaN in JSON, so leaderboard and charts were empty. Fixed by writing null into the dashboard copy.
+- Build host hit a memory stall when the first asset script held all frames in RAM (1.5 GB box). Rewritten to stream frames.
+- Healing made the PPO residual worse after a disabled leg (77% -> 49% speed retained). Reported as is.
+- Playwright screenshots (desktop and mobile) are in docs/screenshots; ROS 2, Docker and CI remain UNVERIFIED.
