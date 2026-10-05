@@ -13,6 +13,7 @@ class Fault:
     leg: int = 1  # 0..5
     joint: int = 1  # 0 coxa, 1 femur, 2 tibia (lock_joint only)
     severity: float = 0.3  # reduce_torque: remaining torque fraction
+    angle: float | None = None  # lock_joint: lock angle (rad); None = current angle
 
     def __post_init__(self):
         if self.kind not in FAULT_TYPES:

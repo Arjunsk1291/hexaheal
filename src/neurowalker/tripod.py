@@ -27,6 +27,10 @@ class TripodController:
         self.disabled_legs: set[int] = set()  # used by the self-healing layer
         self.leg_stride_scale = np.ones(6)
 
+    @property
+    def cpg(self):
+        return self
+
     def reset(self):
         self.phase = 0.0
 

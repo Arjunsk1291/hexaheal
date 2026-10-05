@@ -166,7 +166,7 @@ class HexapodEnv(gym.Env):
                 m.actuator_biasprm[a, 2] = 0.02 * self._base_kv[a]
                 m.actuator_forcerange[a] = [0, 0]
         elif f.kind == "lock_joint":
-            self.locked[f.leg * 3 + f.joint] = float(self.q[f.leg * 3 + f.joint])
+            self.locked[f.leg * 3 + f.joint] = float(self.q[f.leg * 3 + f.joint]) if f.angle is None else float(f.angle)
         elif f.kind == "reduce_torque":
             for j in range(3):
                 a = f.leg * 3 + j
