@@ -8,8 +8,12 @@ def font(sz):
     for p in ["/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"]:
         if os.path.exists(p): return ImageFont.truetype(p, sz)
     return ImageFont.load_default()
-def frames(fn, step=1):
-    r = iio.get_reader(f"{M}/{fn}"); out = [Image.fromarray(f) for i, f in enumerate(r) if i % step == 0]; r.close(); return out
+def frames(fn, step=1, limit=None):
+    r = iio.get_reader(f"{M}/{fn}")
+    for i, f in enumerate(r):
+        if limit and i >= limit: break
+        if i % step == 0: yield Image.fromarray(f)
+    r.close()
 def label(img, text, sub=""):
     im = img.copy(); d = ImageDraw.Draw(im); d.rectangle([0, 0, im.width, 34], fill=(16, 20, 28)); d.text((10, 6), text, fill=(240, 240, 240), font=font(18))
     if sub: d.text((im.width - 10 - 9 * len(sub), 8), sub, fill=(150, 200, 255), font=font(14))
@@ -18,42 +22,45 @@ def write(fn, fr, fps=30):
     w = iio.get_writer(fn, fps=fps, codec="libx264", pixelformat="yuv420p", macro_block_size=2, quality=7)
     for f in fr: w.append_data(np.asarray(f.convert("RGB")))
     w.close()
-def side(sc):
-    names = {"tripod": "Tripod CPG", "connectome": "Connectome-inspired", "ppo": "PPO residual"}
-    cl = {c: frames(f"{c}__{sc}.mp4") for c in names}; n = max(len(v) for v in cl.values()); W, H = cl["tripod"][0].size
-    out = []
-    for i in range(n):
-        row = Image.new("RGB", (W * 3, H))
-        for k, c in enumerate(names):
-            f = cl[c][min(i, len(cl[c]) - 1)]; row.paste(label(f, names[c], "fell" if i >= len(cl[c]) - 1 and len(cl[c]) < n else ""), (k * W, 0))
-        out.append(row)
-    return out
+NAMES = {"tripod": "Tripod CPG", "connectome": "Connectome-inspired", "ppo": "PPO residual"}
+def side(sc, limit=None, cap=None):
+    its = {c: frames(f"{c}__{sc}.mp4", limit=limit) for c in NAMES}; last = {}; done = {c: False for c in NAMES}
+    while True:
+        row = None
+        for k, c in enumerate(NAMES):
+            try: last[c] = next(its[c])
+            except StopIteration: done[c] = True
+            if c not in last: return
+            if row is None: W, H = last[c].size; row = Image.new("RGB", (W * 3, H))
+            row.paste(label(last[c], NAMES[c], "fell/ended" if done[c] else ""), (k * W, 0))
+        if all(done.values()): return
+        if cap: ImageDraw.Draw(row).text((12, row.height - 28), cap, fill=(255, 255, 0), font=font(18))
+        yield row
 def card(text_lines, size, bg=(16, 20, 28)):
     im = Image.new("RGB", size, bg); d = ImageDraw.Draw(im); y = size[1] // 3
     for t, sz, col in text_lines:
         f = font(sz); d.text((size[0] // 12, y), t, fill=col, font=f); y += int(sz * 1.5)
     return im
-def hold(im, s, fps=30): return [im] * int(s * fps)
+def hold(im, s, fps=30):
+    for _ in range(int(s * fps)): yield im
 sim = "Simulation only. 2 vCPU CPU sandbox measurements."
 # hero + gif
-hero = side("flat"); write(f"{M}/hero.mp4", hero); shutil.copy(f"{M}/hero.mp4", "dashboard/public/media/hero.mp4")
-g = [f.resize((f.width // 2, f.height // 2)) for f in hero[::3]]; g[0].save(f"{M}/demo.gif", save_all=True, append_images=g[1:], duration=100, loop=0, optimize=True)
-# reel 45s
-parts = [("flat", "Flat ground: all three walk"), ("slope15", "15 deg slope: tripod and connectome-inspired fall, PPO survives"), ("push", "48 N push"), ("fault_disable_leg", "Fault: leg disabled")]
-reel = hold(card([("NeuroWalker", 60, (255, 255, 255)), ("Connectome-inspired hexapod, simulated", 26, (150, 200, 255)), (sim, 18, (180, 180, 180))], hero[0].size), 3)
-for sc, cap in parts:
-    try: fr = side(sc)
-    except Exception as e: print("skip", sc, e); continue
-    fr = [label(f, cap) if False else f for f in fr]
-    d = ImageDraw.Draw(fr[0]); reel += [ (lambda f: (ImageDraw.Draw(f).text((12, f.height - 28), cap, fill=(255, 255, 0), font=font(18)), f)[1])(f.copy()) for f in fr[:int(9 * 30)] ]
-reel += hold(card([("All numbers from results/summary.json", 30, (255, 255, 255)), ("10 seeds per cell, simulation only", 22, (150, 200, 255))], hero[0].size), 3)
-write(f"{OUT}/reel_showcase.mp4", reel)
-# vertical clips 15s (1080x1920) per controller
+W3 = (1920, 368)
+write(f"{M}/hero.mp4", side("flat")); shutil.copy(f"{M}/hero.mp4", "dashboard/public/media/hero.mp4")
+g = [f.resize((f.width // 3, f.height // 3)) for i, f in enumerate(side("flat")) if i % 3 == 0]
+g[0].save(f"{M}/demo.gif", save_all=True, append_images=g[1:], duration=100, loop=0, optimize=True); del g
+parts = [("flat", "Flat ground: all three walk"), ("slope15", "15 deg slope: tripod and connectome-inspired fall, PPO survives"), ("push", "48 N push"), ("fault_disable_leg", "Fault: leg disabled (no healing)")]
+def reel():
+    yield from hold(card([("NeuroWalker", 60, (255, 255, 255)), ("Connectome-inspired hexapod, simulated", 26, (150, 200, 255)), (sim, 18, (180, 180, 180))], W3), 3)
+    for sc, cap in parts: yield from side(sc, limit=270, cap=cap)
+    yield from hold(card([("All numbers from results/summary.json", 30, (255, 255, 255)), ("10 seeds per cell, simulation only", 22, (150, 200, 255))], W3), 3)
+write(f"{OUT}/reel_showcase.mp4", reel())
 for c in ["connectome", "ppo"]:
-    fr = frames(f"{c}__flat.mp4")[:450]; v = []
-    for f in fr:
-        im = Image.new("RGB", (1080, 1920), (16, 20, 28)); big = f.resize((1080, 607)); im.paste(big, (0, 656)); ImageDraw.Draw(im).text((40, 520), {"connectome": "Connectome-inspired controller", "ppo": "PPO residual controller"}[c], fill=(255, 255, 255), font=font(44)); ImageDraw.Draw(im).text((40, 1300), "Simulation only", fill=(180, 180, 180), font=font(30)); v.append(im)
-    write(f"{OUT}/vertical_{c}.mp4", v)
+    def v(c=c):
+        for f in frames(f"{c}__flat.mp4", limit=300):
+            im = Image.new("RGB", (1080, 1920), (16, 20, 28)); im.paste(f.resize((1080, 607)), (0, 656)); dd = ImageDraw.Draw(im)
+            dd.text((40, 520), {"connectome": "Connectome-inspired controller", "ppo": "PPO residual controller"}[c], fill=(255, 255, 255), font=font(44)); dd.text((40, 1300), "Simulation only", fill=(180, 180, 180), font=font(30)); yield im
+    write(f"{OUT}/vertical_{c}.mp4", v())
 # cover + carousel
 cover = card([("NeuroWalker", 110, (255, 255, 255)), ("Connectome-inspired hexapod", 48, (150, 200, 255)), ("Simulation only", 36, (200, 200, 200))], (1080, 1080)); cover.save(f"{OUT}/cover_1080x1080.png")
 f1 = lambda x: f"{x:.2f} m"
