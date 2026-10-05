@@ -8,8 +8,10 @@ nm = lambda c: "+".join(LEG[int(i)] for i in c[3:].split("_"))
 walk = [o for o in orc if o["walks"]]; nowalk = [o for o in orc if not o["walks"]]
 read = lambda p: open(p).read().split("\n", 2)[2] if os.path.exists(p) else "(missing)"
 s1, mp, s4, plan = (read(p) for p in ("docs/v3_stage1_tables.md", "docs/v3_recovery_map.md", "docs/v3_stage4_tables.md", "docs/v3_video_plan.md"))
+lng = [json.loads(line) for f in ("results/v3_oracle_long.jsonl", "results/v3_oracle_long2.jsonl") if os.path.exists(f) for line in open(f)]
+long_txt = ("Longer-budget rerun (80 generations x 3 restarts, popsize 16) of the cases that did not walk: " + ("; ".join(f"{nm(o['case'])}: {'WALKS' if o['walks'] else 'no walking gait found'} ({10 - o['val_falls']}/10 survive, mean {sum(o['val_dist']) / 10:.2f} m)" for o in lng) or "not finished") + ".")
 head = open("docs/v3_header.md").read()
 oracle_txt = (f"Oracle cases finished: {len(orc)}/21. Walks (>=8/10 validation seeds, no fall, >=1.0 m in 10 s): " + (", ".join(nm(o["case"]) for o in walk) or "none") + ". Did not reach the walking criterion within the budget: " + (", ".join(f"{nm(o['case'])} ({o['val_falls']}/10 falls)" for o in nowalk) or "none") + ".")
-out = head.replace("{{ORACLE}}", oracle_txt).replace("{{S1}}", s1).replace("{{MAP}}", mp).replace("{{S4}}", s4).replace("{{PLAN}}", plan)
+out = head.replace("{{ORACLE}}", oracle_txt).replace("{{LONG}}", long_txt).replace("{{S1}}", s1).replace("{{MAP}}", mp).replace("{{S4}}", s4).replace("{{PLAN}}", plan)
 open("docs/RESULTS_V3.md", "w").write(out)
-print(oracle_txt)
+print(oracle_txt); print(long_txt)

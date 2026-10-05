@@ -88,3 +88,10 @@ CPU-only design, PPO as a residual on the CPG (64x64 MLP), verification labels, 
 ## v2 Stage 5 (statistics)
 - scripts/stats_v2.py: paired bootstrap on per-seed differences, 100,000 resamples, percentile 95% CI, rng seed 12345; Holm across each family; Wilson 95% intervals for falls; d_z effect size. Old v1 ci95 was Student-t half-width t(0.975,9)*sd/sqrt(10). Outputs results/v2_stats.json, docs/v2_tables.md.
 - Full test suite: 26 passed. ruff: 1 pre-existing F841 in scripts/make_story.py (old file).
+
+## V3 (simulation, 2 vCPU sandbox; tune on seeds 100-109, evaluate on seeds 0-9)
+- Stage 1: claims register rewritten. Healing on disable_leg (with minus without, seeds 0-9): tripod falls 10/10 -> 3/10, distance +0.714 [+0.323,+1.104]; tuned tripod 7/10 -> 4/10, +0.203 [-0.233,+0.649]; connectome 10/10 -> 10/10; PPO 0/10 -> 1/10. Wilson intervals, time-to-fall added. Distance rewards overshoot.
+- Stage 2: connectome+healing falls ~6.5 s (healed gait applies at 6.52 s after fault at 4 s). Nudges off: 3/10 falls; x0.5: 9; clipped: 5; CMA-ES on the connectome controller: 10 (no gain). Speed/freq nudges saturate and pitch drifts before the healed gait is in place.
+- Stage 3: 21 leg-loss cases x 4 controllers x 10 seeds (840 episodes) plus a 30-gen x 2-restart CMA-ES oracle; see docs/v3_recovery_map.md.
+- Stage 4: hybrid h_half_pg chosen on tuning seeds; vs tuned tripod 5 win / 5 tie / 2 loss; loses single-leg+healing and sequential. See docs/v3_stage4_tables.md.
+- Stage 5: plan only (docs/v3_video_plan.md); nothing rendered.

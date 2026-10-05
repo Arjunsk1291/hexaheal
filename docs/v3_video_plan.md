@@ -44,9 +44,13 @@ Selection rule (fixed in advance): every seed 0-9 of a chosen cell is shown, in 
 
 ## Candidate E: hybrid on the same single-leg cell and slope
 
-### E1 hybrid disable_leg+healing: data for hybrid / fault_disable_leg+healing h_half_pg not available (n=0)
+### E1 hybrid disable_leg+healing
+- hybrid h_half_pg / fault_disable_leg+healing: falls 8/10, mean distance 1.94 m
+- per seed 0-9: s0:T=8.66, s1:T=6.28, s2:T=8.62, s3:OK, s4:T=6.14, s5:T=7.46, s6:T=6.26, s7:T=7.30, s8:OK, s9:T=6.56
 
-### E2 hybrid slope15: data for hybrid / slope15 h_half_pg not available (n=0)
+### E2 hybrid slope15
+- hybrid h_half_pg / slope15: falls 0/10, mean distance 1.99 m
+- per seed 0-9: s0:OK, s1:OK, s2:OK, s3:OK, s4:OK, s5:OK, s6:OK, s7:OK, s8:OK, s9:OK
 
 ## Recommendation
 
