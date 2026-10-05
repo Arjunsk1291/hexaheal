@@ -1,4 +1,8 @@
 """Media pipeline: render clips (640x360, 30 fps), neural-activity data, dashboard data, showcase reel, LinkedIn assets."""
+try:
+    import torch, torch._dynamo  # noqa: F401  (load before mujoco/numba: avoids a segfault in torch.optim on this stack)
+except ImportError:
+    pass
 import glob
 import json
 import os
@@ -56,15 +60,17 @@ def render(ctrl_name, ctrl, scenario, seed=0, record_neural=False):
 
 def main():
     manifest = {"videos": {}, "arena_scenarios": []}
-    ctrls = [c for c in ["tripod", "connectome", "ppo"] if os.path.exists("models/ppo_residual.zip") or c != "ppo"]
+    ctrls = [c for c in os.environ.get("CTRLS","tripod,connectome,ppo").split(",") if os.path.exists("models/ppo_residual.zip") or c != "ppo"]
     objs = {c: make_ctrl(c) for c in ctrls}
     for sc in CLIPS:
         if only and sc not in only: continue
         key = sc.replace("+healing", "")
         for cn in ctrls:
             fn = f"{cn}__{key}.mp4"
+            if os.path.exists(f"{MEDIA}/{fn}.v4"): continue
             rec, env = render(cn, objs[cn], sc)
             rec.save(f"{MEDIA}/{fn}"); shutil.copy(f"{MEDIA}/{fn}", f"{PUB}/media/{fn}")
+            open(f"{MEDIA}/{fn}.v4", "w").write("v4")
             manifest["videos"].setdefault(key, {})[cn] = fn
             print("rendered", fn, len(rec.frames), "frames, fell" if env.fell else "ok", flush=True)
         manifest["arena_scenarios"].append(key)

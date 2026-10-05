@@ -1,38 +1,24 @@
 {
  "videos": {
   "flat": {
-   "tripod": "tripod__flat.mp4",
-   "connectome": "connectome__flat.mp4",
    "ppo": "ppo__flat.mp4"
   },
   "rough3": {
-   "tripod": "tripod__rough3.mp4",
-   "connectome": "connectome__rough3.mp4",
    "ppo": "ppo__rough3.mp4"
   },
   "slope10": {
-   "tripod": "tripod__slope10.mp4",
-   "connectome": "connectome__slope10.mp4",
    "ppo": "ppo__slope10.mp4"
   },
   "slope15": {
-   "tripod": "tripod__slope15.mp4",
-   "connectome": "connectome__slope15.mp4",
    "ppo": "ppo__slope15.mp4"
   },
   "push": {
-   "tripod": "tripod__push.mp4",
-   "connectome": "connectome__push.mp4",
    "ppo": "ppo__push.mp4"
   },
   "fault_disable_leg": {
-   "tripod": "tripod__fault_disable_leg.mp4",
-   "connectome": "connectome__fault_disable_leg.mp4",
    "ppo": "ppo__fault_disable_leg.mp4"
   },
   "fault_lock_joint": {
-   "tripod": "tripod__fault_lock_joint.mp4",
-   "connectome": "connectome__fault_lock_joint.mp4",
    "ppo": "ppo__fault_lock_joint.mp4"
   }
  },

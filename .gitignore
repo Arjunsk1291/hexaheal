@@ -9,3 +9,4 @@ dashboard/dist/
 results/checkpoints/
 .pytest_cache/
 .ruff_cache/
+runs_media*.log
