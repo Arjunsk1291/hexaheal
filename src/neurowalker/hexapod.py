@@ -37,24 +37,26 @@ class HexapodParams:
 V = 'contype="0" conaffinity="0" mass="0" group="1"'  # visual-only: no collision, no mass, dynamics unchanged
 
 
-TORSO_VIS = """<geom type="box" pos="0 0 -0.012" size="0.13 0.064 0.008" material="graphite" """ + V + """/>
-      <geom type="box" pos="0 0 -0.012" euler="0 0 1.0472" size="0.13 0.064 0.0075" material="graphite" """ + V + """/>
-      <geom type="box" pos="0 0 -0.012" euler="0 0 -1.0472" size="0.13 0.064 0.0075" material="graphite" """ + V + """/>
-      <geom type="ellipsoid" pos="-0.045 0 0.012" size="0.105 0.062 0.036" material="pearl" """ + V + """/>
-      <geom type="box" pos="-0.04 0 0.046" size="0.07 0.004 0.0015" material="glow" """ + V + """/>
-      <geom type="box" pos="0.085 0 0.012" size="0.05 0.04 0.012" material="graphite" """ + V + """/>
-      <geom type="box" pos="0.085 0 0.025" size="0.042 0.032 0.0025" material="pcb" """ + V + """/>
-      <geom type="box" pos="0.092 0.0 0.0295" size="0.013 0.013 0.0035" material="titan" """ + V + """/>
-      <geom type="box" pos="0.092 0.0 0.0345" size="0.011 0.011 0.0025" material="alu" """ + V + """/>
-      <geom type="box" pos="0.068 0 0.0275" size="0.0035 0.016 0.002" material="gold" """ + V + """/>
-      <geom type="box" pos="0.112 0.022 0.0285" size="0.007 0.007 0.0035" material="alu" """ + V + """/>
-      <geom type="box" pos="0.112 -0.022 0.0285" size="0.007 0.007 0.0035" material="alu" """ + V + """/>
-      <geom type="sphere" pos="0.138 0 0.012" size="0.024" material="graphite" """ + V + """/>
-      <geom type="ellipsoid" pos="0.152 0 0.014" size="0.016 0.036 0.014" material="visor" """ + V + """/>
-      <geom type="sphere" pos="0.165 0.016 0.016" size="0.008" material="lens" """ + V + """/>
-      <geom type="sphere" pos="0.165 -0.016 0.016" size="0.008" material="lens" """ + V + """/>
-      <geom type="box" pos="-0.17 0 0.004" size="0.012 0.03 0.008" material="graphite" """ + V + """/>
-      <geom type="box" pos="-0.182 0 0.004" size="0.0015 0.022 0.004" material="glow" """ + V + """/>"""
+TORSO_VIS = """<geom type="box" pos="0 0 -0.014" size="0.14 0.062 0.006" material="graphite" """ + V + """/>
+      <geom type="box" pos="0 0.066 0.0" size="0.14 0.004 0.012" material="alu" """ + V + """/>
+      <geom type="box" pos="0 -0.066 0.0" size="0.14 0.004 0.012" material="alu" """ + V + """/>
+      <geom type="box" pos="0 0.0675 0.0" size="0.12 0.0012 0.0025" material="teal" """ + V + """/>
+      <geom type="box" pos="0 -0.0675 0.0" size="0.12 0.0012 0.0025" material="teal" """ + V + """/>
+      <geom type="box" pos="-0.14 0 0.0" size="0.006 0.066 0.012" material="alu" """ + V + """/>
+      <geom type="box" pos="0.14 0 0.0" size="0.006 0.066 0.012" material="alu" """ + V + """/>
+      <geom type="box" pos="0.0 0 0.0" size="0.12 0.05 0.006" material="graphite" """ + V + """/>
+      <geom type="box" pos="0.04 0 0.009" size="0.045 0.036 0.0025" material="pcb" """ + V + """/>
+      <geom type="box" pos="0.045 0 0.0145" size="0.016 0.016 0.0035" material="titan" """ + V + """/>
+      <geom type="box" pos="0.045 0 0.0215" size="0.014 0.014 0.0035" material="alu" """ + V + """/>
+      <geom type="box" pos="0.012 0 0.011" size="0.0035 0.02 0.002" material="gold" """ + V + """/>
+      <geom type="box" pos="-0.07 0 0.01" size="0.04 0.03 0.004" material="graphite" """ + V + """/>
+      <geom type="box" pos="-0.07 0 0.0155" size="0.03 0.002 0.0015" material="teal" """ + V + """/>
+      <geom type="ellipsoid" pos="-0.005 0 0.008" size="0.125 0.058 0.034" material="glass" """ + V + """/>
+      <geom type="box" pos="0.15 0 -0.002" size="0.012 0.04 0.012" material="graphite" """ + V + """/>
+      <geom type="sphere" pos="0.162 0 0.002" size="0.022" material="graphite" """ + V + """/>
+      <geom type="cylinder" pos="0.178 0 0.003" euler="0 1.5708 0" size="0.016 0.004" material="alu" """ + V + """/>
+      <geom type="cylinder" pos="0.1825 0 0.003" euler="0 1.5708 0" size="0.011 0.002" material="lens" """ + V + """/>
+      <geom type="box" pos="-0.152 0 0.0" size="0.003 0.04 0.006" material="teal" """ + V + """/>"""
 
 
 def _leg_xml(i: int, p: HexapodParams) -> str:
@@ -69,25 +71,27 @@ def _leg_xml(i: int, p: HexapodParams) -> str:
     <body name="{n}_coxa" pos="{x} {side * p.body_half[1]} 0" euler="0 0 {yaw}">
       <joint name="{n}_coxa" axis="{zax}" range="{r[0][0]} {r[0][1]}" damping="0.05" armature="0.004"/>
       <geom type="capsule" fromto="0 0 0 {cl} 0 0" size="0.012" mass="0.03" rgba="0 0 0 0" contype="0" conaffinity="0"/>
-      <geom type="ellipsoid" pos="{cl * 0.4} 0 0" size="0.034 0.019 0.021" material="graphite" {V}/>
-      <geom type="cylinder" pos="{cl * 0.4} 0 0.019" size="0.012 0.0025" material="glow" {V}/>
+      <geom type="box" pos="{cl * 0.45} 0 0" size="0.032 0.02 0.022" material="graphite" {V}/>
+      <geom type="cylinder" pos="{cl * 0.45} 0 0.0225" size="0.013 0.002" material="alu" {V}/>
+      <geom type="box" pos="{cl * 0.45} 0.0205 0" size="0.02 0.0012 0.004" material="teal" {V}/>
       <body name="{n}_femur" pos="{cl} 0 0">
         <joint name="{n}_femur" axis="0 1 0" range="{r[1][0]} {r[1][1]}" damping="0.05" armature="0.004"/>
         <geom type="capsule" fromto="0 0 0 {fl} 0 0" size="0.011" mass="0.05" rgba="0 0 0 0" contype="0" conaffinity="0"/>
-        <geom type="sphere" pos="0 0 0" size="0.021" material="graphite" {V}/>
-        <geom type="cylinder" pos="0 0.0205 0" euler="1.5708 0 0" size="0.013 0.0025" material="glow" {V}/>
-        <geom type="ellipsoid" pos="{fl * 0.5} 0 0.002" size="{fl * 0.56} 0.012 0.019" material="pearl" {V}/>
-        <geom type="box" pos="{fl * 0.5} 0 0.0205" size="{fl * 0.32} 0.0035 0.0015" material="glow" {V}/>
+        <geom type="box" pos="0.004 0 0" size="0.026 0.016 0.021" material="graphite" {V}/>
+        <geom type="cylinder" pos="0 0.0165 0" euler="1.5708 0 0" size="0.014 0.002" material="alu" {V}/>
+        <geom type="ellipsoid" pos="{fl * 0.55} 0 0.004" size="{fl * 0.5} 0.013 0.017" material="smoke" {V}/>
+        <geom type="capsule" fromto="0.02 0 -0.004 {fl} 0 -0.004" size="0.005" material="alu" {V}/>
+        <geom type="box" pos="{fl * 0.5} 0.0125 0.004" size="{fl * 0.3} 0.0012 0.0025" material="teal" {V}/>
         <body name="{n}_tibia" pos="{fl} 0 0">
           <joint name="{n}_tibia" axis="0 1 0" range="{r[2][0]} {r[2][1]}" damping="0.05" armature="0.004"/>
           <geom type="capsule" fromto="0 0 0 {tl} 0 0" size="0.009" mass="0.05" rgba="0 0 0 0" contype="0" conaffinity="0"/>
-          <geom type="sphere" pos="0 0 0" size="0.0185" material="graphite" {V}/>
-          <geom type="cylinder" pos="0 0.0185 0" euler="1.5708 0 0" size="0.011 0.0025" material="glow" {V}/>
-          <geom type="capsule" fromto="0.01 0 0 {tl * 0.93} 0 0" size="0.0085" material="carbon" {V}/>
-          <geom type="ellipsoid" pos="{tl * 0.38} 0 0" size="{tl * 0.34} 0.0075 0.014" material="pearl" {V}/>
+          <geom type="box" pos="0.003 0 0" size="0.022 0.014 0.018" material="graphite" {V}/>
+          <geom type="cylinder" pos="0 0.0145 0" euler="1.5708 0 0" size="0.012 0.002" material="alu" {V}/>
+          <geom type="capsule" fromto="0.01 0 0 {tl * 0.93} 0 0" size="0.0075" material="carbon" {V}/>
+          <geom type="ellipsoid" pos="{tl * 0.4} 0 0.003" size="{tl * 0.33} 0.0095 0.013" material="smoke" {V}/>
           <geom type="cylinder" pos="{tl - 0.02} 0 0" euler="0 1.5708 0" size="0.0105 0.005" material="graphite" {V}/>
           <geom name="{n}_foot" type="sphere" pos="{tl} 0 0" size="0.013" mass="0.01" friction="{p.foot_friction} 0.02 0.002" material="rubber"/>
-          <geom type="cylinder" pos="{tl - 0.009} 0 0" euler="0 1.5708 0" size="0.0125 0.0022" material="glow" {V}/>
+          <geom type="cylinder" pos="{tl - 0.009} 0 0" euler="0 1.5708 0" size="0.0125 0.0022" material="teal" {V}/>
           <site name="{n}_foot_site" pos="{tl} 0 0" size="0.02" rgba="1 0 0 0.0"/>
         </body>
       </body>
@@ -146,6 +150,9 @@ def generate_mjcf(p: HexapodParams | None = None) -> str:
     <material name="titan" rgba="0.36 0.38 0.42 1" specular="0.8" shininess="0.7" reflectance="0.1"/>
     <material name="pearl" rgba="0.93 0.94 0.96 1" specular="0.8" shininess="0.8" reflectance="0.2"/>
     <material name="graphite" rgba="0.12 0.13 0.16 1" specular="0.5" shininess="0.6"/>
+    <material name="glass" rgba="0.1 0.14 0.2 0.42" specular="1" shininess="1" reflectance="0.3"/>
+    <material name="smoke" rgba="0.1 0.12 0.16 0.6" specular="0.9" shininess="0.9" reflectance="0.15"/>
+    <material name="teal" rgba="0.1 0.78 0.82 1" emission="0.6" specular="0.3"/>
     <material name="glow" rgba="0.1 0.9 0.95 1" emission="1.2" specular="0.2"/>
     <material name="visor" rgba="0.02 0.03 0.06 1" specular="1" shininess="1" reflectance="0.35"/>
     <material name="gold" rgba="0.9 0.72 0.25 1" specular="0.9" shininess="0.9"/>
