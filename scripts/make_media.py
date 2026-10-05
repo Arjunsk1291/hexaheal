@@ -99,7 +99,7 @@ def neural_data():
 
 
 def dashboard_data():
-    summ = json.load(open("results/summary.json")); shutil.copy("results/summary.json", f"{PUB}/data/summary.json")
+    summ = json.load(open("results/summary.json")); json.dump(json.loads(json.dumps(summ).replace("NaN", "null")), open(f"{PUB}/data/summary.json", "w"), separators=(",", ":"))  # browsers reject NaN
     man = json.load(open("results/media_manifest.json"))
     info = json.load(open("data/processed/subgraph_info.json")); val = json.load(open("results/validation/shiu_sugar_validation.json"))
     c = summ["connectome"]; head = []
