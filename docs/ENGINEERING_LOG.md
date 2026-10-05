@@ -76,3 +76,15 @@ CPU-only design, PPO as a residual on the CPG (64x64 MLP), verification labels, 
 - fault_sequential (R3 @4 s, L3 @9 s, 16 s) falls/10, no healing: tripod 10, connectome 10, PPO 10 (these robots fall before 9 s or after).
 - fault_sequential+healing: falls/10 tripod 10, connectome 10, PPO 10. Mean FAULT_SUSPECTED per run: tripod 1.6, connectome 1.0, PPO 2.0; verified recoveries per run: tripod 0.6, connectome 0.0, PPO 1.0. Second fault (L3) detected (detect2_s mean): tripod 0.340 s, PPO 0.292 s, connectome n/a (falls before 9 s, never reaches the second fault).
 - Reading: the latch is gone and the second fault IS detected where the robot is still standing, but nobody survives the two-fault episode. With the leak fixed, healing does not stop the first-fault fall for the connectome (10/10 falls, 0 verified recoveries).
+
+## v2 Stage 3 (ablations; seeds 0-9 final evaluation, 2 vCPU sandbox simulation)
+- Variants: connectome, degree-preserving shuffle, random graph, no-network linear low-pass filter, small MLP (8-16-16-4 tanh; fit to imitate the connectome's decoded commands on random inputs, sampling seeds 100+ only; 8 cells x 10 seeds each). Files: results/v2_ablation_0-9.jsonl, results/v2_mlp_0-9.jsonl.
+- Flat distance, connectome minus variant (paired bootstrap, 100,000 resamples, 95% percentile, Holm): shuffled +0.376 m, random_graph +0.266, filter +0.489 (all CIs exclude 0) but MLP -0.213 [-0.267,-0.164]; rough1 MLP -0.126 [-0.175,-0.075]; rough3 MLP -0.125 [-0.160,-0.091]. The MLP beats the connectome on distance, so the pre-registered "wiring matters" rule is NOT met.
+- POST-HOC (not pre-registered): distance rewards overshooting the 0.25 m/s target. Mean flat speed: connectome 0.2760, tripod 0.2635, random_graph 0.2494, shuffled 0.2384, filter 0.2271, MLP 0.2973.
+- Mean abs nudge per control step (connectome): speed_gain 0.2695, freq 0.1667, turn 0.1537, stance 0.0335.
+## v2 Stage 4 (baselines) - in progress
+- Tuned tripod (analytic pitch feedback, kp=1.2, kr=0, ks=0) tuned on seeds 100-109 only (results/tuned_tripod_tuning.json); seeds 0-9 results in results/v2_tuned_0-9.jsonl: flat 2.616 m, 0 falls.
+- Rebench of tripod/connectome/PPO on all cells with fixed healing: results/v2_rebench_0-9.jsonl. PPO training seeds 1-4 in progress (seed 0 = models/ppo_residual.zip).
+## v2 Stage 5 (statistics)
+- scripts/stats_v2.py: paired bootstrap on per-seed differences, 100,000 resamples, percentile 95% CI, rng seed 12345; Holm across each family; Wilson 95% intervals for falls; d_z effect size. Old v1 ci95 was Student-t half-width t(0.975,9)*sd/sqrt(10). Outputs results/v2_stats.json, docs/v2_tables.md.
+- Full test suite: 26 passed. ruff: 1 pre-existing F841 in scripts/make_story.py (old file).
