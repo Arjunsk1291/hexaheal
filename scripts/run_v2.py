@@ -36,6 +36,8 @@ if mode == "ablation":
     plan = [(v, ABL_CELLS) for v in VARIANTS]; build = make_variant
 elif mode == "stage2":
     plan = [(c, S2_CELLS) for c in ("tripod", "connectome", "ppo")]; build = make_ctrl
+elif mode == "mlp":
+    plan = [("mlp", ABL_CELLS)]; build = make_variant
 elif mode == "tuned":
     from neurowalker.tuned import TunedTripod
     best = json.load(open("results/tuned_tripod_tuning.json"))["best"]  # gains chosen on seeds 100-109 only

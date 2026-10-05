@@ -11,7 +11,7 @@ import pandas as pd
 
 B = 10_000
 rng = np.random.default_rng(12345)
-frames = [pd.read_json(f, lines=True) for f in sorted(glob.glob("results/v2_ablation_0-9.jsonl") + glob.glob("results/v2_rebench_0-9.jsonl") + glob.glob("results/v2_tuned_0-9.jsonl") + glob.glob("results/v2_pposeeds_0-9.jsonl"))]
+frames = [pd.read_json(f, lines=True) for f in sorted(glob.glob("results/v2_ablation_0-9.jsonl") + glob.glob("results/v2_rebench_0-9.jsonl") + glob.glob("results/v2_tuned_0-9.jsonl") + glob.glob("results/v2_mlp_0-9.jsonl") + glob.glob("results/v2_pposeeds_0-9.jsonl"))]
 df = pd.concat(frames).drop_duplicates(["controller", "scenario", "seed"], keep="last")
 df = df[df.seed.between(0, 9)]
 
