@@ -1,6 +1,7 @@
 """Media pipeline: render clips (640x360, 30 fps), neural-activity data, dashboard data, showcase reel, LinkedIn assets."""
 try:
-    import torch, torch._dynamo  # noqa: F401  (load before mujoco/numba: avoids a segfault in torch.optim on this stack)
+    import torch  # noqa: F401
+    import torch._dynamo  # noqa: F401  (load before mujoco/numba: avoids a segfault in torch.optim on this stack)
 except ImportError:
     pass
 import glob
