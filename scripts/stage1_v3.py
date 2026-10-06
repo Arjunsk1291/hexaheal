@@ -4,7 +4,6 @@ speed-tracking error |mean_speed - 0.25 m/s| (command speed 0.25); distance. Dis
 Healing effect (paired by seed) on disable_leg: falls and survival-time difference with a 100,000-resample paired bootstrap, percentile 95%, rng seed 12345."""
 import glob
 
-import numpy as np
 import pandas as pd
 
 from stats_v2_helpers import paired, wilson

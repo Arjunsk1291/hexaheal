@@ -6,7 +6,6 @@ import os
 
 import pandas as pd
 
-from stats_v2_helpers import wilson
 
 d = pd.read_json("results/v3_stage3_map_0-9.jsonl", lines=True)
 orc = {json.loads(line)["case"]: json.loads(line) for line in open("results/v3_oracle.jsonl")} if os.path.exists("results/v3_oracle.jsonl") else {}

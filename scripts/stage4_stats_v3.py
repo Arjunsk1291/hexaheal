@@ -4,7 +4,6 @@ Verdict rule per cell (stated before looking at final data): if either arm has a
 PPO arm = mean over the 5 training seeds (ppo, ppo_s1..s4) of each eval seed's value; for cells where only training seed 0 exists (fault_sequential+healing, healthy+healing) the arm is PPO seed 0 only and is flagged."""
 import glob
 
-import numpy as np
 import pandas as pd
 
 from stats_v2_helpers import paired, wilson

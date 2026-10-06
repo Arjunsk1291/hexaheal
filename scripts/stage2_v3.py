@@ -38,7 +38,7 @@ def make(n):
     if n == "c_search": return ScaledBrain(1.0), "search"
 
 
-import neurowalker.benchmark as bm
+import neurowalker.benchmark as bm  # noqa: E402
 
 for n in names:
     for sd in seeds:

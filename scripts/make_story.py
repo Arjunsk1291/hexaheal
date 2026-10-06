@@ -40,7 +40,6 @@ def neural_img(sz, k, glow=1.0):
     p = XY * (sz - 20) + 10
     for a, b in EDG: d.line([tuple(p[a]), tuple(p[b])], fill=(60, 110, 150, 34), width=1)
     cnt = NEU[min(k, len(NEU) - 1)].astype(float)
-    base = np.full(len(p), 0.0)
     for i in range(len(p)):
         c = cnt[i]
         if c > 0:
