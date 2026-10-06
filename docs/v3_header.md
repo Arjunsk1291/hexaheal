@@ -43,10 +43,10 @@ Survivors/10 (no fall by 14 s) for each case and the oracle result:
 
 Reading the map (oracle faults act from t=0 for 10 s; controller cells disable legs at 4 s and run to 14 s, so the two are comparable in kind only):
 - Planner limits (the oracle walks, the controllers do not): R1, L1 and L3 alone (oracle 10/10 survive; L1 and L3 every controller 0/10; R1 only plain tripod+healing 10/10, tuned 0/10); R1+R3, R1+L2, R2+L1 and R3+L1 (oracle walks, tuned+healing 0-3/10); L1+L3 (oracle walks, tuned+healing 0/10); R2+R3 with tuned+healing (0/10). The healing layer rescales the diagnosed leg and global tripod parameters, and cannot express the per-leg phase shifts the oracle uses.
-- Not found by the oracle (R1+R2, R1+L1, R1+L3, R3+L3, L1+L2): every controller also fails them. With 2 restarts x 30 generations no walking gait was found. This is NOT a proof of physical impossibility; see the long-budget rerun below.
+- With the short budget (2 restarts x 30 generations) no walking gait was found for R1+R2, R1+L1, R1+L3, R3+L3, L1+L2. The long-budget rerun (below) found walking gaits for R1+L3 and R3+L3, so those two are planner limits after all (every controller fails them). Still no walking gait found for R1+R2, R1+L1 and L1+L2 (two adjacent same-side pairs and the two front legs): these are the candidates for physics limits, but absence of a found gait is NOT a proof of impossibility.
 - Survived by every controller with no help: R2, L2, and R2+L2.
 - Healing is not monotone good: it lowers survival in R2+L3 (tuned 10 -> 3), R2+R3 (tuned 2 -> 0, tripod 10 -> 8), R3+L2 (tripod 10 -> 8) and others, because diagnose/replan interrupts a gait that was already working.
-Verdict: the recovery map is complete (840 episodes). Most failures of walkable cases are planner limits; five doubles had no walking gait found by the oracle (physics limit unproven).
+Verdict: the recovery map is complete (840 episodes). Most failures of walkable cases are planner limits; three doubles (R1+R2, R1+L1, L1+L2) had no walking gait found by the long-budget oracle (physics limit unproven).
 
 ## Stage 4: hybrid controller (tuned-tripod pitch feedback + healing + connectome nudges)
 
