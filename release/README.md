@@ -41,3 +41,7 @@ The raw wall-runtime field is separately recorded and machine-dependent; it does
 `SHA256SUMS`: audit integrity, not proof a run occurred.
 
 Negative results use the same denominator and prominence as successful results. PPO and response-delay historical counts are not independently rerun by this release. They remain historical context, not fresh validation. No new latency/dropout sweep is being introduced.
+
+## License boundary
+
+The release robot is procedural original geometry; no imported robot meshes or external dataset. Code is MIT. Installed dependency license texts are copied in `dependency_licenses/`, with package versions and upstream source links in its index. These notices do not relicense upstream packages. The archived connectome code is outside this release. FlyWire-derived tables left in earlier git history still retain their third-party non-commercial terms; calling current HexaHeal code MIT does not remove those history restrictions. See `docs/LICENSES.md`. The encoded demonstration uses FFmpeg via imageio; see imageio-ffmpeg and FFmpeg notices below.
