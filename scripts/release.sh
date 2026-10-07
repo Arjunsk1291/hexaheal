@@ -13,7 +13,9 @@ else
 fi
 export MUJOCO_GL=egl
 export PYTHONPATH="$PWD/src:$PWD/scripts${PYTHONPATH:+:$PYTHONPATH}"
-.venv/bin/python -m pytest -q
+mkdir -p release/validation
+.venv/bin/python -m pytest -q | tee release/validation/test_output.txt
+.venv/bin/ruff check . | tee release/validation/lint_output.txt
 .venv/bin/python scripts/release_run.py "$@"
 .venv/bin/python scripts/release_compare.py
 .venv/bin/python scripts/release_demo.py

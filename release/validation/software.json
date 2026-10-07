@@ -2,12 +2,13 @@
   "simulation_only": true,
   "harness_files_sha256": {
     "scripts/release_run.py": "1b260646ab7a0342674d82fc50cc9a8cd6ffcdb21317c6725aff150a49f2a977",
-    "scripts/release_report.py": "1e064d300aea8e3f94e9ff2c10e0319aa166c0c1f296386e712dc1679738e351",
+    "scripts/release_report.py": "dffffc7353a07ce68f17537dcef1039f1a9fa7ac28e30f83ca3de990e4bf7715",
     "scripts/release_compare.py": "d1973480bb6f24c489ab9e9ef7f307535d257f9c4a3d0a8d744d5f2e92ed3fd4",
     "scripts/hh_common.py": "b10de8755b88766bef06af89d528058a2cbdbb0bf061ce9ec1b5b66b0eeb8747",
     "requirements.lock": "51067f21e99eb8ef62f074798fb419de85b1fd3d5c68680b3ffe5a884ea442d2"
   },
   "installed_packages": {
+    "neurowalker": "0.1.0",
     "Pygments": "2.21.0",
     "kiwisolver": "1.5.1",
     "absl-py": "2.5.0",
@@ -55,7 +56,6 @@
     "scipy": "1.15.3",
     "iniconfig": "2.3.1",
     "cycler": "0.12.1",
-    "neurowalker": "0.1.0",
     "pytest": "9.1.1",
     "numpy": "2.2.6",
     "virtualenv": "21.14.5"

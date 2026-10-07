@@ -1,6 +1,6 @@
 # Validation release
 
-Simulation only. This release isolates a fresh, complete leg-loss validation from older plots, missing historical raw files and superseded captions. Work-in-progress raw checkpoints are not a finished release; `release_report.py` refuses missing or duplicate runs.
+Simulation only. This release isolates a fresh, complete leg-loss validation from older plots, missing historical raw files and superseded captions. The saved release contains all 1470 episodes; `release_report.py` refuses missing or duplicate runs.
 
 ## One command
 

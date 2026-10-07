@@ -3,6 +3,7 @@ import argparse
 import csv
 import hashlib
 import json
+from importlib.metadata import distributions
 from pathlib import Path
 
 import matplotlib
@@ -28,6 +29,8 @@ def audit(rows, controllers=CONTROLLERS, seeds=range(10)):
 def main():
     p=argparse.ArgumentParser();p.add_argument('--output',type=Path,default=Path('release/validation'));a=p.parse_args()
     path=a.output; rows=load_rows(path/'runs.jsonl');audit(rows)
+    software={'simulation_only':True, 'harness_files_sha256':{f:hashlib.sha256(Path(f).read_bytes()).hexdigest() for f in ['scripts/release_run.py','scripts/release_report.py','scripts/release_compare.py','scripts/hh_common.py','requirements.lock']}, 'installed_packages':{d.metadata['Name']:d.version for d in distributions()}}
+    (path/'software.json').write_text(json.dumps(software,indent=2)+'\n')
     fieldnames=sorted(set().union(*(r.keys() for r in rows)))
     with (path/'runs.csv').open('w',newline='') as f:
         w=csv.DictWriter(f,fieldnames=fieldnames);w.writeheader();w.writerows(rows)
