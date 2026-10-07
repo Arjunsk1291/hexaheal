@@ -1,0 +1,9 @@
+{
+  "case": "dl_0",
+  "seed": 0,
+  "controller": "tierB",
+  "simulation_only": true,
+  "selection": "first case and seed, declared in code before rendering",
+  "fell": false,
+  "frames": 211
+}

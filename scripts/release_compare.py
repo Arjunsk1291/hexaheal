@@ -18,7 +18,7 @@ def compare(output=Path('release/validation')):
             keys=[k for k in h if k in r and k not in ('controller','wall_runtime_s')]
             mismatch=[k for k in keys if r[k]!=h[k]]
             if mismatch:bad.append({'case':r['case'],'seed':r['seed'],'fields':mismatch})
-        result[c]={'compared_runs':len(rows),'historical_runs':len(old),'all_shared_fields_exact':not bad,'mismatches':bad}
+        result[c]={'compared_runs':len(rows),'historical_runs':len(old),'all_shared_fields_exact':(not bad) if rows else None,'mismatches':bad}
     (output/'historical_comparison.json').write_text(json.dumps(result,indent=2)+'\n')
     return result
 
