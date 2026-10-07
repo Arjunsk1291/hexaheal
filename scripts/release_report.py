@@ -61,7 +61,7 @@ def main():
     fig.tight_layout(rect=(0,.06,1,1));fig.savefig(path/'recovery_matrix.png',dpi=160);fig.savefig(path/'recovery_matrix.svg');plt.close(fig)
     fig,ax=plt.subplots(figsize=(9,4.8));x=np.arange(7)
     ax.bar(x-.18,[n(rec[c]) for c in CONTROLLERS],width=.36,label='walking recovery',color='#147d92')
-    ax.bar(x+.18,[n(upright[c]) for c in CONTROLLERS],width=.36,label='upright only',color='#b7c5cf')
+    ax.bar(x+.18,[n(upright[c]) for c in CONTROLLERS],width=.36,label='upright (includes recovered)',color='#b7c5cf')
     ax.set_xticks(x,CONTROLLERS,rotation=25,ha='right');ax.set_ylim(0,21);ax.set_ylabel('Cases / 21 (>=7 of 10 seeds)');ax.legend()
     ax.set_title('Simulation results: success and failure use the same rule')
     fig.text(.02,.01,'Warm-start rule passed: '+str(summary['warm_rule_passed'])+'. Oracle has different fault/episode conditions.',fontsize=9)

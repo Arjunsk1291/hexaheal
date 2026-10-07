@@ -1,0 +1,26 @@
+{
+  "tripod": {
+    "compared_runs": 210,
+    "historical_runs": 210,
+    "all_shared_fields_exact": true,
+    "mismatches": []
+  },
+  "tierB": {
+    "compared_runs": 210,
+    "historical_runs": 210,
+    "all_shared_fields_exact": true,
+    "mismatches": []
+  },
+  "warm_start": {
+    "compared_runs": 210,
+    "historical_runs": 210,
+    "all_shared_fields_exact": true,
+    "mismatches": []
+  },
+  "oracle": {
+    "compared_runs": 210,
+    "historical_runs": 210,
+    "all_shared_fields_exact": true,
+    "mismatches": []
+  }
+}
