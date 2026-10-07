@@ -15,4 +15,5 @@ export MUJOCO_GL=egl
 export PYTHONPATH="$PWD/src:$PWD/scripts${PYTHONPATH:+:$PYTHONPATH}"
 .venv/bin/python -m pytest -q
 .venv/bin/python scripts/release_run.py "$@"
+.venv/bin/python scripts/release_demo.py
 .venv/bin/python scripts/release_report.py
