@@ -1,0 +1,133 @@
+{
+  "schema": 1,
+  "simulation_only": true,
+  "mujoco": "3.15.0",
+  "numpy": "2.2.6",
+  "eval_seeds": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "tuning_seeds": [
+    100,
+    101,
+    102,
+    103,
+    104,
+    105,
+    106,
+    107,
+    108,
+    109
+  ],
+  "cases": [
+    "dl_0",
+    "dl_1",
+    "dl_2",
+    "dl_3",
+    "dl_4",
+    "dl_5",
+    "dl_0_1",
+    "dl_0_2",
+    "dl_0_3",
+    "dl_0_4",
+    "dl_0_5",
+    "dl_1_2",
+    "dl_1_3",
+    "dl_1_4",
+    "dl_1_5",
+    "dl_2_3",
+    "dl_2_4",
+    "dl_2_5",
+    "dl_3_4",
+    "dl_3_5",
+    "dl_4_5"
+  ],
+  "controllers": [
+    "tripod",
+    "tuned",
+    "healing_v1",
+    "tierA",
+    "tierB",
+    "warm_start",
+    "oracle"
+  ],
+  "fault_t_s": 4.0,
+  "episode_s": 14.0,
+  "oracle_fault_t_s": 0.0,
+  "oracle_episode_s": 15.0,
+  "recovery_last_s": 8.0,
+  "recovery_speed_m_s": 0.125,
+  "case_min_recovered_seeds": 7,
+  "model": {
+    "body_half": [
+      0.16,
+      0.07,
+      0.025
+    ],
+    "leg_x": [
+      0.12,
+      0.0,
+      -0.12
+    ],
+    "coxa_len": 0.04,
+    "femur_len": 0.09,
+    "tibia_len": 0.14,
+    "torso_mass": 1.0,
+    "kp": 8.0,
+    "kv": 0.4,
+    "torque_limit": 2.5,
+    "dt": 0.005,
+    "foot_friction": 1.2,
+    "nominal": [
+      0.0,
+      0.2,
+      1.2
+    ],
+    "ranges": [
+      [
+        -0.7,
+        0.7
+      ],
+      [
+        -0.8,
+        1.4
+      ],
+      [
+        0.2,
+        2.3
+      ]
+    ],
+    "terrain": {
+      "kind": "flat"
+    }
+  },
+  "mjcf_sha256": "bd384636ad6c0e9e9758f3e564ad43b6e43f536b2d0c78b009406ffaf52c70bb",
+  "inputs_sha256": {
+    "results/v3/v2_config_final.json": "47254dc5ed679e486be2a8aaac6b8f2415cad9bf8389ce29bb40cef8e43f5748",
+    "results/tuned_tripod_tuning.json": "0aea34441468f5ab6aadbd8196820ffb5a6b4029da8af4570b6123019c80fda1",
+    "results/v3_oracle.jsonl": "2ca1fb0fd344daa40b6b33a53e11ca6d694f70c8cd53cfff7a4444ce5c36f002",
+    "results/v3_oracle_long.jsonl": "d8f23206dffe5e4c973867f9e5f7de14ee7cb9c5a9a777f8e455ac9e0d0fd56c",
+    "results/v3_oracle_long2.jsonl": "49e3590dea9c7e4fa4f21b866fe6f949e746e824ecc899fd95aa0bc2e6b8dbcd",
+    "src/neurowalker/__init__.py": "003780fd223172143b8ff26a69f200b7f4d1220f38b5401ef5b91baa372603be",
+    "src/neurowalker/benchmark.py": "e380543b64edb3ca447550f4ac27da90d8b9f0dd2fec82918ae92537513bdc23",
+    "src/neurowalker/env.py": "259195f5daaa8a780fee63402011bb96a597f94666c164ca93b6b7606d981dbe",
+    "src/neurowalker/faults.py": "ec561d94c1797027262fbec822e6bc6abdf368479f138a75e3a8a51197931171",
+    "src/neurowalker/freegait.py": "998451c33ef4b93c04d24bdb2f4cf4831bdf7bfc04cdeac33e624e899443d564",
+    "src/neurowalker/healing.py": "f46d383b0d006300a3ff2ea4be2cbaf00afe6fd94294fc70e0ae2a4c51c54120",
+    "src/neurowalker/healing2.py": "d5a4fc41d21311bf80b3789077975e748c5888ed9cd20ce85c68654a3daa4ec2",
+    "src/neurowalker/hexapod.py": "6a7d429c0139b96325df3188d74e27b0e4ed185feab74ff1ddb6cded69312678",
+    "src/neurowalker/hh_eval.py": "8abf0fcfa2879b10b4192e1169c71be1f6cab79755c0252f00e7395d36cbe42f",
+    "src/neurowalker/render.py": "7b2cf5d5346bf23e76f55d4ec3afe11f721aeb47a355e4aa82ae047c8af48565",
+    "src/neurowalker/rl.py": "d243a9ae1a42b409848ecfb35607673c4aed8e729b36b7273b1e074252f59a95",
+    "src/neurowalker/tripod.py": "4a994fdacf6c76a9f19d6b02e6a4fc6e9a5110e9c7c28b9a5665d7610fd4c72c",
+    "src/neurowalker/tuned.py": "8555021afb99e6a84fd9b84bfc3a1ac6c46fb6adf1f97550514bac747e5d8326"
+  }
+}
