@@ -1,0 +1,36 @@
+<html><head><meta charset="utf-8"><style>
+body{font-family:'Noto Sans',sans-serif;font-size:9.6pt;line-height:1.38;color:#111;margin:0}
+h1{font-size:17pt;margin:0 0 2pt}h2{font-size:11pt;margin:9pt 0 2pt;color:#0b7f72}
+.sub{color:#555;font-size:9pt;margin-bottom:6pt}table{border-collapse:collapse;font-size:8.8pt;margin:3pt 0}
+td,th{border:1px solid #bbb;padding:2pt 6pt;text-align:left}th{background:#eef}
+img{width:100%}.lim{background:#fff4f4;border-left:3px solid #d33;padding:3pt 7pt;margin:5pt 0}.pb{page-break-before:always}
+</style></head><body>
+<h1>HexaHeal: how long can a six-legged robot wait before it reacts to a lost leg?</h1>
+<div class="sub">Technical note, v4. Simulation only (MuJoCo, 2 vCPU sandbox). No hardware.</div>
+<div class="lim"><b>Limits.</b> Simulation only; disabled-leg faults on flat ground, 14 s episodes, fault at 4 s, 0.25 m/s command. 10 evaluation seeds (0-9); tuning used seeds 100-109 only. The oracle is an offline upper bound, not a controller. 9 of 21 cases are recovered by no controller; that is not proof they are impossible. Sim-to-real transfer is UNKNOWN.</div>
+<h2>Question and metric</h2>
+When 1 or 2 of 6 legs fail (21 cases), in how many does a controller <b>recover</b>? <i>Upright</i> = no fall. <i>Recovered</i> = no fall and at least 0.125 m/s over the last 8 s; a case counts if it holds on at least 7 of 10 seeds. An earlier metric scored a robot that stood still as a success: all 75 upright runs of the plain tripod were standing still.
+<h2>Controller</h2>
+The controller finds the failed-leg set in about 0.34 s (mean, MEASURED), stands, then searches a new free gait online with CMA-ES (60 trials over per-leg phase, duty, amplitude, lift) and switches. The stand lasts a fixed 4.6 s of simulated time in every planning run (MEASURED), so the new gait starts about 5 s after the fault.
+<img src="../media_v4/architecture.png">
+<h2>Headline (MEASURED, seeds 0-9)</h2>
+<table><tr><th>controller</th><th>recovered /21</th><th>upright /21</th><th>upright runs standing still /210</th></tr>
+<tr><td>plain tripod</td><td>0</td><td>6</td><td>75</td></tr>
+<tr><td>online re-planning (Tier B)</td><td>6</td><td>12</td><td>54</td></tr>
+<tr><td>Tier B+ warm start (not adopted)</td><td>9</td><td>14</td><td>39</td></tr>
+<tr><td>oracle (offline, knows fault)</td><td>15</td><td>18</td><td>26</td></tr></table>
+Tier B minus plain tripod: +6 recovered cases, 95% paired-bootstrap CI [+4, +8]. <b>Warm start: no gain by the pre-registered rule</b> (+3, CI [0, +6]; the rule needed at least +2 and an interval that excludes zero).
+<h2>Latency</h2>
+Delaying the repair after diagnosis: recovered share 55% at 0 s, 44% at 0.2 s, 41% at 0.7 s, 30% at 1.0 s, 15% at 1.5 s (100 runs per delay). Front-leg faults (R1, L1) fall to 0/10 recovered at 0.2 s. <i>Stated bias:</i> the 10 cases were chosen from tuning-seed results as cases where healing can work.
+<div class="pb"></div>
+<img src="../media_v4/latency_curve.png" style="width:78%">
+<h2>Per case</h2>
+<img src="../media_v4/recovered_matrix.png">
+<h2>What failed or did not help</h2>
+<ul><li>Healing v1: 0 recovered, fewer upright cases than the plain tripod (4 vs 6).</li>
+<li>Two tuning rounds (do-no-harm rule, steady-state fitness) lowered recovery on tuning seeds; the config was left unchanged.</li>
+<li>Warm start: no gain by the rule. The Tier B stand-still is a fixed budget; most of its upright runs that end still are not walking after the switch (diagnostic in docs/RESULTS_V4.md). Whether a shorter stand would help is UNTESTED.</li>
+<li>PPO reference: 1 recovered case. Connectome-inspired controller: a small MLP beat it; archived.</li></ul>
+<h2>Reproduce</h2>
+<code>make reproduce-v4</code> rebuilds stats and figures from committed results; <code>bash scripts/reproduce_v4.sh full</code> re-runs the episodes (deterministic). Pre-registrations: docs/PREREGISTRATION_V3.md, V4. Claims register: docs/RESULTS_V3.md, RESULTS_V4.md.
+</body></html>

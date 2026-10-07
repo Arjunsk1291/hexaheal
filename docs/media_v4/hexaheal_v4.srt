@@ -1,0 +1,23 @@
+1
+00:00:00,000 --> 00:00:04,000
+Lose a leg at 4 s: how long can the robot wait before it reacts?  Simulation only (MuJoCo, seeds 0-9). No hardware.
+
+2
+00:00:04,000 --> 00:00:12,000
+One robot: NORMAL, FAULT, DIAGNOSED, STANDING + REPLANNING, WALKING
+
+3
+00:00:12,000 --> 00:00:22,000
+Detect the failed legs, stand, search a new gait with CMA-ES, switch
+
+4
+00:00:22,000 --> 00:00:34,000
+Same fault, same 10 seeds: plain tripod makes no net progress, re-planned gait walks in 7 of 10 and falls in 2
+
+5
+00:00:34,000 --> 00:00:44,000
+Recovered share falls from 55% at 0 s delay to 15% at 1.5 s
+
+6
+00:00:44,000 --> 00:00:52,000
+Recovered: plain tripod 0, final controller 6, offline oracle 15 of 21

@@ -1,0 +1,4 @@
+{"selection_rule": "most total survivors over 21 cases x seeds 100-109 (tie-break: more cases with >=7/10 survivors); all selected on tuning seeds 100-109 only; files results/hh_tune_*.jsonl",
+ "A": {"interim": "stand", "confirm_s": 0.3, "n_joints": 1, "thr": 0.3, "suspect_n": 8, "min_confirm_s": 0.0},
+ "B": {"interim": "stand", "confirm_s": 0.3, "n_joints": 1, "thr": 0.3, "suspect_n": 8, "min_confirm_s": 0.0, "max_trials": 60},
+ "tuning_summary": {"A pk_nj1_n8_mc0": [13, 131], "A pk_nj1_n4_mc0": [12, 122], "A pk_nj1_n8_mc1": [12, 120], "A stand3 (no peak hold)": [10, 120], "A pk_nj2_n8_mc1": [9, 96], "B b60": [13, 132], "B b30": [12, 118]}}

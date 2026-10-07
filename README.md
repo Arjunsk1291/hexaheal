@@ -1,57 +1,68 @@
-# NeuroWalker
+# HexaHeal
 
-![demo](docs/media/demo.gif)
+How quickly can a simulated six-legged robot react to losing one or two legs? A fault-recovery study in MuJoCo simulation.
 
-![license](https://img.shields.io/badge/license-MIT-blue) ![python](https://img.shields.io/badge/python-3.10%2B-blue) ![CI](https://img.shields.io/badge/CI-UNVERIFIED-lightgrey)
+## Limits first
 
-A simulated 18-DOF hexapod (MuJoCo) whose walking is modulated by a **connectome-inspired controller**: a 10,000-neuron spiking subgraph of the published FlyWire fruit-fly connectome. It is benchmarked against a PPO residual policy and a classic tripod-gait CPG, and it can detect and recover from leg and joint faults. **Simulation only.**
+- Simulation only, flat ground, disabled-leg faults, 14 s episodes, faults at 4 s. No hardware result. ROS 2, Docker and sim-to-real transfer are UNKNOWN.
+- Evaluation seeds 0-9; tuning seeds 100-109. Small samples, with Wilson and paired-bootstrap intervals.
+- The oracle knows the fault from t=0 and uses different episode conditions. Its failed searches do not prove physical impossibility.
+- Nine of 21 cases are recovered by none of the evaluated controllers. The warm-start experiment did not pass its pre-registered rule.
+- The local workspace was lost on October 7. Source and media were recovered, with final Tier B/Tier B+ evaluations re-measured. Some earlier baseline and latency raw files are still missing. See [recovery notes](docs/RECOVERY_20261007.md). No claim of complete historical reproduction is made.
 
-## The 30-second version
-Take a map of how a fruit fly's brain cells connect. Cut out a 10,000-cell piece around the cells that feel the body and the cells that send commands down. Feed the robot's sensor readings into the input cells, read the output cells, and let them nudge the speed and turning of a normal walking pattern. Then break a leg and see whether the robot notices and adapts. It is not a copy of a fly brain, and the robot does not think like a fly.
+## Question and metric
 
-## Key results (generated from `results/summary.json`; 10 seeds per cell, see docs/BENCHMARK.md)
-| scenario | Tripod CPG | Connectome-inspired | PPO residual |
-|---|---|---|---|
-| flat | 2.63 m, 0/10 falls | 2.76 m, 0/10 falls | 1.44 m, 0/10 falls |
-| rough1 | 2.68 m, 0/10 falls | 2.78 m, 0/10 falls | 1.51 m, 0/10 falls |
-| rough2 | 2.66 m, 0/10 falls | 2.76 m, 0/10 falls | 1.54 m, 0/10 falls |
-| rough3 | 2.62 m, 0/10 falls | 2.73 m, 0/10 falls | 1.55 m, 0/10 falls |
-| slope10 | 2.15 m, 0/10 falls | 1.56 m, 3/10 falls | 1.58 m, 0/10 falls |
-| slope15 | 0.19 m, 8/10 falls | -0.09 m, 10/10 falls | 1.49 m, 0/10 falls |
-| slope20 | -0.12 m, 10/10 falls | -0.08 m, 10/10 falls | 1.22 m, 0/10 falls |
-| push | 2.02 m, 5/10 falls | 2.23 m, 5/10 falls | 0.83 m, 10/10 falls |
+"Upright" means no fall. "Recovered" also requires at least 0.125 m/s over the last 8 s, half the 0.25 m/s command. A case counts when at least 7 of 10 seeds meet that rule. The earlier no-fall metric counted standing still as success: all 75 upright plain-tripod runs were standing still (MEASURED).
 
-Speed retained after a fault, plain -> with self-healing:
+![HexaHeal simulation HUD](docs/media_v4/hero.gif)
 
-| fault | Tripod CPG | Connectome-inspired | PPO residual |
-|---|---|---|---|
-| disable leg | 0% -> 30% | 0% -> 38% | 77% -> 49% |
-| lock joint | 0% -> 78% | 71% -> 80% | 79% -> 70% |
-| reduce torque | 0% -> 140% | 0% -> 57% | 0% -> 8% |
-| sensor dropout | 98% -> 82% | 107% -> 97% | 0% -> 2% |
+## Method
 
-Full tables, confidence intervals and "where each controller loses": [docs/BENCHMARK.md](docs/BENCHMARK.md). Figures: `docs/figures/`.
+The controller detects the failed-leg set, stands while CMA-ES searches a new free gait, then switches. The planner uses 60 short simulation trials over phase, duty, amplitude and lift. Standing lasts a fixed 4.6 s of simulated time (MEASURED), so the new gait starts about 5 s after the fault.
 
-Connectome subgraph: 10,000 neurons, 797,577 synapse pairs; 0.095 s compute per simulated second on the build sandbox (2 vCPU). Validation: sugar-sensing neuron drive reaches feeding motor neurons in the full network (`docs/figures/validation_shiu_sugar.png`, qualitative only).
+![Simulation fault-response pipeline](docs/media_v4/architecture.png)
 
-## What this is / what this is not
-- Is: a simulation study with a connectome-derived wiring diagram inside a hand-designed input/output mapping.
-- Is not: an uploaded or emulated brain, a claim about how flies walk, or hardware. The I/O mapping is a design choice.
+## Headline
 
-## Verification status
-| item | status |
-|---|---|
-| Core sim, controllers, healing, benchmark, tests | run in the build sandbox |
-| ROS 2 nodes, Docker image | UNVERIFIED (written, syntax-checked only) |
-| GitHub Actions CI, Pages | UNVERIFIED until a run succeeds |
-| GTX 1660 Ti runtimes | NOT MEASURED. All timings are from a 2 vCPU CPU sandbox |
+MEASURED, 21 cases, seeds 0-9. Tier B, Tier B+, plain tripod and oracle counts were re-measured during recovery. Other rows below are recovered original MEASURED results, not rerun today.
 
-## Quickstart
-```bash
-make setup && make test      # install + fast tests
-make demo                    # render a clip
-make benchmark report        # arena + figures
-python scripts/download_data.py   # FlyWire data download + checksum check (data is never committed)
+| controller | recovered /21 | upright /21 |
+|---|---:|---:|
+| plain tripod | 0 | 6 |
+| tuned tripod | 0 | 6 |
+| healing v1 | 0 | 4 |
+| Tier A offline library | 12 | 13 |
+| Tier B online search | 6 | 12 |
+| Tier B+ warm start, not adopted | 9 | 14 |
+| PPO reference | 1 | 12 |
+| offline oracle | 15 | 18 |
+
+Warm start adds 3 cases, with a paired-bootstrap 95% interval [0, +6]. It fails the pre-registered rule: no gain. Tier B minus plain tripod: +6 cases, interval [+4, +8].
+
+![Simulation recovered matrix](docs/media_v4/recovered_matrix.png)
+
+## Response delay
+
+The latency plot uses recovered original MEASURED counts, not a fresh sweep. The ten cases were chosen from tuning-seed results where healing can work, a stated bias. Recovery falls from 55% at no added delay to 15% at 1.5 s. Front-leg cases R1/L1 are 0/10 at 0.2 s.
+
+![Simulation response-delay curve](docs/media_v4/latency_curve.png)
+
+## What did not help
+
+Healing v1: 0 recovered cases. Two later tuning rounds lowered recovered cases on tuning seeds, so the base config stayed frozen. Warm start did not pass its rule. Standing while planning is a possible limit of the measured recovery window (GUESS, untested). Other terrain, speeds and fault models are UNKNOWN.
+
+## Reproduce the recovered v4 results
+
+```sh
+pip install -e '.[dev]'
+make reproduce-v4
+make test
 ```
-## Citations
-Dorkenwald et al. 2024 (FlyWire, Nature); Shiu et al. 2024 (whole-brain LIF model, Nature); Lobato-Rios et al. 2022 and Wang-Chen et al. 2024 (NeuroMechFly); Todorov et al. 2012 (MuJoCo). FlyWire data is CC BY-NC 4.0; Shiu et al. code is MIT. See CITATION.cff and THIRD_PARTY_NOTICES.md.
+
+`make reproduce-v4` rebuilds v4 statistics and figures from the saved evaluations. `bash scripts/reproduce_v4.sh full` reruns Tier B and Tier B+ on seeds 0-9. MuJoCo 3.15.0 is required for the recorded reproduction check. This does not rebuild missing historical v3 baseline/latency raw files.
+
+[Results v4](docs/RESULTS_V4.md), [original v3 results](docs/RESULTS_V3.md), [plain-language explanation](docs/EXPLAINER.md), [technical note](docs/media_v4/HexaHeal_technical_note.pdf), [posting drafts for owner review](docs/POST.md), [licenses](docs/LICENSES.md).
+
+## Archived experiment
+
+The first experiment tested a fly-connectome-inspired controller. A small MLP beat it, so there was no evidence that wiring mattered. It is in `archive/`. Restricted derived tables are absent from the current tree but remain in older history under the owner's decision. See the license note. Earlier media are superseded, not current results.

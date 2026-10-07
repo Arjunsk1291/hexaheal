@@ -5,11 +5,11 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "neurowalker"
 version = "0.1.0"
-description = "Simulated 18-DOF hexapod with a connectome-inspired spiking controller, benchmarked against PPO and a tripod CPG. Simulation only."
+description = "HexaHeal: hexapod leg-loss recovery in MuJoCo. Simulation only."
 readme = "README.md"
 requires-python = ">=3.10"
 license = {text = "MIT"}
-dependencies = ["numpy", "scipy", "pandas", "pyarrow", "mujoco>=3.1", "gymnasium", "matplotlib", "imageio", "imageio-ffmpeg", "pyyaml", "psutil", "cma"]
+dependencies = ["numpy", "scipy", "pandas", "pyarrow", "mujoco==3.15.0", "gymnasium", "matplotlib", "imageio", "imageio-ffmpeg", "pyyaml", "psutil", "cma"]
 
 [project.optional-dependencies]
 rl = ["torch", "stable-baselines3", "tensorboard"]
@@ -19,6 +19,7 @@ dev = ["pytest", "ruff", "pre-commit"]
 where = ["src"]
 
 [tool.ruff]
+extend-exclude = ["archive"]
 line-length = 110
 [tool.ruff.lint]
 select = ["E", "F", "I"]

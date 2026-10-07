@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="936pt" height="259.2pt" viewBox="0 0 936 259.2" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-10-07T08:59:11.118028</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.10.9, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 259.2 
+L 936 259.2 
+L 936 0 
+L 0 0 
+z
+" style="fill: #0d1117"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 142.11 169.704 
+L 242.55 169.704 
+Q 250.92 169.704 250.92 161.388 
+L 250.92 94.86 
+Q 250.92 86.544 242.55 86.544 
+L 142.11 86.544 
+Q 133.74 86.544 133.74 94.86 
+L 133.74 161.388 
+Q 133.74 169.704 142.11 169.704 
+z
+" clip-path="url(#p81b654a57c)" style="fill: #161b22; stroke: #ff5d5d; stroke-width: 2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 284.4 169.704 
+L 384.84 169.704 
+Q 393.21 169.704 393.21 161.388 
+L 393.21 94.86 
+Q 393.21 86.544 384.84 86.544 
+L 284.4 86.544 
+Q 276.03 86.544 276.03 94.86 
+L 276.03 161.388 
+Q 276.03 169.704 284.4 169.704 
+z
+" clip-path="url(#p81b654a57c)" style="fill: #161b22; stroke: #2dd4bf; stroke-width: 2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 426.69 169.704 
+L 527.13 169.704 
+Q 535.5 169.704 535.5 161.388 
+L 535.5 94.86 
+Q 535.5 86.544 527.13 86.544 
+L 426.69 86.544 
+Q 418.32 86.544 418.32 94.86 
+L 418.32 161.388 
+Q 418.32 169.704 426.69 169.704 
+z
+" clip-path="url(#p81b654a57c)" style="fill: #161b22; stroke: #2dd4bf; stroke-width: 2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 568.98 169.704 
+L 669.42 169.704 
+Q 677.79 169.704 677.79 161.388 
+L 677.79 94.86 
+Q 677.79 86.544 669.42 86.544 
+L 568.98 86.544 
+Q 560.61 86.544 560.61 94.86 
+L 560.61 161.388 
+Q 560.61 169.704 568.98 169.704 
+z
+" clip-path="url(#p81b654a57c)" style="fill: #161b22; stroke: #2dd4bf; stroke-width: 2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 711.27 169.704 
+L 811.71 169.704 
+Q 820.08 169.704 820.08 161.388 
+L 820.08 94.86 
+Q 820.08 86.544 811.71 86.544 
+L 711.27 86.544 
+Q 702.9 86.544 702.9 94.86 
+L 702.9 161.388 
+Q 702.9 169.704 711.27 169.704 
+z
+" clip-path="url(#p81b654a57c)" style="fill: #161b22; stroke: #2dd4bf; stroke-width: 2; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_1">
+    <text style="font-weight: 700; font-size: 12px; font-family: 'Noto Sans'; text-anchor: middle; fill: #ff5d5d" x="192.33" y="109.068" transform="rotate(-0 192.33 109.068)">FAULT</text>
+   </g>
+   <g id="text_2">
+    <text style="font-size: 9.5px; font-family: 'Noto Sans'; fill: #e6edf3" transform="translate(159.859297 138.982)">leg torque lost</text>
+    <text style="font-size: 9.5px; font-family: 'Noto Sans'; fill: #e6edf3" transform="translate(173.586797 149.926)">at t = 4 s</text>
+   </g>
+   <g id="patch_7">
+    <path d="M 254.036817 128.124 
+Q 262.637461 128.124 269.449251 128.124 
+" style="fill: none; stroke: #8b949e; stroke-width: 1.6; stroke-linecap: round"/>
+    <path d="M 265.049251 125.924 
+L 269.449251 128.124 
+L 265.049251 130.324 
+z
+" style="fill: #8b949e; stroke: #8b949e; stroke-width: 1.6; stroke-linecap: round"/>
+   </g>
+   <g id="text_3">
+    <text style="font-weight: 700; font-size: 12px; font-family: 'Noto Sans'; text-anchor: middle; fill: #2dd4bf" x="334.62" y="109.068" transform="rotate(-0 334.62 109.068)">DETECT</text>
+   </g>
+   <g id="text_4">
+    <text style="font-size: 9.5px; font-family: 'Noto Sans'; fill: #e6edf3" transform="translate(306.010156 139.00575)">failed-leg set</text>
+    <text style="font-size: 9.5px; font-family: 'Noto Sans'; fill: #e6edf3" transform="translate(301.945195 149.94975)">in about 0.34 s</text>
+   </g>
+   <g id="patch_8">
+    <path d="M 396.326817 128.124 
+Q 404.927461 128.124 411.739251 128.124 
+" style="fill: none; stroke: #8b949e; stroke-width: 1.6; stroke-linecap: round"/>
+    <path d="M 407.339251 125.924 
+L 411.739251 128.124 
+L 407.339251 130.324 
+z
+" style="fill: #8b949e; stroke: #8b949e; stroke-width: 1.6; stroke-linecap: round"/>
+   </g>
+   <g id="text_5">
+    <text style="font-weight: 700; font-size: 12px; font-family: 'Noto Sans'; text-anchor: middle; fill: #2dd4bf" x="476.91" y="109.068" transform="rotate(-0 476.91 109.068)">STAND</text>
+   </g>
+   <g id="text_6">
+    <text style="font-size: 9.5px; font-family: 'Noto Sans'; fill: #e6edf3" transform="translate(456.780391 138.982)">hold still,</text>
+    <text style="font-size: 9.5px; font-family: 'Noto Sans'; fill: #e6edf3" transform="translate(434.128086 149.926)">robot stays upright</text>
+   </g>
+   <g id="patch_9">
+    <path d="M 538.616817 128.124 
+Q 547.217461 128.124 554.029251 128.124 
+" style="fill: none; stroke: #8b949e; stroke-width: 1.6; stroke-linecap: round"/>
+    <path d="M 549.629251 125.924 
+L 554.029251 128.124 
+L 549.629251 130.324 
+z
+" style="fill: #8b949e; stroke: #8b949e; stroke-width: 1.6; stroke-linecap: round"/>
+   </g>
+   <g id="text_7">
+    <text style="font-weight: 700; font-size: 12px; font-family: 'Noto Sans'; text-anchor: middle; fill: #2dd4bf" x="619.2" y="109.068" transform="rotate(-0 619.2 109.068)">RE-PLAN</text>
+   </g>
+   <g id="text_8">
+    <text style="font-size: 9.5px; font-family: 'Noto Sans'; fill: #e6edf3" transform="translate(584.771406 138.982)">CMA-ES search,</text>
+    <text style="font-size: 9.5px; font-family: 'Noto Sans'; fill: #e6edf3" transform="translate(591.703438 149.926)">60 gait trials</text>
+   </g>
+   <g id="patch_10">
+    <path d="M 680.906817 128.124 
+Q 689.507461 128.124 696.319251 128.124 
+" style="fill: none; stroke: #8b949e; stroke-width: 1.6; stroke-linecap: round"/>
+    <path d="M 691.919251 125.924 
+L 696.319251 128.124 
+L 691.919251 130.324 
+z
+" style="fill: #8b949e; stroke: #8b949e; stroke-width: 1.6; stroke-linecap: round"/>
+   </g>
+   <g id="text_9">
+    <text style="font-weight: 700; font-size: 12px; font-family: 'Noto Sans'; text-anchor: middle; fill: #2dd4bf" x="761.49" y="109.068" transform="rotate(-0 761.49 109.068)">GAIT SWITCH</text>
+   </g>
+   <g id="text_10">
+    <text style="font-size: 9.5px; font-family: 'Noto Sans'; fill: #e6edf3" transform="translate(728.540586 138.982)">new gait starts</text>
+    <text style="font-size: 9.5px; font-family: 'Noto Sans'; fill: #e6edf3" transform="translate(729.247148 149.926)">~5 s after fault</text>
+   </g>
+   <g id="text_11">
+    <text style="font-weight: 700; font-size: 14px; font-family: 'Noto Sans'; text-anchor: start; fill: #e6edf3" x="133.74" y="47.736" transform="rotate(-0 133.74 47.736)">Fault response pipeline</text>
+   </g>
+   <g id="text_12">
+    <text style="font-size: 9px; font-family: 'Noto Sans'; text-anchor: start; fill: #8b949e" x="133.74" y="200.196" transform="rotate(-0 133.74 200.196)">Standing lasts a fixed 4.6 s of simulated time in every planning run (MEASURED). The offline oracle skips detect, stand and re-plan: it knows the fault from t = 0.</text>
+   </g>
+   <g id="text_13">
+    <text style="font-size: 9px; font-family: 'Noto Sans'; text-anchor: start; fill: #8b949e" x="133.74" y="219.6" transform="rotate(-0 133.74 219.6)">Simulation only (MuJoCo, seeds 0-9). No hardware.</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p81b654a57c">
+   <rect x="117" y="31.104" width="725.4" height="199.584"/>
+  </clipPath>
+ </defs>
+</svg>

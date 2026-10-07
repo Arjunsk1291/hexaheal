@@ -13,7 +13,7 @@ import numpy as np
 sys.path.insert(0, "scripts")
 from neurowalker.env import HexapodEnv
 from neurowalker.faults import Fault
-from neurowalker.v3 import FreeGait
+from neurowalker.freegait import FreeGait
 
 args = sys.argv[1:]
 gens, n_restarts, out = 30, 2, "results/v3_oracle.jsonl"
